@@ -12,7 +12,7 @@ namespace ManagementDbContext.DbContext
     /// <summary>
     /// DB와 연동하는 Context
     /// </summary>
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

@@ -1,3 +1,5 @@
+using Management.Application.Interfaces;
+using Management.Application.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,7 @@ namespace ManagementSite.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddMudServices();
+            builder.Services.AddTransient<IAccountService, AccountService>();
 
             await builder.Build().RunAsync();
         }

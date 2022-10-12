@@ -26,11 +26,10 @@ namespace ManagementDbContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GivenName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FamilyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DepartmentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GivenName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FamilyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartmentNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MemberSince = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

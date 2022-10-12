@@ -1,0 +1,101 @@
+﻿@page "/register"
+@using Management.Application.Dto.Account
+@using Management.Application.Interfaces
+@using System.Diagnostics
+@inject NavigationManager _navigationManager
+@inject HttpClient _httpClient
+@inject IAccountService _accountService
+
+<h3>Register</h3>
+
+@if(ShowErrors==true)
+{
+    <div class="alert alert-danger" role="alert">
+        @foreach (var error in Errors)
+        {
+            <p>@error</p>
+        }
+    </div>
+}
+
+<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+
+                <MudCardContent>
+                    <MudTextField Label="UserName" @bind-Value="model.UserName" For="@(()=>model.UserName)" />
+                    <MudTextField Label="Given Name" @bind-Value="model.GivenName" For="@(()=>model.GivenName)" />
+                    <MudTextField Label="Family Name" @bind-Value="model.FamilyName" For="@(()=>model.FamilyName)" />
+
+                    <MudTextField Label="Email" InputType="InputType.Email" Class="mt-3"
+                                  @bind-Value="model.Email" For="@(()=>model.Email)" />
+
+                    <MudTextField Label="Confirm Email" InputType="InputType.Email" Class="mt-3"
+                                  @bind-Value="model.ConfirmEmail" For="@(()=>model.ConfirmEmail)" />
+
+                    <MudTextField Label="Password" InputType="InputType.Password" Class="mt-3"
+                                  @bind-Value="model.Password" For="@(()=>model.Password)" />
+
+                    <MudTextField Label="Confirm Password" InputType="InputType.Password" Class="mt-3"
+                                  @bind-Value="model.ConfirmPassword" For="@(()=>model.ConfirmEmail)" />
+
+                    <MudTextField Label="Department" @bind-Text="model.Department" For="@(()=>model.Department)" />
+                    <MudTextField Label="Department Number" @bind-Text="model.DepartmentNumber" For="(()=>model.DepartmentNumber)" />
+                </MudCardContent>
+
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
+                        Register
+                    </MudButton>
+                </MudCardActions>
+
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+@code {
+    private RegisterDto model = new RegisterDto();
+
+    public bool ShowErrors { get; set; }
+    public IEnumerable<string> Errors{ get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        model = new RegisterDto();
+    }
+
+    private async Task OnValidSubmit()
+    {
+
+        //var result = await _accountService.Register(model);
+
+        //if (result.IsSuccessForRegisteration)
+        //{
+        //    _navigationManager.NavigateTo("/login");
+        //}
+        //else
+        //{
+        //    Errors = result.Errors;
+        //    ShowErrors = true;
+        //    _navigationManager.NavigateTo("/register", true);
+        //}
+
+        //var result = await _httpClient.PostAsJsonAsync<RegisterViewModel>("/Account/Register", model);
+        var result = await _accountService.Register(model);
+        if(!result.Successful)
+        {
+            _navigationManager.NavigateTo("/");
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/login");
+        }
+    }
+
+
+}
