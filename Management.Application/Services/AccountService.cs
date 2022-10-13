@@ -36,12 +36,6 @@ namespace Management.Application.Services
             return await response.Content.ReadFromJsonAsync<RegisterResult>();
         }
 
-        //public async Task<LoginResult> Login(LoginDto loginDto)
-        //{
-        //    var response = await _httpClient.PostAsJsonAsync("/Account/Login", loginDto);
-        //    return await response.Content.ReadFromJsonAsync<LoginResult>();
-        //}
-
         public async Task<LoginResult> Login(LoginDto loginDto)
         {
             var response = await _httpClient.PostAsJsonAsync("/Account/Login", loginDto);
@@ -55,6 +49,13 @@ namespace Management.Application.Services
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
 
             return loginResult;
+        }
+
+        public async Task Logout()
+        {
+            await _localStorage.RemoveItemAsync("authToken");
+            ((CustomAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
+            _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
     }

@@ -1,8 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@inject IAccountService _accountService
 
-<MudThemeProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
 <div class="page">
     <div class="sidebar">
@@ -11,7 +12,15 @@
 
     <div class="main">
         <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <strong>Hello, @context.User.Identity.Name!</strong>
+                    <MudButton ButtonType="ButtonType.Submit" OnClick="onClick">Log out</MudButton>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="bff/login">Log in</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
         <div class="content px-4">
@@ -19,3 +28,12 @@
         </div>
     </div>
 </div>
+
+@code {
+
+    private async Task onClick()
+    {
+        await _accountService.Logout();
+        _navigationManager.NavigateTo("/");
+    }
+}
