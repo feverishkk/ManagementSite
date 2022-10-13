@@ -3,7 +3,10 @@ using Management.Application.Interfaces;
 using Management.Application.Services;
 using Management.Domain.Models;
 using ManagementDbContext.DbContext;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using System.Text;
 
 namespace ManagementSite.Server
 {
@@ -30,7 +35,10 @@ namespace ManagementSite.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthenticationCore();
-            services.AddAuthentication().AddCookie();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -38,39 +46,24 @@ namespace ManagementSite.Server
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = false;
-            }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy("CorsPolicy", builder => builder
+                       .AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod());
             });
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddAutoMapper(typeof(MappInitialiser));
 
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    options.Password.RequiredLength = 3;
-            //    options.Password.RequireDigit = true;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireLowercase = true;
-            //    options.Password.RequireUppercase = true;
-            //    options.User.RequireUniqueEmail = true;
-
-            //    //이메일 컨펌 해야 로그인 가능 유무 체크
-            //    // options.SignIn.RequireConfirmedEmail = true;
-
-            //    //5번까지 시도 가능
-            //    //options.Lockout.MaxFailedAccessAttempts = 5;
-
-            //    //30분 후 잠김
-            //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            //});
+            services.AddServerSideBlazor();
             services.AddMvcCore();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddHttpClient();
-
             services.AddTransient<IAccountService, AccountService>();
         }
 
@@ -90,6 +83,7 @@ namespace ManagementSite.Server
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 

@@ -1,0 +1,58 @@
+﻿@page "/login"
+
+<h3>Login</h3>
+
+@if(ShowErrors==true)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@Errors</p>
+    </div>
+}
+
+<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <MudTextField Label="Email" @bind-Value="model.Email" For="@(()=>model.Email)" Required
+                  RequiredError="Email is Required" />
+
+    <MudTextField Label="Password" @bind-Value="model.Password" For="@(()=>model.Password)" Required
+                  RequiredError="Password is Required" InputType="InputType.Password" />
+
+    <div class="d-flex align-center justify-space-between">
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
+            Login
+        </MudButton>
+    </div>
+
+</EditForm>
+
+    @code {
+    private LoginDto model = new();
+    private bool ShowErrors { get; set; } = false;
+    private string Errors { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        model = new LoginDto();
+    }
+
+    private async Task OnValidSubmit()
+    {
+        var result = await _accountService.Login(model);
+
+        if(!result.Successful)
+        {
+            Errors = result.Errors;
+            ShowErrors = true;
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/");
+        }
+    }
+
+
+
+}

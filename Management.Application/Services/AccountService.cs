@@ -23,11 +23,15 @@ namespace Management.Application.Services
 
         public async Task<RegisterResult> Register(RegisterDto registerDto)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/Account", registerDto);
+            var response = await _httpClient.PostAsJsonAsync("Account/Register", registerDto);
             return await response.Content.ReadFromJsonAsync<RegisterResult>();
         }
 
-
+        public async Task<LoginResult> Login(LoginDto loginDto)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Account/Login", loginDto);
+            return await response.Content.ReadFromJsonAsync<LoginResult>();
+        }
 
 
     }

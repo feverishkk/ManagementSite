@@ -1,10 +1,4 @@
 ﻿@page "/register"
-@using Management.Application.Dto.Account
-@using Management.Application.Interfaces
-@using System.Diagnostics
-@inject NavigationManager _navigationManager
-@inject HttpClient _httpClient
-@inject IAccountService _accountService
 
 <h3>Register</h3>
 
@@ -60,8 +54,8 @@
 @code {
     private RegisterDto model = new RegisterDto();
 
-    public bool ShowErrors { get; set; }
-    public IEnumerable<string> Errors{ get; set; }
+    public bool ShowErrors { get; set; } = false;
+    public IEnumerable<string> Errors { get; set; }
 
     protected override void OnInitialized()
     {
@@ -71,25 +65,11 @@
 
     private async Task OnValidSubmit()
     {
-
-        //var result = await _accountService.Register(model);
-
-        //if (result.IsSuccessForRegisteration)
-        //{
-        //    _navigationManager.NavigateTo("/login");
-        //}
-        //else
-        //{
-        //    Errors = result.Errors;
-        //    ShowErrors = true;
-        //    _navigationManager.NavigateTo("/register", true);
-        //}
-
-        //var result = await _httpClient.PostAsJsonAsync<RegisterViewModel>("/Account/Register", model);
         var result = await _accountService.Register(model);
         if(!result.Successful)
         {
-            _navigationManager.NavigateTo("/");
+            Errors = result.Errors;
+            ShowErrors = true;
         }
         else
         {

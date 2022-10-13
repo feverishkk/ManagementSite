@@ -10,14 +10,16 @@ using System.Linq;
 namespace ManagementSite.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -51,17 +53,51 @@ namespace ManagementSite.Server.Controllers
                 }
             }
             return Ok(new RegisterResult { Successful = true });
-            //var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-            //if(!result.Succeeded)
-            //{
-            //    var errors = result.Errors.Select(error => error.Description);
-            //    return BadRequest(errors);
-            //}
-
-            //return StatusCode(201);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            if (!ModelState.IsValid || loginDto == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var user = await _userManager.FindByEmailAsync(loginDto.Email);
+                var checkPassword = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+
+                if (user == null)
+                {
+                    return BadRequest();
+                }
+                if(checkPassword==false)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    var result = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password, false, false);
+                    if (!result.Succeeded)
+                    {
+                        //실패
+                        return Ok(new LoginResult
+                        {
+                            Successful = false,
+                            Errors = "User Name or Password is not correct!"
+                        });
+                    }
+                    else
+                    {
+                        return Ok(new LoginResult { Successful = true });
+                    }
+                }
+            }
+        }
+
+
+
 
 
     }

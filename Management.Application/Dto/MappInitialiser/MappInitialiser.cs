@@ -14,6 +14,7 @@ namespace Management.Application.Dto.MappInitialiser
         public MappInitialiser()
         {
             CreateMap<ApplicationUser, RegisterDto>().ReverseMap();
+            CreateMap<ApplicationUser, LoginDto>().ReverseMap();
         }
     }
 }

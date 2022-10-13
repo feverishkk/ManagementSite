@@ -8,5 +8,6 @@ namespace Management.Application.Interfaces
     public interface IAccountService
     {
         Task<RegisterResult> Register(RegisterDto registerDto);
+        Task<LoginResult> Login(LoginDto loginDto);
     }
 }
