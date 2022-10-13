@@ -10,5 +10,7 @@ namespace Management.Application.Dto.Account
     {
         public bool Successful { get; set; }   
         public string Errors { get; set; }
+
+        public string Token { get; set; }
     }
 }

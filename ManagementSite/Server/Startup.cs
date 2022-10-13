@@ -1,3 +1,5 @@
+using Blazored.LocalStorage;
+using Management.Application.Authentication;
 using Management.Application.Dto.MappInitialiser;
 using Management.Application.Interfaces;
 using Management.Application.Services;
@@ -48,6 +50,20 @@ namespace ManagementSite.Server
                 options.SignIn.RequireConfirmedEmail = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["JwtIssuer"],
+                    ValidAudience = Configuration["JwtAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
+                };
+            });
+           
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
@@ -58,13 +74,13 @@ namespace ManagementSite.Server
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddAutoMapper(typeof(MappInitialiser));
+            services.AddBlazoredLocalStorage();
 
             services.AddServerSideBlazor();
             services.AddMvcCore();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddHttpClient();
-            services.AddTransient<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
