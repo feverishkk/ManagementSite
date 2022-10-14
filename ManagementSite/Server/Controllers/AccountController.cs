@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using ManagementDbContext.DbContext;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace ManagementSite.Server.Controllers
 {
@@ -24,13 +27,16 @@ namespace ManagementSite.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
 
+        private readonly ApplicationDbContext _dbContext;
+
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                IConfiguration configuration, IEmailSender emailSender)
+                                IConfiguration configuration, IEmailSender emailSender, ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _emailSender = emailSender;
+            _dbContext = dbContext;
         }
 
         [HttpPost]
@@ -72,6 +78,7 @@ namespace ManagementSite.Server.Controllers
                     var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
                                                       new { userId = userId, token = emailToken },
                                                       protocol: HttpContext.Request.Scheme);
+                    //await _dbContext.UserToken.AddAsync()
 
                     await _emailSender.SendEmail(user.Email, subject, confirmationLink);
                 }
@@ -80,7 +87,7 @@ namespace ManagementSite.Server.Controllers
             return Ok(new RegisterResult { Successful = true });
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)
@@ -161,9 +168,8 @@ namespace ManagementSite.Server.Controllers
             }
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
             var user = _userManager.FindByEmailAsync(changePasswordDto.Email);
             if (user == null || changePasswordDto == null)
@@ -171,10 +177,10 @@ namespace ManagementSite.Server.Controllers
                 return BadRequest();
             }
 
-            var result = await _userManager.ChangePasswordAsync(await user, changePasswordDto.OldPassword, 
+            var result = await _userManager.ChangePasswordAsync(await user, changePasswordDto.OldPassword,
                                                                 changePasswordDto.NewPassword);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return BadRequest();
             }
@@ -185,6 +191,59 @@ namespace ManagementSite.Server.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+            if (user == null || !ModelState.IsValid)
+            {
+                return Ok(new ForgotPasswordResult { Successful = false, Error = "User Id cannot be null" });
+            }
+            else
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var encodeToken = Encoding.UTF8.GetBytes(token);
+                var validToken = WebEncoders.Base64UrlEncode(encodeToken);
 
+                var generateLink = Url.Action(nameof(ResetPassword), "Account",
+                                              new { userId = forgotPasswordDto.Email, token = validToken },
+                                              protocol: HttpContext.Request.Scheme);
+
+                await _emailSender.SendEmail(forgotPasswordDto.Email, "Reset your Password", generateLink);
+
+                return Ok(new ForgotPasswordResult { Successful = true });
+            }
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            if (resetPasswordDto == null || !ModelState.IsValid)
+            {
+                return Ok(new ResetPasswordResult { Successful = false, Errors = "Please Refresh and Try Again." });
+            }
+            else
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+
+                if (user == null)
+                {
+                    return Ok(new ResetPasswordResult { Successful = false, Errors = "User Email cannot be null" });
+                }
+                else
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.ConfirmPassword);
+                    if(!result.Succeeded)
+                    {
+                        return Ok(new ForgotPasswordResult { Successful = false, Error = "Something Went Wrong.. Please Try Again" });
+                    }
+                    else
+                    {
+                        return Ok(new ResetPasswordResult { Successful = true });
+                    }
+                }
+            }
+        }
     }
 }

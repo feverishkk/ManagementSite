@@ -64,5 +64,17 @@ namespace Management.Application.Services
             return await result.Content.ReadFromJsonAsync<ChangePasswordResult>();
         }
 
+        public async Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+        {
+            var result = await _httpClient.PostAsJsonAsync("Account/ForgotPassword", forgotPasswordDto);
+            return await result.Content.ReadFromJsonAsync<ForgotPasswordResult>();
+        }
+
+        public async Task<ResetPasswordResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var result = await _httpClient.PostAsJsonAsync("Account/ResetPassword", resetPasswordDto);
+            return await result.Content.ReadFromJsonAsync<ResetPasswordResult>();
+        }
+
     }
 }

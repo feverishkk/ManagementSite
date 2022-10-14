@@ -1,22 +1,31 @@
 ﻿@page "/fetchdata"
+@using System.Web
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Diagnostics
 
-<MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="OnButtonClicked" >Delete</MudButton>
+<MudButton @onclick="mine" Variant="Variant.Filled" Color="Color.Primary">
+    Open Simple Dialog
+</MudButton>
 
-<MudChip>@state</MudChip>
 @code
 {
-    [Inject] private IDialogService DialogService { get; set; }
+    public string _Token { get; set; } = string.Empty;
+    public string _Email { get; set; } = string.Empty;
 
-    string state = "Message box hasn't been opened yet";
-
-
-    private async void OnButtonClicked()
+    private void mine()
     {
-        bool? result = await DialogService.ShowMessageBox(
-            "Warning", 
-            "Deleting can not be undone!", 
-            yesText:"Delete!", cancelText:"Cancel");
-        state= result==null ? "Cancelled" : "Deleted!";
-        StateHasChanged();
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
+
+        // Token, Email쿼리를 파싱한다.
+        var queryStrings = QueryHelpers.ParseQuery(uri.Query);
+        if (queryStrings.TryGetValue("Token", out var UserToken))
+        {
+            Debug.WriteLine(_Token = UserToken);
+        }
+        if (queryStrings.TryGetValue("Email", out var UserEmail))
+        {
+            Debug.WriteLine(_Email = UserEmail);
+        }
     }
 }

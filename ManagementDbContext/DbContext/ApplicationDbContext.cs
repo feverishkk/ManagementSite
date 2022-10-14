@@ -20,5 +20,6 @@ namespace ManagementDbContext.DbContext
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = default;
+        public DbSet<UserToken> UserToken { get; set; } = default;
     }
 }

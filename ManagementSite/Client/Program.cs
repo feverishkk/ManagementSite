@@ -5,6 +5,7 @@ using Management.Application.Services;
 using Management.Infrastructure.Shared.EmailSender;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System;
@@ -30,6 +31,7 @@ namespace ManagementSite.Client
 
             builder.Services.AddTransient<IAccountService, AccountService>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
 
             await builder.Build().RunAsync();
         }
