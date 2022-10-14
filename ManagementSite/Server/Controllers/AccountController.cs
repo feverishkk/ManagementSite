@@ -202,11 +202,9 @@ namespace ManagementSite.Server.Controllers
             else
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var encodeToken = Encoding.UTF8.GetBytes(token);
-                var validToken = WebEncoders.Base64UrlEncode(encodeToken);
 
                 var generateLink = Url.Action(nameof(ResetPassword), "Account",
-                                              new { userId = forgotPasswordDto.Email, token = validToken },
+                                              new { userId = forgotPasswordDto.Email, token = token },
                                               protocol: HttpContext.Request.Scheme);
 
                 await _emailSender.SendEmail(forgotPasswordDto.Email, "Reset your Password", generateLink);
