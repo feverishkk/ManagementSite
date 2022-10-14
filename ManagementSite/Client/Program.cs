@@ -29,7 +29,6 @@ namespace ManagementSite.Client
             builder.Services.AddBlazoredLocalStorage();
 
             builder.Services.AddTransient<IAccountService, AccountService>();
-            builder.Services.AddSingleton<IEmailSender, EmailSender>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             await builder.Build().RunAsync();

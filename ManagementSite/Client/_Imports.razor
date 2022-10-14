@@ -19,8 +19,10 @@
 @using Management.Application.Dto.Account
 @using Management.Application.Interfaces
 @using ManagementSite.Client.Pages.Account
+@using Management.Application.Authentication
 
 @* DI *@
 @inject NavigationManager _navigationManager
-@inject HttpClient _httpClient
 @inject IAccountService _accountService
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authenticationStateProvider

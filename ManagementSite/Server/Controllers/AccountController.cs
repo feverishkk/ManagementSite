@@ -33,7 +33,6 @@ namespace ManagementSite.Server.Controllers
             _emailSender = emailSender;
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
@@ -57,7 +56,7 @@ namespace ManagementSite.Server.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, registerDto.Password);
-                if(!result.Succeeded)
+                if (!result.Succeeded)
                 {
                     var errors = result.Errors.Select(errors => errors.Description);
 
@@ -70,10 +69,10 @@ namespace ManagementSite.Server.Controllers
                     var userId = await _userManager.FindByIdAsync(user.Id);
                     var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", 
-                                                      new { userId = userId, token = emailToken }, 
+                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
+                                                      new { userId = userId, token = emailToken },
                                                       protocol: HttpContext.Request.Scheme);
-                    
+
                     await _emailSender.SendEmail(user.Email, subject, confirmationLink);
                 }
             }
@@ -81,7 +80,7 @@ namespace ManagementSite.Server.Controllers
             return Ok(new RegisterResult { Successful = true });
         }
 
-        
+
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)
@@ -120,7 +119,7 @@ namespace ManagementSite.Server.Controllers
                 {
                     return BadRequest();
                 }
-                if(checkPassword==false)
+                if (checkPassword == false)
                 {
                     return BadRequest();
                 }
@@ -163,7 +162,28 @@ namespace ManagementSite.Server.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var user = _userManager.FindByEmailAsync(changePasswordDto.Email);
+            if (user == null || changePasswordDto == null)
+            {
+                return BadRequest();
+            }
 
+            var result = await _userManager.ChangePasswordAsync(await user, changePasswordDto.OldPassword, 
+                                                                changePasswordDto.NewPassword);
+
+            if(!result.Succeeded)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(new ChangePasswordResult { Successful = true });
+            }
+
+        }
 
 
     }

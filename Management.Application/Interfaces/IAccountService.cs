@@ -10,5 +10,6 @@ namespace Management.Application.Interfaces
         Task<RegisterResult> Register(RegisterDto registerDto);
         Task<LoginResult> Login(LoginDto loginDto);
         Task Logout();
+        Task<ChangePasswordResult> ChangePassword(ChangePasswordDto changePasswordDto);
     }
 }

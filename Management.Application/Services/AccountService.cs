@@ -38,7 +38,7 @@ namespace Management.Application.Services
 
         public async Task<LoginResult> Login(LoginDto loginDto)
         {
-            var response = await _httpClient.PostAsJsonAsync("/Account/Login", loginDto);
+            var response = await _httpClient.PostAsJsonAsync("Account/Login", loginDto);
             var loginResult = JsonSerializer.Deserialize<LoginResult>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });    
             if (!response.IsSuccessStatusCode)
             {
@@ -56,6 +56,12 @@ namespace Management.Application.Services
             await _localStorage.RemoveItemAsync("authToken");
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
             _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
+        public async Task<ChangePasswordResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var result = await _httpClient.PostAsJsonAsync("Account/ChangePassword", changePasswordDto);
+            return await result.Content.ReadFromJsonAsync<ChangePasswordResult>();
         }
 
     }
