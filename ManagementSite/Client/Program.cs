@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using Management.Application.Authentication;
 using Management.Application.Interfaces;
 using Management.Application.Services;
+using Management.Infrastructure.Shared.EmailSender;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +27,9 @@ namespace ManagementSite.Client
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddMudServices();
             builder.Services.AddBlazoredLocalStorage();
+
             builder.Services.AddTransient<IAccountService, AccountService>();
+            builder.Services.AddSingleton<IEmailSender, EmailSender>();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             await builder.Build().RunAsync();

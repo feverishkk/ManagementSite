@@ -4,6 +4,7 @@ using Management.Application.Dto.MappInitialiser;
 using Management.Application.Interfaces;
 using Management.Application.Services;
 using Management.Domain.Models;
+using Management.Infrastructure.Shared.EmailSender;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -75,6 +76,9 @@ namespace ManagementSite.Server
             services.AddControllers().AddNewtonsoftJson();
             services.AddAutoMapper(typeof(MappInitialiser));
             services.AddBlazoredLocalStorage();
+
+            services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddServerSideBlazor();
             services.AddMvcCore();

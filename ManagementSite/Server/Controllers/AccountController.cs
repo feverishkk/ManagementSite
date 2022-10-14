@@ -20,13 +20,17 @@ namespace ManagementSite.Server.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+
         private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
+
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                IConfiguration configuration)
+                                IConfiguration configuration, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _emailSender = emailSender;
         }
 
 
@@ -51,6 +55,7 @@ namespace ManagementSite.Server.Controllers
                     FamilyName = registerDto.FamilyName,
                     MemberSince = DateTime.UtcNow.Date
                 };
+
                 var result = await _userManager.CreateAsync(user, registerDto.Password);
                 if(!result.Succeeded)
                 {
@@ -58,9 +63,45 @@ namespace ManagementSite.Server.Controllers
 
                     return Ok(new RegisterResult { Successful = false, Errors = errors });
                 }
-            }
-            return Ok(new RegisterResult { Successful = true });
+                else
+                {
+                    string subject = "Confirmation Email Address";
+                    //userId에 Email이 포함된다.
+                    var userId = await _userManager.FindByIdAsync(user.Id);
+                    var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", 
+                                                      new { userId = userId, token = emailToken }, 
+                                                      protocol: HttpContext.Request.Scheme);
+                    
+                    await _emailSender.SendEmail(user.Email, subject, confirmationLink);
+                }
+            }
+
+            return Ok(new RegisterResult { Successful = true });
+        }
+
+        
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByEmailAsync(userId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpPost]
