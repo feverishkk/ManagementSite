@@ -11,5 +11,7 @@ namespace Management.Application.Interfaces
         Task<LoginResult> Login(LoginDto loginDto);
         Task Logout();
         Task<ChangePasswordResult> ChangePassword(ChangePasswordDto changePasswordDto);
+        Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto);
+        Task<ResetPasswordResult> ResetPassword(ResetPasswordDto resetPasswordDto);
     }
 }

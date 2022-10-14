@@ -103,6 +103,8 @@ namespace ManagementDbContext.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

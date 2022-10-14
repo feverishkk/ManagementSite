@@ -16,6 +16,7 @@ namespace Management.Application.Dto.MappInitialiser
             CreateMap<ApplicationUser, RegisterDto>().ReverseMap();
             CreateMap<ApplicationUser, LoginDto>().ReverseMap();
             CreateMap<ApplicationUser, ChangePasswordDto>().ReverseMap();
+            CreateMap<ApplicationUser, ResetPasswordDto>().ReverseMap();
         }
     }
 }
