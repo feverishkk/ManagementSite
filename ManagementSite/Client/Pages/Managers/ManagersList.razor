@@ -5,7 +5,8 @@
 @inject IManagerService _managerService
 @inject HttpClient httpClient
 
-<MudTable Items="@ApplicationUsers" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
+<MudTable Items="@ApplicationUsers" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" 
+          Filter="new Func<ApplicationUser, bool>(FilterFunction)">
 
     <ToolBarContent>
         <MudText Typo="Typo.h6">Periodic Elements</MudText>
@@ -66,5 +67,18 @@
         ApplicationUsers = await _managerService.GetAllManagers();
     }
 
-    
+    private bool FilterFunction(ApplicationUser applicationUser) => FilterFunc(applicationUser, searchString);
+
+    private bool FilterFunc(ApplicationUser applicationUser, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+
+        if (applicationUser.FamilyName.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        if (applicationUser.GivenName.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        if (applicationUser.Department.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        if (applicationUser.DepartmentNumber.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        if (applicationUser.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
+
+        return false;
+    }
 }
