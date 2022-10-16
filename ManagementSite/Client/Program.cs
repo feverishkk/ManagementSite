@@ -2,10 +2,8 @@ using Blazored.LocalStorage;
 using Management.Application.Authentication;
 using Management.Application.Interfaces;
 using Management.Application.Services;
-using Management.Infrastructure.Shared.EmailSender;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using System;
@@ -30,6 +28,8 @@ namespace ManagementSite.Client
             builder.Services.AddBlazoredLocalStorage();
 
             builder.Services.AddTransient<IAccountService, AccountService>();
+            builder.Services.AddTransient<IManagerService, ManagerService>();
+
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 
