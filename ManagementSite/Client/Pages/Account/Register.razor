@@ -2,7 +2,7 @@
 
 <h3>Register</h3>
 
-@if(ShowErrors==true)
+@if (ShowErrors == true)
 {
     <div class="alert alert-danger" role="alert">
         @foreach (var error in Errors)
@@ -38,6 +38,14 @@
 
                     <MudTextField Label="Department" @bind-Text="model.Department" For="@(()=>model.Department)" />
                     <MudTextField Label="Department Number" @bind-Text="model.DepartmentNumber" For="(()=>model.DepartmentNumber)" />
+
+                    <MudSelect @bind-Value="model.Role" For="@(()=>model.Role)" Label="Role List">
+                        @foreach (RoleList roles in Enum.GetValues(typeof(RoleList)))
+                        {
+                            <MudSelectItem Value="@roles">@roles</MudSelectItem>
+                        }
+                    </MudSelect>
+
                 </MudCardContent>
 
                 <MudCardActions>
@@ -52,7 +60,7 @@
 </EditForm>
 
 @code {
-    private RegisterDto model = new RegisterDto();
+    private RegisterDto model { get; set; }
 
     public bool ShowErrors { get; set; } = false;
     public IEnumerable<string> Errors { get; set; }
@@ -66,7 +74,7 @@
     private async Task OnValidSubmit()
     {
         var result = await _accountService.Register(model);
-        if(!result.Successful)
+        if (!result.Successful)
         {
             Errors = result.Errors;
             ShowErrors = true;

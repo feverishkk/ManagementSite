@@ -11,9 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
-using ManagementDbContext.DbContext;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace ManagementSite.Server.Controllers
 {
@@ -23,20 +20,19 @@ namespace ManagementSite.Server.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
 
-        private readonly ApplicationDbContext _dbContext;
-
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                IConfiguration configuration, IEmailSender emailSender, ApplicationDbContext dbContext)
+                                 IConfiguration configuration, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _emailSender = emailSender;
-            _dbContext = dbContext;
+            _roleManager = roleManager;
         }
 
         [HttpPost]
@@ -62,14 +58,31 @@ namespace ManagementSite.Server.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+                // 실패시..
                 if (!result.Succeeded)
                 {
                     var errors = result.Errors.Select(errors => errors.Description);
 
                     return Ok(new RegisterResult { Successful = false, Errors = errors });
                 }
+                // 성공시..
                 else
                 {
+                    var role = new IdentityRole
+                    {
+                        Name = registerDto.Role.ToString(),
+                    };
+
+                    var selectedRole = await _roleManager.CreateAsync(role);
+                    if(!selectedRole.Succeeded)
+                    {
+                        var error = selectedRole.Errors.Select(error => error.Description);
+                        return BadRequest(error);
+                    }
+
+                    await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
+
                     string subject = "Confirmation Email Address";
                     //userId에 Email이 포함된다.
                     var userId = await _userManager.FindByIdAsync(user.Id);
@@ -78,7 +91,6 @@ namespace ManagementSite.Server.Controllers
                     var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
                                                       new { userId = userId, token = emailToken },
                                                       protocol: HttpContext.Request.Scheme);
-                    //await _dbContext.UserToken.AddAsync()
 
                     await _emailSender.SendEmail(user.Email, subject, confirmationLink);
                 }
@@ -232,7 +244,7 @@ namespace ManagementSite.Server.Controllers
                 else
                 {
                     var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.ConfirmPassword);
-                    if(!result.Succeeded)
+                    if (!result.Succeeded)
                     {
                         return Ok(new ForgotPasswordResult { Successful = false, Error = "Something Went Wrong.. Please Try Again" });
                     }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Management.Application.Enums.Roles;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Management.Application.Dto.Account
 {
@@ -42,6 +39,11 @@ namespace Management.Application.Dto.Account
 
         [Required]
         public string DepartmentNumber { get; set; }
+
+        [Required]
+        [NotMapped]
+        public RoleList Role { get; set; }
+
 
     }
 }
