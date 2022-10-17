@@ -1,6 +1,7 @@
 ﻿@* Libraries *@
 @using System.Net.Http
 @using System.Net.Http.Json
+@using System.Web
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
@@ -25,11 +26,14 @@
 @using Management.Application.Interfaces
 @using ManagementSite.Client.Pages.Account
 @using Management.Application.Authentication
-@using Management.Application.Enums.Roles
+@using Management.Shared.Enums.Roles
+@using Management.Domain.Models
 
 
 @* DI *@
 @inject NavigationManager _navigationManager
-@inject IAccountService _accountService
 @inject HttpClient _httpClient
 @inject AuthenticationStateProvider _authenticationStateProvider
+
+@inject IAccountService _accountService
+@inject IManagerService _managerService

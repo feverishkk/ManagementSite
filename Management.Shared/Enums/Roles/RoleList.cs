@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Management.Application.Enums.Roles
+namespace Management.Shared.Enums.Roles
 {
     public enum RoleList
     {
-       SuperAdministrator = 1,
-       ServerAdministrator,
-       ApplicationAdministrator,
-       Basic
+        SuperAdministrator = 1,
+        ServerAdministrator,
+        ApplicationAdministrator,
+        Basic
     }
 }

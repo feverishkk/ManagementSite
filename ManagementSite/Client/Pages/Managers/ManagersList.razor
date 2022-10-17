@@ -1,15 +1,10 @@
 ﻿@page "/managers"
 
-@using System.Net.Http.Json
-@using Management.Domain.Models
-@inject IManagerService _managerService
-@inject HttpClient httpClient
-
 <MudTable Items="@ApplicationUsers" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" 
           Filter="new Func<ApplicationUser, bool>(FilterFunction)">
 
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Periodic Elements</MudText>
+        <MudText Typo="Typo.h6">Managers List</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -19,7 +14,7 @@
         <MudTh>Family Name</MudTh>
         <MudTh>Given Name</MudTh>
         <MudTh>Member Since</MudTh>
-        @*<MudTh> Role </MudTh>*@
+        <MudTh> Role </MudTh>
         <MudTh>Department</MudTh>
         <MudTh>Department Number</MudTh>
         <MudTh>Email Confirmed</MudTh>
@@ -30,7 +25,7 @@
         <MudTd DataLabel="Family Name">@context.FamilyName</MudTd>
         <MudTd DataLabel="Given Name">@context.GivenName</MudTd>
         <MudTd DataLabel="Member Since">@context.MemberSince</MudTd>
-        @*<MudTd DataLabel="Role">@context.Role</MudTd>*@
+        <MudTd DataLabel="Role">@context.Role</MudTd>
         <MudTd DataLabel="Department">@context.Department</MudTd>
         <MudTd DataLabel="Department Number">@context.DepartmentNumber</MudTd>
         <MudTd DataLabel="Email Confirmed">@context.EmailConfirmed</MudTd>
@@ -59,12 +54,16 @@
 
     private string searchString = string.Empty;
 
-
     private IEnumerable<ApplicationUser> ApplicationUsers = new List<ApplicationUser>();
 
     protected override async Task OnInitializedAsync()
     {
         ApplicationUsers = await _managerService.GetAllManagers();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
     }
 
     private bool FilterFunction(ApplicationUser applicationUser) => FilterFunc(applicationUser, searchString);

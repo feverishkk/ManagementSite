@@ -20,9 +20,26 @@ namespace ManagementSite.Server.Controllers
         [HttpGet]
         public IActionResult GetAllManagers()
         {
-            var users = _dbContext.ApplicationUsers.ToList();
+            var userRoleList = _dbContext.ApplicationUsers.ToList();
+            var userRole = _dbContext.UserRoles.ToList();
+            var roles = _dbContext.Roles.ToList();
 
-            return Ok(users);
+            foreach (var user in userRoleList)
+            {
+                var role = userRole.FirstOrDefault(obj => obj.UserId == user.Id);
+
+                if (role == null)
+                {
+                    user.Role = "None";
+                }
+
+                else
+                {
+                    user.Role = roles.FirstOrDefault(user => user.Id == role.RoleId).Name;
+                }
+            }
+
+            return Ok(userRoleList);
         }
 
 

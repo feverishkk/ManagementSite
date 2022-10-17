@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Management.Shared.Enums.Roles;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,5 +45,12 @@ namespace Management.Domain.Models
         public string DepartmentNumber { get; set; }
 
         public DateTime? MemberSince { get; set; } = DateTime.UtcNow;
+
+
+        [NotMapped]
+        public string Role { get; set; } = string.Empty;
+
+        [NotMapped]
+        public RoleList RoleLists { get; set; }
     }
 }

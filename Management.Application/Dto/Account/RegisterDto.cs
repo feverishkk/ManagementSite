@@ -1,4 +1,4 @@
-﻿using Management.Application.Enums.Roles;
+﻿using Management.Shared.Enums.Roles;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -41,7 +41,6 @@ namespace Management.Application.Dto.Account
         public string DepartmentNumber { get; set; }
 
         [Required]
-        [NotMapped]
         public RoleList Role { get; set; }
 
 
