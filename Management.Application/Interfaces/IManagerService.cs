@@ -8,5 +8,6 @@ namespace Management.Application.Interfaces
     public interface IManagerService
     {
         Task<IEnumerable<ApplicationUser>> GetAllManagers();
+        Task<ManagerResult> DeleteManager(string userId);
     }
 }

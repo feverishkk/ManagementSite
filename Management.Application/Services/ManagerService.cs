@@ -25,7 +25,11 @@ namespace Management.Application.Services
             return await _httpClient.GetFromJsonAsync<IEnumerable<ApplicationUser>>("/Manager/GetAllManagers");
         }
 
-
+        public async Task<ManagerResult> DeleteManager(string userId)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Manager/DeleteManager", userId);
+            return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        }
 
     }
 }

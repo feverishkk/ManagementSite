@@ -1,4 +1,5 @@
-﻿using ManagementDbContext.DbContext;
+﻿using Management.Application.Dto.Managers;
+using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -41,6 +42,27 @@ namespace ManagementSite.Server.Controllers
 
             return Ok(userRoleList);
         }
+
+        [HttpPost]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteManager([FromBody] string userId)
+        {
+            var user = _dbContext.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return Ok(new ManagerResult { Successful = false, Error = "User is null" });
+            }
+            else
+            {
+                _dbContext.ApplicationUsers.Remove(user);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new ManagerResult { Successful = true });
+            }
+        }
+
+
 
 
 
