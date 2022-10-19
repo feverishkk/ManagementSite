@@ -9,10 +9,10 @@ namespace Management.Application.Interfaces
     public interface IManagerService
     {
         Task<IEnumerable<ApplicationUser>> GetAllManagers();
+        Task<ManagerResult> GetManagersInfo(string userId);
         Task<ManagerResult> DeleteManager(string userId);
         Task<ManagerResult> GetUserRole(string userId);
-        //Task<ApplicationUser> GetUserRole(string userId);
-        //Task<ManagerResult> UpdateManagerRole(string userId, UpdateManagerRoleDto managerRoleDto);
         Task<ManagerResult> UpdateManagerRole(ArrayList managerRoleDto);
+        Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoDto managerInfoDto);
     }
 }

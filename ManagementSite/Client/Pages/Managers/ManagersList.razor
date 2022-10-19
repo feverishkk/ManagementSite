@@ -39,8 +39,13 @@
             </MudButton>
 
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Warning"
-                       OnClick="()=>ChangeRole(context.Id)">
+                       OnClick="()=>UpdateManagerRole(context.Id)">
                 Update Role
+            </MudButton>
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Info"
+                       OnClick="()=>UpdateManagerInfo(context.Id)">
+                Update Info       
             </MudButton>
 
         </MudTd>
@@ -94,10 +99,18 @@
         _navigationManager.NavigateTo("/managerlist", true);
     }
 
-    private void ChangeRole(string userId)
+    //Role
+    private void UpdateManagerRole(string userId)
     {
         var user = ApplicationUsers.FirstOrDefault(u => u.Id == userId);
         _navigationManager.NavigateTo($"/manager/updaterole/{user.Id}");
+    }
+
+    //Info
+    private void UpdateManagerInfo(string userId)
+    {
+        var user = ApplicationUsers.FirstOrDefault(u => u.Id == userId);
+        _navigationManager.NavigateTo($"/manager/updateinfo/{user.Id}");
     }
 
     private bool FilterFunction(ApplicationUser applicationUser) => FilterFunc(applicationUser, searchString);

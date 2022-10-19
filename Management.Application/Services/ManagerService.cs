@@ -26,6 +26,18 @@ namespace Management.Application.Services
             return await _httpClient.GetFromJsonAsync<IEnumerable<ApplicationUser>>("/Manager/GetAllManagers");
         }
 
+        public async Task<ManagerResult> GetManagersInfo(string userId)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Manager/GetManagersInfo", userId);
+            return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        }
+
+        public async Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoDto managerInfoDto)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerInfo", managerInfoDto);
+            return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        }
+
         public async Task<ManagerResult> DeleteManager(string userId)
         {
             var response = await _httpClient.PostAsJsonAsync("/Manager/DeleteManager", userId);
@@ -43,12 +55,6 @@ namespace Management.Application.Services
             var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerRole", managerRoleDto);
             return await response.Content.ReadFromJsonAsync<ManagerResult>();
         }
-
-        //public async Task<ManagerResult> UpdateManagerRole(string userId, UpdateManagerRoleDto managerRoleDto)
-        //{
-        //    var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerRole", new { userId, managerRoleDto });
-        //    return await response.Content.ReadFromJsonAsync<ManagerResult>();
-        //}
 
     }
 }

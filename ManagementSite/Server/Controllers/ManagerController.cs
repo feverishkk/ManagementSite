@@ -53,6 +53,14 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> GetManagersInfo([FromBody] string userId)
+        {
+            var CurrentUser = await _userManager.FindByIdAsync(userId);
+
+            return Ok(new ManagerResult { Successful = true, AppUsers = CurrentUser });
+        }
+
+        [HttpPost]
         public async Task<IActionResult> GetUserRole([FromBody] string userId)
         {
             var CurrentUserId = await _userManager.FindByIdAsync(userId);
@@ -99,26 +107,49 @@ namespace ManagementSite.Server.Controllers
                     return Ok(new ManagerResult { Successful = false, Error = "user is null" });
                 }
                 var oldUser = await _roleManager.FindByIdAsync(user.Id);
-                
+
                 // 유저의 현재 Role을 가져온다.
                 var RoleId = await _roleManager.FindByNameAsync(role);
 
                 // 유저의 현재 Role Id를 가져온다.
                 var UpdateRoleId = await _roleManager.GetRoleIdAsync(RoleId);
-                
+
                 // 현재의 Role을 지운다.
                 await _userManager.RemoveFromRoleAsync(user, role);
 
                 // 선택한 Role을 추가한다.
                 await _userManager.AddToRoleAsync(user, ChosenRole);
-                
-                await _dbContext.SaveChangesAsync();
 
                 return Ok(new ManagerResult { Successful = true });
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateManagerInfo([FromBody] UpdateManagerInfoDto managerInfoDto)
+        {
+            if(managerInfoDto == null)
+            {
+                return Ok(new ManagerResult { Successful = false, Error = "Your data is null. Please Re-try!" });
+            }
 
+            var user = await _userManager.FindByIdAsync(managerInfoDto.UserId);
+            if(user == null)
+            {
+                return Ok(new ManagerResult { Successful = false, Error = "Cannot find user!" });
+            }
+            else
+            {
+                user.FamilyName = managerInfoDto.FamilyName;
+                user.GivenName = managerInfoDto.GivenName;
+                user.Department = managerInfoDto.Department;
+                user.DepartmentNumber = managerInfoDto.DepartmentNumber;
+
+                _dbContext.ApplicationUsers.Update(user);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return Ok(new ManagerResult { Successful = true, AppUsers = user });
+        }
 
     }
 }

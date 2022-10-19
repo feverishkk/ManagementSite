@@ -1,0 +1,62 @@
+﻿@page "/manager/updateinfo/{UserId}"
+
+<h3>UpdateInfo</h3>
+
+<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
+
+    <MudTextField Label="FamilyName" @bind-Value="model.FamilyName" For="@(()=>model.FamilyName)" HelperText="Enter a new family name" />
+    <MudTextField Label="GivenName" @bind-Value="model.GivenName" For="@(()=>model.GivenName)" HelperText="Enter a new given name" />
+
+    <MudTextField Label="Department" @bind-Value="model.Department" For="@(()=>model.Department)" HelperText="Enter a new department" />
+    <MudTextField Label="Department Number" @bind-Value="model.DepartmentNumber" For="@(()=>model.DepartmentNumber)" HelperText="Enter a new department" />
+
+    <MudSpacer />
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
+        Submit
+    </MudButton>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    private ManagerResult ApplicationUsers;
+    private ApplicationUser AppUser;
+    private UpdateManagerInfoDto model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        model = new UpdateManagerInfoDto();
+        await LoadData();
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadData()
+    {
+        ApplicationUsers = await _managerService.GetManagersInfo(UserId);
+        model.UserId = UserId.ToString();
+        model.Department = ApplicationUsers.AppUsers.Department.ToString();
+        model.DepartmentNumber = ApplicationUsers.AppUsers.DepartmentNumber.ToString();
+        model.FamilyName = ApplicationUsers.AppUsers.FamilyName.ToString();
+        model.GivenName = ApplicationUsers.AppUsers.GivenName.ToString();
+
+        StateHasChanged();
+    }
+
+    private async Task OnValidSubmit()
+    {
+        var result = await _managerService.UpdateManagerInfo(model);
+        if (!result.Successful)
+        {
+            _navigationManager.NavigateTo("/manager/updateinfo/{UserId}", true);
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/managerlist", true);
+        }
+    }
+}
