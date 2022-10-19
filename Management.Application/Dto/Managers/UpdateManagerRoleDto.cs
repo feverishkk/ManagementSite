@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Dto.Managers
 {
-    public class ManagerResult
+    public class UpdateManagerRoleDto
     {
-        public bool Successful { get; set; }
-        public string Error { get; set; }  
-        public string Roles { get; set; }
+        public string Role { get; set; }
     }
 }

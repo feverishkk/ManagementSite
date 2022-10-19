@@ -2,6 +2,7 @@
 using Management.Application.Interfaces;
 using Management.Domain.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -30,6 +31,24 @@ namespace Management.Application.Services
             var response = await _httpClient.PostAsJsonAsync("/Manager/DeleteManager", userId);
             return await response.Content.ReadFromJsonAsync<ManagerResult>();
         }
+
+        public async Task<ManagerResult> GetUserRole(string userId)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Manager/GetUserRole", userId);
+            return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        }
+
+        public async Task<ManagerResult> UpdateManagerRole(ArrayList managerRoleDto)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerRole", managerRoleDto);
+            return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        }
+
+        //public async Task<ManagerResult> UpdateManagerRole(string userId, UpdateManagerRoleDto managerRoleDto)
+        //{
+        //    var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerRole", new { userId, managerRoleDto });
+        //    return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        //}
 
     }
 }

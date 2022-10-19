@@ -46,11 +46,8 @@ namespace Management.Domain.Models
 
         public DateTime? MemberSince { get; set; } = DateTime.UtcNow;
 
-
         [NotMapped]
         public string Role { get; set; } = string.Empty;
 
-        [NotMapped]
-        public RoleList RoleLists { get; set; }
     }
 }

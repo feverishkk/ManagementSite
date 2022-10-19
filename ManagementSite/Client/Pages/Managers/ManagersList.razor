@@ -1,4 +1,4 @@
-﻿@page "/managers"
+﻿@page "/managerlist"
 
 <MudTable Items="@ApplicationUsers" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped"
           Filter="new Func<ApplicationUser, bool>(FilterFunction)">
@@ -14,10 +14,10 @@
         <MudTh>Family Name</MudTh>
         <MudTh>Given Name</MudTh>
         <MudTh>Member Since</MudTh>
-        <MudTh> Role </MudTh>
         <MudTh>Department</MudTh>
         <MudTh>Department Number</MudTh>
         <MudTh>Email Confirmed</MudTh>
+        <MudTh> Role </MudTh>
         <MudTh>Options</MudTh>
     </HeaderContent>
 
@@ -26,16 +26,25 @@
         <MudTd DataLabel="Family Name">@context.FamilyName</MudTd>
         <MudTd DataLabel="Given Name">@context.GivenName</MudTd>
         <MudTd DataLabel="Member Since">@context.MemberSince</MudTd>
-        <MudTd DataLabel="Role">@context.Role</MudTd>
         <MudTd DataLabel="Department">@context.Department</MudTd>
         <MudTd DataLabel="Department Number">@context.DepartmentNumber</MudTd>
         <MudTd DataLabel="Email Confirmed">@context.EmailConfirmed</MudTd>
+        <MudTd DataLabel="Role">@context.Role</MudTd>
+
         <MudTd DataLabel="Options">
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Error" 
-                       OnClick="()=>OnValidSubmit(context.Id)">
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Error"
+                       OnClick="()=>DeleteSubmit(context.Id)">
                 Delete
             </MudButton>
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Warning"
+                       OnClick="()=>ChangeRole(context.Id)">
+                Update Role
+            </MudButton>
+
         </MudTd>
+
     </RowTemplate>
 
     <PagerContent>
@@ -56,7 +65,7 @@
 @code {
     private bool dense = false;
     private bool hover = true;
-    private bool striped = false;
+    private bool striped = true;
     private bool bordered = false;
 
     private bool Succesful = false;
@@ -65,24 +74,30 @@
     private string searchString = string.Empty;
 
     private IEnumerable<ApplicationUser> ApplicationUsers = new List<ApplicationUser>();
+    private ApplicationUser AppUser { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        AppUser = new ApplicationUser();
         ApplicationUsers = await _managerService.GetAllManagers();
     }
 
-    private async Task OnValidSubmit(string userId)
+    private async Task DeleteSubmit(string userId)
     {
         var user = await _managerService.DeleteManager(userId);
-        if(user==null)
+        if (!user.Successful)
         {
             Succesful = false;
             Error = "User is null";
         }
-        else
-        {
-            StateHasChanged();
-        }
+
+        _navigationManager.NavigateTo("/managerlist", true);
+    }
+
+    private void ChangeRole(string userId)
+    {
+        var user = ApplicationUsers.FirstOrDefault(u => u.Id == userId);
+        _navigationManager.NavigateTo($"/manager/updaterole/{user.Id}");
     }
 
     private bool FilterFunction(ApplicationUser applicationUser) => FilterFunc(applicationUser, searchString);

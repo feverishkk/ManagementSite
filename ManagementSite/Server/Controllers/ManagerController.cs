@@ -1,7 +1,11 @@
 ﻿using Management.Application.Dto.Managers;
+using Management.Domain.Models;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,10 +16,15 @@ namespace ManagementSite.Server.Controllers
     public class ManagerController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public ManagerController(ApplicationDbContext dbContext)
+        public ManagerController(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager,
+                                 RoleManager<IdentityRole> roleManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -44,7 +53,16 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        [HttpDelete]
+        public async Task<IActionResult> GetUserRole([FromBody] string userId)
+        {
+            var CurrentUserId = await _userManager.FindByIdAsync(userId);
+            var role = _userManager.GetRolesAsync(CurrentUserId)?.Result;
+            var result = role[0];
+
+            return Ok(new ManagerResult { Successful = true, Roles = result });
+        }
+
+        [HttpPost]
         public async Task<IActionResult> DeleteManager([FromBody] string userId)
         {
             var user = _dbContext.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
@@ -62,8 +80,43 @@ namespace ManagementSite.Server.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateManagerRole(ArrayList paramList)
+        {
+            if (paramList == null)
+            {
+                return Ok(new ManagerResult { Successful = false, Error = "user id is null" });
+            }
+            else
+            {
+                var userId = paramList[0].ToString();
+                var role = paramList[1].ToString();
+                var ChosenRole = paramList[2].ToString();
 
+                var user = _dbContext.ApplicationUsers.FirstOrDefault(u => u.Id == userId.ToString());
+                if (user == null)
+                {
+                    return Ok(new ManagerResult { Successful = false, Error = "user is null" });
+                }
+                var oldUser = await _roleManager.FindByIdAsync(user.Id);
+                
+                // 유저의 현재 Role을 가져온다.
+                var RoleId = await _roleManager.FindByNameAsync(role);
 
+                // 유저의 현재 Role Id를 가져온다.
+                var UpdateRoleId = await _roleManager.GetRoleIdAsync(RoleId);
+                
+                // 현재의 Role을 지운다.
+                await _userManager.RemoveFromRoleAsync(user, role);
+
+                // 선택한 Role을 추가한다.
+                await _userManager.AddToRoleAsync(user, ChosenRole);
+                
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new ManagerResult { Successful = true });
+            }
+        }
 
 
 

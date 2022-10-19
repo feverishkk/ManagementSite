@@ -74,13 +74,6 @@ namespace ManagementSite.Server.Controllers
                         Name = registerDto.Role.ToString(),
                     };
 
-                    var selectedRole = await _roleManager.CreateAsync(role);
-                    if(!selectedRole.Succeeded)
-                    {
-                        var error = selectedRole.Errors.Select(error => error.Description);
-                        return BadRequest(error);
-                    }
-
                     await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
 
                     string subject = "Confirmation Email Address";

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,9 +9,13 @@ namespace Management.Shared.Enums.Roles
 {
     public enum RoleList
     {
-        SuperAdministrator = 1,
+        [EnumMember(Value = "SuperAdministrator")]
+        SuperAdministrator = 0,
+
+        [EnumMember(Value = "ServerAdministrator")]
         ServerAdministrator,
-        ApplicationAdministrator,
-        Basic
+
+        [EnumMember(Value = "Basic")]
+        Basic,
     }
 }
