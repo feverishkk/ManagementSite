@@ -69,11 +69,20 @@ namespace ManagementSite.Server.Controllers
                 // 성공시..
                 else
                 {
-                    var role = new IdentityRole
+                    if (!(await _roleManager.RoleExistsAsync(registerDto.Role.ToString())))
                     {
-                        Name = registerDto.Role.ToString(),
-                    };
-
+                        var role = new IdentityRole
+                        {
+                            Name = registerDto.Role.ToString(),
+                        };
+                        var roleResult = await _roleManager.CreateAsync(role);
+                        if (roleResult.Succeeded == false)
+                        {
+                            var errors = roleResult.Errors.Select(e => e.Description);
+                            ModelState.AddModelError("Role", string.Join(",", errors));
+                            return Ok(new RegisterResult { Successful = false, Errors = errors });
+                        }
+                    }
                     await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
 
                     string subject = "Confirmation Email Address";
