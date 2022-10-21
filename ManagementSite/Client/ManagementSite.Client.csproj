@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CommonDatabase\CommonDatabase.csproj" />
     <ProjectReference Include="..\..\Management.Application\Management.Application.csproj" />
     <ProjectReference Include="..\..\Management.Infrastructure.Shared\Management.Infrastructure.Shared.csproj" />
   </ItemGroup>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ManagementDbContext.DbContext
 {
     /// <summary>
-    /// DB와 연동하는 Context
+    /// 매니저들을 관리하는 Context
     /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

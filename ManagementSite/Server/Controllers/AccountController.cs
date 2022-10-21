@@ -57,32 +57,31 @@ namespace ManagementSite.Server.Controllers
                     MemberSince = DateTime.UtcNow.Date
                 };
 
+                if (!(await _roleManager.RoleExistsAsync(registerDto.Role.ToString())))
+                {
+                    var role = new IdentityRole
+                    {
+                        Name = registerDto.Role.ToString(),
+                    };
+                    var roleResult = await _roleManager.CreateAsync(role);
+                    if (roleResult.Succeeded == false)
+                    {
+                        var errors = roleResult.Errors.Select(e => e.Description);
+                        ModelState.AddModelError("Role", string.Join(",", errors));
+                        return Ok(new RegisterResult { Successful = false, Errors = errors });
+                    }
+                }
+
                 var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-                // 실패시..
-                if (!result.Succeeded)
+                if (result.Succeeded==false)
                 {
                     var errors = result.Errors.Select(errors => errors.Description);
 
                     return Ok(new RegisterResult { Successful = false, Errors = errors });
                 }
-                // 성공시..
                 else
                 {
-                    if (!(await _roleManager.RoleExistsAsync(registerDto.Role.ToString())))
-                    {
-                        var role = new IdentityRole
-                        {
-                            Name = registerDto.Role.ToString(),
-                        };
-                        var roleResult = await _roleManager.CreateAsync(role);
-                        if (roleResult.Succeeded == false)
-                        {
-                            var errors = roleResult.Errors.Select(e => e.Description);
-                            ModelState.AddModelError("Role", string.Join(",", errors));
-                            return Ok(new RegisterResult { Successful = false, Errors = errors });
-                        }
-                    }
                     await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
 
                     string subject = "Confirmation Email Address";

@@ -29,6 +29,7 @@ namespace ManagementSite.Client
 
             builder.Services.AddTransient<IAccountService, AccountService>();
             builder.Services.AddTransient<IManagerService, ManagerService>();
+            builder.Services.AddTransient<ICustomerService, CustomerService>();
 
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 

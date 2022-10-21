@@ -43,6 +43,9 @@ namespace ManagementSite.Server
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<CommonDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("CommonDbConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = false;

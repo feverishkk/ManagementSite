@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommonDatabase\CommonDatabase.csproj" />
     <ProjectReference Include="..\Management.Domain\Management.Domain.csproj" />
   </ItemGroup>
 
