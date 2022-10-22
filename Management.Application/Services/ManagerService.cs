@@ -1,13 +1,9 @@
 ﻿using Management.Application.Dto.Managers;
 using Management.Application.Interfaces;
-using Management.Domain.Models;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Management.Application.Services
@@ -21,9 +17,9 @@ namespace Management.Application.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetAllManagers()
+        public async Task<IEnumerable<ManagersDto>> GetAllManagers()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<ApplicationUser>>("/Manager/GetAllManagers");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<ManagersDto>>("/Manager/GetAllManagers");
         }
 
         public async Task<ManagerResult> GetManagersInfo(string userId)

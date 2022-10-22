@@ -1,6 +1,5 @@
-﻿using Management.Shared.Enums.Roles;
+﻿using Management.Application.Enums.Roles;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Management.Application.Dto.Account
 {

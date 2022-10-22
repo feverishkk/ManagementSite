@@ -8,7 +8,7 @@ namespace Management.Application.Interfaces
 {
     public interface IManagerService
     {
-        Task<IEnumerable<ApplicationUser>> GetAllManagers();
+        Task<IEnumerable<ManagersDto>> GetAllManagers();
         Task<ManagerResult> GetManagersInfo(string userId);
         Task<ManagerResult> DeleteManager(string userId);
         Task<ManagerResult> GetUserRole(string userId);

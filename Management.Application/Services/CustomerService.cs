@@ -1,4 +1,5 @@
 ﻿using CommonDatabase.Models;
+using Management.Application.Dto.Customers;
 using Management.Application.Interfaces;
 using Management.Domain.Models;
 using System;
@@ -20,9 +21,9 @@ namespace Management.Application.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Customers>> GetAllCustomers()
+        public async Task<IEnumerable<CustomersDto>> GetAllCustomers()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<Customers>>("Customers/GetAllCustomers");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersDto>>("Customers/GetAllCustomers");
         }
     }
 }

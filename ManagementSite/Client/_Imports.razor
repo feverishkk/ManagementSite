@@ -23,13 +23,15 @@
 @using ManagementSite.Client
 @using ManagementSite.Client.Shared
 @using Management.Application.Dto.Account
-@using Management.Application.Interfaces
 @using ManagementSite.Client.Pages.Account
 @using Management.Application.Authentication
-@using Management.Shared.Enums.Roles
 @using Management.Domain.Models
 @using Management.Application.Dto.Managers
-@using Management.Shared.Extensions
+@using Management.Application.Enums.Roles
+@using Management.Application.Interfaces
+@using Management.Application.Dto.Customers
+
+@* CommonDb *@
 @using CommonDatabase.Models
 
 
@@ -41,4 +43,3 @@
 @inject IAccountService _accountService
 @inject IManagerService _managerService
 @inject ICustomerService _customersService
-

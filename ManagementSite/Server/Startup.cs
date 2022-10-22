@@ -76,7 +76,7 @@ namespace ManagementSite.Server
                 options.AddPolicy("CorsPolicy", builder => builder
                        .AllowAnyOrigin()
                        .AllowAnyHeader()
-                       .AllowAnyMethod());
+                       .AllowAnyMethod());                     
             });
 
             services.AddControllers().AddNewtonsoftJson();
@@ -121,7 +121,6 @@ namespace ManagementSite.Server
             {
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
-                //endpoints.MapFallbackToPage("/ResetPassword/{userid}/{token}", "/ResetPassword.html");
                 endpoints.MapFallbackToFile("index.html");
             });
         }

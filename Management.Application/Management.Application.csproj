@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonDatabase\CommonDatabase.csproj" />
     <ProjectReference Include="..\Management.Domain\Management.Domain.csproj" />
+    <ProjectReference Include="..\Management.Infrastructure.Shared\Management.Infrastructure.Shared.csproj" />
     <ProjectReference Include="..\ManagementDbContext\ManagementDbContext.csproj" />
   </ItemGroup>
 
