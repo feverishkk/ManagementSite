@@ -1,73 +1,37 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">ManagementSite</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@open" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">My App</MudText>
+        </MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All" Href="counter">counter</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="fetchdata">fetchdata</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="register">register</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="login">login</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="changepassword">changepassword</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="forgotpassword">forgotpassword</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="managerlist">managerlist</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="customerlist">customerlist</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="weaponslist">weaponslist</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent Class="pt-16 px-16">
+        <MudContainer Class="mt-6">
+            @*<MudAlert Severity="Severity.Success" Class="mt-16">Text inside MudContainer</MudAlert>*@
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
+@code{
+    bool open = false;
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="register">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Register
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="login">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Login
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="changepassword">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Change Password
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="forgotpassword">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Forgot password
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="managerlist">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Managers List
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="customerlist">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Customers List
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="weaponslist">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Weapons List
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    void ToggleDrawer()
     {
-        collapseNavMenu = !collapseNavMenu;
+        open = !open;
     }
 }
