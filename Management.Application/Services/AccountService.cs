@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService : IAccountRepository
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;

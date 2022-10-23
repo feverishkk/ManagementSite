@@ -32,7 +32,7 @@
 @using Management.Application.Dto.Customers
 
 @* CommonDb *@
-@using CommonDatabase.Models
+@using CommonDatabase.Models.Customers
 
 
 @* DI *@
@@ -40,6 +40,6 @@
 @inject HttpClient _httpClient
 @inject AuthenticationStateProvider _authenticationStateProvider
 
-@inject IAccountService _accountService
-@inject IManagerService _managerService
-@inject ICustomerService _customersService
+@inject IAccountRepository _accountService
+@inject IManagerRepository _managerService
+@inject ICustomerRepository _customersService

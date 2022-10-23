@@ -1,7 +1,11 @@
 using Blazored.LocalStorage;
+using CommonDatabase.Models.TotalItems;
+using Management.Application.Dto.CommonDb.TotalItems;
 using Management.Application.Dto.MappInitialiser;
 using Management.Application.Interfaces;
+using Management.Application.Interfaces.CommonDb;
 using Management.Application.Services;
+using Management.Application.Services.CommonDb;
 using Management.Domain.Models;
 using Management.Infrastructure.Shared.EmailSender;
 using ManagementDbContext.DbContext;
@@ -79,12 +83,14 @@ namespace ManagementSite.Server
                        .AllowAnyMethod());                     
             });
 
+            services.AddMvc().AddControllersAsServices();
+
             services.AddControllers().AddNewtonsoftJson();
             services.AddAutoMapper(typeof(MappInitialiser));
             services.AddBlazoredLocalStorage();
 
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSenderRepository, EmailSender>();
 
             services.AddServerSideBlazor();
             services.AddMvcCore();

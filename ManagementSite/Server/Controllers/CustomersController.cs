@@ -26,7 +26,7 @@ namespace ManagementSite.Server.Controllers
         public IActionResult GetAllCustomers()
         {
             var result = _commonDbContext.Customers.ToList();
-            Task.Delay(3000);
+            Task.Delay(5000);
 
             return Ok(result);
         }

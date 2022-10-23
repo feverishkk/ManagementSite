@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonDatabase.Models
+namespace CommonDatabase.Models.Customers
 {
-    public class Customers
+    public class CustomerInfomation
     {
         public int UserId { get; set; }
         public string ID { get; set; }

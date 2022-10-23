@@ -2,7 +2,7 @@
 
 namespace Management.Application.Interfaces
 {
-    public interface IEmailSender
+    public interface IEmailSenderRepository
     {
         Task SendEmail(string email, string subject, string htmlMessage);
     }

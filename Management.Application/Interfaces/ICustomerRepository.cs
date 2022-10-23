@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces
 {
-    public interface ICustomerService
+    public interface ICustomerRepository
     {
         Task<IEnumerable<CustomersDto>> GetAllCustomers();
     }

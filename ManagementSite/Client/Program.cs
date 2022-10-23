@@ -1,7 +1,11 @@
 using Blazored.LocalStorage;
+using CommonDatabase.Models.TotalItems;
 using Management.Application.Authentication;
+using Management.Application.Dto.CommonDb.TotalItems;
 using Management.Application.Interfaces;
+using Management.Application.Interfaces.CommonDb;
 using Management.Application.Services;
+using Management.Application.Services.CommonDb;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,9 +31,10 @@ namespace ManagementSite.Client
             builder.Services.AddMudServices();
             builder.Services.AddBlazoredLocalStorage();
 
-            builder.Services.AddTransient<IAccountService, AccountService>();
-            builder.Services.AddTransient<IManagerService, ManagerService>();
-            builder.Services.AddTransient<ICustomerService, CustomerService>();
+            builder.Services.AddTransient<IAccountRepository, AccountService>();
+            builder.Services.AddTransient<IManagerRepository, ManagerService>();
+            builder.Services.AddTransient<ICustomerRepository, CustomerService>();
+            builder.Services.AddTransient<ICommonDbService, CommonDbService>();
 
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 

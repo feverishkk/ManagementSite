@@ -23,10 +23,10 @@ namespace ManagementSite.Server.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
 
         private readonly IConfiguration _configuration;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSenderRepository _emailSender;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                 IConfiguration configuration, IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
+                                 IConfiguration configuration, IEmailSenderRepository emailSender, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

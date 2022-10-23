@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services
 {
-    public class EmailSender : IEmailSender
+    public class EmailSender : IEmailSenderRepository
     {
         public EmailSender()
         {
