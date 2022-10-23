@@ -1,4 +1,5 @@
 ﻿using CommonDatabase.Models;
+using Management.Application.Dto.CommonDb.Customers;
 using Management.Application.Dto.Customers;
 using Management.Domain.Models;
 using System.Collections.Generic;
@@ -9,5 +10,6 @@ namespace Management.Application.Interfaces
     public interface ICustomerRepository
     {
         Task<IEnumerable<CustomersDto>> GetAllCustomers();
+        Task<IEnumerable<CustomersInGameInfoDto>> CustomersInGameInfo(string userId);
     }
 }

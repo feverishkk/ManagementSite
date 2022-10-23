@@ -1,0 +1,21 @@
+﻿@page "/weaponslist"
+@using Management.Application.Dto.CommonDb.TotalItems
+@using Management.Application.Interfaces.CommonDb
+@inject ICommonDbService _commonDbService
+
+<h3>Weapon List</h3>
+
+<p>
+    Testing..
+</p>
+
+@code {
+    private IEnumerable<TotalWeaponsDto> TotalWeapons { get; set; } = new List<TotalWeaponsDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        TotalWeapons = await _commonDbService.GetAllWeapon();
+        await base.OnInitializedAsync();
+    }
+
+}

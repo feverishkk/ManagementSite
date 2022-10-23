@@ -10,7 +10,7 @@ namespace CommonDatabase.Models.Accessories
     public class Accessory
     {
         [Key]
-        public int AccessoryId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string AC { get; set; }
         public string Class { get; set; }

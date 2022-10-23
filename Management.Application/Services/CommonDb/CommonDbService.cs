@@ -1,5 +1,6 @@
 ﻿using CommonDatabase.Models.TotalItems;
 using CommonDatabase.Models.Weapons;
+using Management.Application.Dto.CommonDb.Customers;
 using Management.Application.Dto.CommonDb.TotalItems;
 using Management.Application.Interfaces.CommonDb;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace Management.Application.Services.CommonDb
         {
             return await _httpClient.GetFromJsonAsync<IEnumerable<TotalWeaponsDto>>("Weapon/GetAllWeapons");
         }
+
+        
 
 
     }

@@ -23,18 +23,10 @@ namespace ManagementSite.Server.Controllers
         //[HttpGet]
         //public IActionResult GetAllWeapons()
         //{
-        //    var result =  _genericRepository.GetAll();
+        //    var result = _commonDbContext.TotalWeapon.ToList();
 
         //    return Ok(result);
         //}
-
-        [HttpGet]
-        public IActionResult GetAllWeapons()
-        {
-            var result = _commonDbContext.TotalWeapon.ToList();
-
-            return Ok(result);
-        }
 
     }
 }

@@ -11,8 +11,10 @@ namespace CommonDatabase.Models.Customers
     {
         [Key]
         public int UserId { get; set; }
-        public int UserClass { get; set; }
+        public string ID { get; set; }
+        public string UserName { get; set; }
+        public UserClass UserClass { get; set; }
         public string GuildName { get; set; } = string.Empty;
-        public CustomersEquipment CustomersEquipments { get; set; }
+        
     }
 }

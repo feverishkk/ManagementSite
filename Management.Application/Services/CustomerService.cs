@@ -1,4 +1,5 @@
-﻿using Management.Application.Dto.Customers;
+﻿using Management.Application.Dto.CommonDb.Customers;
+using Management.Application.Dto.Customers;
 using Management.Application.Interfaces;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -19,6 +20,11 @@ namespace Management.Application.Services
         public async Task<IEnumerable<CustomersDto>> GetAllCustomers()
         {
             return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersDto>>("Customers/GetAllCustomers");
+        }
+
+        public async Task<IEnumerable<CustomersInGameInfoDto>> CustomersInGameInfo(string userId)
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersInGameInfoDto>>("Customers/GetCustomersInGameInfo?userId=" + userId);
         }
     }
 }

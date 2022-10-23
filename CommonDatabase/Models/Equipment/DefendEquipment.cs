@@ -5,7 +5,7 @@ namespace CommonDatabase.Models.Equipment
     public class DefendEquipment
     {
         [Key]
-        public int DefendEquipmentId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string AC { get; set; }
         public string Class { get; set; }

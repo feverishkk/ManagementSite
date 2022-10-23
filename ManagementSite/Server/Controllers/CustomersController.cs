@@ -22,6 +22,7 @@ namespace ManagementSite.Server.Controllers
             _commonDbContext = commonDbContext;
         }
 
+
         [HttpGet]
         public IActionResult GetAllCustomers()
         {
@@ -31,7 +32,12 @@ namespace ManagementSite.Server.Controllers
             return Ok(result);
         }
 
-
+        [HttpGet]
+        public IActionResult GetCustomersInGameInfo([FromQuery] string userId)
+        {
+            var result = _commonDbContext.CustomerInGameInfo.Where(u=>u.ID == userId).ToList();
+            return Ok(result);
+        }
 
     }
 }

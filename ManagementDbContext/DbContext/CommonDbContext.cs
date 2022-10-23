@@ -24,12 +24,12 @@ namespace ManagementDbContext.DbContext
         }
 
         public DbSet<CustomerInfomation> Customers { get; set; } = default;
-        public DbSet<CustomersEquipment> UserEquipment { get; set; } = default;
-        public DbSet<CustomersInGameInfo> UserInGameInfo { get; set; } = default;
+        public DbSet<CustomersEquipment> CustomerEquipment { get; set; } = default;
+        public DbSet<CustomersInGameInfo> CustomerInGameInfo { get; set; } = default;
 
         public DbSet<TotalWeapons> TotalWeapon { get; set; } = default;
-        //public DbSet<TotalEquipment> TotalEquipment { get; set; } = default;
-        //public DbSet<TotalAccessories> TotalAccessories { get; set; } = default;
+        public DbSet<TotalEquipment> TotalEquipment { get; set; } = default;
+        public DbSet<TotalAccessories> TotalAccessories { get; set; } = default;
 
         public DbSet<DefendEquipment> Armor { get; set; } = default;
         public DbSet<DefendEquipment> TShirt { get; set; } = default;

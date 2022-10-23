@@ -15,6 +15,7 @@
         <MudTh>Gender</MudTh>
         <MudTh>Country</MudTh>
         <MudTh>MemberSince</MudTh>
+        <MudTh>Customer In Game Info</MudTh>
     </HeaderContent>
 
     <RowTemplate>
@@ -24,6 +25,14 @@
         <MudTd DataLabel="Gender">@context.Gender</MudTd>
         <MudTd DataLabel="Gender">@context.Country</MudTd>
         <MudTd DataLabel="MemberSince">@context.MemberSince</MudTd>
+        <MudTd DataLabel="MemberSince">
+
+            <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled" 
+                       OnClick="()=>CustomerInGameInfo(context.ID)">
+                Customer InGame Info
+            </MudButton>
+
+        </MudTd>
     </RowTemplate>
 
    <PagerContent>
@@ -45,7 +54,10 @@
     private bool hover = true;
     private bool striped = true;
     private bool bordered = false;
+
     private string searchString { get; set; } = string.Empty;
+    private string ErrorMsg { get; set; } = string.Empty;
+    private bool ShowErrorMsg = false;
 
     private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
 
@@ -56,8 +68,29 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
         Customer = new CustomersDto();
         CustomerUserList = await _customersService.GetAllCustomers();
         table.SetRowsPerPage(10);
     }
+
+    private void CustomerInGameInfo(string userId)
+    {
+        if(userId==null)
+        {
+            ErrorMsg = "Error!!";
+            ShowErrorMsg = true;
+        }
+        else
+        {
+            _navigationManager.NavigateTo($"/customeringameinfo/{userId}");
+        }
+    }
+
+    
+
 }

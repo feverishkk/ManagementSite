@@ -1,0 +1,53 @@
+﻿@page "/customeringameinfo/{UserId}"
+
+<MudTable Items="@InGameInfo" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>UserName</MudTh>
+        <MudTh>GuildName</MudTh>
+        <MudTh>CustomersClass</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="UserName">@context.UserName</MudTd>
+        <MudTd DataLabel="GuildName">@context.GuildName</MudTd>
+        <MudTd DataLabel="CustomersClass"> @context.UserClass
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+<div class="d-flex flex-wrap mt-4">
+    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSpacer />
+</div>
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = true;
+    private bool bordered = false;
+
+    private string searchString { get; set; } = string.Empty;
+
+    private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
+
+    private MudTable<CustomersDto> table;
+
+    private IEnumerable<CustomersInGameInfoDto> InGameInfo = new List<CustomersInGameInfoDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadData()
+    {
+        InGameInfo = await _customersService.CustomersInGameInfo(UserId);
+    }
+
+}
