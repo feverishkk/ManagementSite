@@ -26,5 +26,10 @@ namespace Management.Application.Services
         {
             return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersInGameInfoDto>>("Customers/GetCustomersInGameInfo?userId=" + userId);
         }
+
+        public async Task<IEnumerable<CustomerEquipmentDto>> CustomersEquipment(string userId)
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerEquipmentDto>>("Customers/GetCustomerEquipment?userId=" + userId);
+        }
     }
 }

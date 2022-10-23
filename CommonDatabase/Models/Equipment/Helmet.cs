@@ -1,7 +1,15 @@
-﻿namespace CommonDatabase.Models.Equipment
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CommonDatabase.Models.Equipment
 {
-    public class Helmet : DefendEquipment
+    public class Helmet
     {
-        public int Enchante { get; set; } = 0;
+        [Key]
+        public int HelmetId { get; set; } = 0;
+        public string Name { get; set; } = string.Empty;
+        public int AC { get; set; } = 0;
+        public string Class { get; set; } = string.Empty;
+        public string Image { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
     }
 }

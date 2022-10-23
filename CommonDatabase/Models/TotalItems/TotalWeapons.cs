@@ -11,12 +11,12 @@ namespace CommonDatabase.Models.TotalItems
     public class TotalWeapons
     {
         [Key]
-        public int Id { get; set; }
-        public string Image { get; set; }
-        public string Name { get; set; }
-        public string Damage { get; set; }
-        public string Class { get; set; }
-        public string Description { get; set; }
-        
+        public int TotalWeaponId { get; set; }
+        public string Image { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Damage { get; set; } = string.Empty;
+        public string Class { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+
     }
 }

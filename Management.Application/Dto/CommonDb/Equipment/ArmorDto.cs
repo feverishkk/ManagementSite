@@ -9,7 +9,7 @@ namespace Management.Application.Dto.Equipment
     public class ArmorDto
     {
         public string Name { get; set; }
-        public string AC { get; set; }
+        public int AC { get; set; }
         public string Class { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }

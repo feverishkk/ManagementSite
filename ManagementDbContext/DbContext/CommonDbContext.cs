@@ -24,7 +24,7 @@ namespace ManagementDbContext.DbContext
         }
 
         public DbSet<CustomerInfomation> Customers { get; set; } = default;
-        public DbSet<CustomersEquipment> CustomerEquipment { get; set; } = default;
+        public DbSet<CustomerEquipment> CustomerEquipment { get; set; } = default;
         public DbSet<CustomersInGameInfo> CustomerInGameInfo { get; set; } = default;
 
         public DbSet<TotalWeapons> TotalWeapon { get; set; } = default;
