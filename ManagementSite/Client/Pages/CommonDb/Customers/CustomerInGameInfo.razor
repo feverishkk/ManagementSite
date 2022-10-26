@@ -2,14 +2,14 @@
 
 <MudTable Items="@InGameInfo" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
     <HeaderContent>
-        <MudTh>UserName</MudTh>
-        <MudTh>GuildName</MudTh>
-        <MudTh>CustomersClass</MudTh>
+        <MudTh>Game Character Name</MudTh>
+        <MudTh>Guild Name</MudTh>
+        <MudTh>Game Character Class</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="UserName">@context.UserName</MudTd>
+        <MudTd DataLabel="Game Character Name">@context.UserName</MudTd>
         <MudTd DataLabel="GuildName">@context.GuildName</MudTd>
-        <MudTd DataLabel="CustomersClass"> @context.UserClass</MudTd>
+        <MudTd DataLabel="Game Character Class"> @context.UserClass</MudTd>
     </RowTemplate>
 </MudTable>
 
@@ -30,25 +30,41 @@
         <MudTh>Globe</MudTh>
     </HeaderContent>
     <RowTemplate>
-        @if (CustomersEquipment.Count() > 0)
-        {
-            <MudTd DataLabel="Weapon">@context.TotalWeapons.Name</MudTd>
-            <MudTd DataLabel="TShirt">@context?.TShirt?.Name</MudTd>
-            <MudTd DataLabel="Armor">@context?.Armor?.Name</MudTd>
-            <MudTd DataLabel="Cape"> @context?.Cape?.Name</MudTd>
-            <MudTd DataLabel="Helmet"> @context?.Helmet?.Name  </MudTd>
-            <MudTd DataLabel="Neckless"> @context?.Neckless?.Name  </MudTd>
-            <MudTd DataLabel="Ring 1"> @context?.Ring1?.Name</MudTd>
-            <MudTd DataLabel="Ring 2"> @context?.Ring2?.Name</MudTd>
-            <MudTd DataLabel="Belt"> @context?.Belt?.Name</MudTd>
-            <MudTd DataLabel="Boots"> @context?.Boots?.Name</MudTd>
-            <MudTd DataLabel="Ear Ring"> @context?.EarRing?.Name</MudTd>
-            <MudTd DataLabel="Guard"> @context?.Guard?.Name</MudTd>
-            <MudTd DataLabel="Globe"> @context?.Globe?.Name</MudTd>
-        }
-
+        <MudTd DataLabel="Weapon">@context.TotalWeapons.Name</MudTd>
+        <MudTd DataLabel="TShirt">@context?.TShirt?.Name</MudTd>
+        <MudTd DataLabel="Armor">@context?.Armor?.Name</MudTd>
+        <MudTd DataLabel="Cape"> @context?.Cape?.Name</MudTd>
+        <MudTd DataLabel="Helmet"> @context?.Helmet?.Name  </MudTd>
+        <MudTd DataLabel="Neckless"> @context?.Neckless?.Name  </MudTd>
+        <MudTd DataLabel="Ring 1"> @context?.Ring1?.Name</MudTd>
+        <MudTd DataLabel="Ring 2"> @context?.Ring2?.Name</MudTd>
+        <MudTd DataLabel="Belt"> @context?.Belt?.Name</MudTd>
+        <MudTd DataLabel="Boots"> @context?.Boots?.Name</MudTd>
+        <MudTd DataLabel="Ear Ring"> @context?.EarRing?.Name</MudTd>
+        <MudTd DataLabel="Guard"> @context?.Guard?.Name</MudTd>
+        <MudTd DataLabel="Globe"> @context?.Globe?.Name</MudTd>
     </RowTemplate>
 </MudTable>
+
+
+<MudCard>
+    <MudForm Model="@BeltModel" @ref="@form">
+        <MudCardContent>
+            <MudSelect Label="Belt" @bind-Value="BeltModel.BeltId" For="@(()=>BeltModel.BeltId)">
+                @foreach (var belt in Belts)
+                {
+                    <MudSelectItem Value="@belt.BeltId">@belt.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(BeltModel, UserId))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+
 
 <div class="d-flex flex-wrap mt-4">
     <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
@@ -57,6 +73,7 @@
     <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
     <MudSpacer />
 </div>
+
 
 @code {
     [Parameter]
@@ -67,26 +84,44 @@
     private bool striped = true;
     private bool bordered = false;
 
-    private string searchString { get; set; } = string.Empty;
-
-    private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
+    MudForm form;
+    public Belt BeltModel = new Belt();
+    private EarRing EarRingModel = new EarRing();
+    //private Acc Accs = new Acc();
 
     private MudTable<CustomersDto> table;
 
     private IEnumerable<CustomersInGameInfoDto> InGameInfo = new List<CustomersInGameInfoDto>();
     private IEnumerable<CustomerEquipmentDto> CustomersEquipment = new List<CustomerEquipmentDto>();
 
+    private IEnumerable<Belt> Belts = new List<Belt>();
+    private IEnumerable<EarRing> EarRings = new List<EarRing>();
+    //private IEnumerable<Acc> Acc = new List<Acc>();
+
+
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
         await base.OnInitializedAsync();
-        this.StateHasChanged();
     }
 
     private async Task LoadData()
     {
         InGameInfo = await _customersService.CustomersInGameInfo(UserId);
         CustomersEquipment = await _customersService.CustomersEquipment(UserId);
+        Belts = await _commonDbService.GetBelt();
+        //EarRings = await _commDbService.GetEarRings();
+        //Acc = await _commonDbService.GetAcc();
+    }
+
+    public async Task OnSelect(Belt belt, string userId)
+    {
+        Console.WriteLine("Fired!!");
+        ArrayList userInfo = new ArrayList();
+        userInfo.Add(belt.BeltId);
+        userInfo.Add(userId);
+        await _customersService.UpdateCustomerEquipment(userInfo);
+        StateHasChanged();
     }
 
 }

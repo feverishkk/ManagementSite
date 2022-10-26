@@ -5,7 +5,7 @@ namespace CommonDatabase.Models.Equipment
     public class TShirt
     {
         [Key]
-        public int TShirtId { get; set; } 
+        public int TShirtId { get; set; } = 0;
         public string Name { get; set; } = string.Empty;
         public int AC { get; set; } 
         public string Class { get; set; } = string.Empty;

@@ -1,6 +1,8 @@
-﻿using Management.Application.Dto.CommonDb.Customers;
+﻿using CommonDatabase.Models.Accessories;
+using Management.Application.Dto.CommonDb.Customers;
 using Management.Application.Dto.Customers;
 using Management.Application.Interfaces;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -31,5 +33,18 @@ namespace Management.Application.Services
         {
             return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerEquipmentDto>>("Customers/GetCustomerEquipment?userId=" + userId);
         }
+
+        //public async Task<CustomerEquipmentDto> UpdateCustomerEquipment(CustomerEquipmentDto customerEquipment)
+        //{
+        //    var response = await _httpClient.PostAsJsonAsync("/Customers/UpdateCustomerEquipment", customerEquipment);
+        //    return await response.Content.ReadFromJsonAsync<CustomerEquipmentDto>();
+        //}
+
+        public async Task<Belt> UpdateCustomerEquipment(ArrayList userInfo)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Customers/UpdateCustomerEquipment", userInfo);
+            return await response.Content.ReadFromJsonAsync<Belt>();
+        }
+
     }
 }

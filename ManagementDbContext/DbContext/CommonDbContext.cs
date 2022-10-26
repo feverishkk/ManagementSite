@@ -26,6 +26,7 @@ namespace ManagementDbContext.DbContext
         public DbSet<CustomerInfomation> Customers { get; set; } = default;
         public DbSet<CustomerEquipment> CustomerEquipment { get; set; } = default;
         public DbSet<CustomersInGameInfo> CustomerInGameInfo { get; set; } = default;
+        public DbSet<Acc> Acc { get; set; } = default;
 
         public DbSet<TotalWeapons> TotalWeapon { get; set; } = default;
         public DbSet<TotalEquipment> TotalEquipment { get; set; } = default;
@@ -39,10 +40,11 @@ namespace ManagementDbContext.DbContext
         public DbSet<DefendEquipment> Helmet { get; set; } = default;
         public DbSet<DefendEquipment> Boots { get; set; } = default;
 
-        public DbSet<Accessory> Neckless { get; set; } = default;
-        public DbSet<Accessory> Belt { get; set; } = default;
-        public DbSet<Accessory> Ring { get; set; } = default;
-        public DbSet<Accessory> EarRing { get; set; } = default;
+        public DbSet<Neckless> Neckless { get; set; } = default;
+        public DbSet<Belt> Belt { get; set; } = default;
+        public DbSet<Ring1> Ring1 { get; set; } = default;
+        public DbSet<Ring2> Ring2 { get; set; } = default;
+        public DbSet<EarRing> EarRing { get; set; } = default;
 
         public DbSet<Weapon> Dagger { get; set; } = default;
         public DbSet<Weapon> OneHandBow { get; set; } = default;
@@ -51,5 +53,12 @@ namespace ManagementDbContext.DbContext
         public DbSet<Weapon> TwoHandSword { get; set; } = default;
         public DbSet<Weapon> TwoHandBow { get; set; } = default;
         public DbSet<Weapon> TwoHandStick { get; set; } = default;
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Acc>().HasNoKey();
+            base.OnModelCreating(builder);
+        }
     }
 }

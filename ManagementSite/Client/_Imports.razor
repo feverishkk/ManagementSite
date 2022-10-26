@@ -3,6 +3,8 @@
 @using System.Net.Http.Json
 @using System.Web
 @using System.Collections
+
+
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
@@ -13,6 +15,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.WebUtilities
+
 
 @* Nuget Package *@
 @using MudBlazor
@@ -31,9 +34,14 @@
 @using Management.Application.Interfaces
 @using Management.Application.Dto.Customers
 @using Management.Application.Dto.CommonDb.Customers
+@using Management.Application.Interfaces.CommonDb
+@using Management.Application.Interfaces.CommonDb.GenericRepository
+
 
 @* CommonDb *@
 @using CommonDatabase.Models.Customers
+@using CommonDatabase.Models.Accessories
+@using CommonDatabase.Models.TotalItems
 
 
 @* DI *@
@@ -44,3 +52,5 @@
 @inject IAccountRepository _accountService
 @inject IManagerRepository _managerService
 @inject ICustomerRepository _customersService
+@inject ICommonDbRepository _commonDbService
+@inject IChartRepository _chartService;

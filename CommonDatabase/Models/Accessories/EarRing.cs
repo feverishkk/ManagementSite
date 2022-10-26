@@ -11,5 +11,6 @@ namespace CommonDatabase.Models.Accessories
         public string Class { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+
     }
 }

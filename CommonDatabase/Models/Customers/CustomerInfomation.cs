@@ -14,11 +14,11 @@ namespace CommonDatabase.Models.Customers
         public string UserName { get; set; }
         public DateTime MemberSince { get; set; }
         public string PreferPayment { get; set; }
-        public string Gender { get; set; }
+        public int Gender { get; set; }
         public int IsActive { get; set; }
         public int IsEmailConfirmed { get; set; }
         public string MobileNumber { get; set; }
         public string Country { get; set; }
-        public string PaidCash { get; set; } = string.Empty;
+        public long PaidCash { get; set; }
     }
 }

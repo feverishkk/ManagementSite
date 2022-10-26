@@ -11,7 +11,7 @@ namespace CommonDatabase.Models.TotalItems
     public class TotalEquipment
     {
         [Key]
-        public int Id { get; set; }
+        public int TotalEqpId { get; set; }
         public string Image { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Damage { get; set; } = string.Empty;

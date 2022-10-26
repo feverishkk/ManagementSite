@@ -1,0 +1,59 @@
+﻿@page "/userclasschart"
+<MudPaper Class="pa-4 text-center">
+    <MudText Typo="Typo.h4" Class="font-weight-bold mb-2">User Class</MudText>
+    <MudChart ChartType="ChartType.Pie" InputData="CustomersInGameClass" @bind-SelectedIndex="Index"
+              InputLabels="@ClassLabels" Width="300px" Height="300px" />
+    <MudText Typo="Typo.h6">Selected portion of the chart: @Index </MudText>
+</MudPaper>
+
+
+<MudPaper Class="pa-4 text-center mt-3">
+    <MudText Typo="Typo.h4" Class="font-weight-bold mb-2">Gender</MudText>
+    <MudChart ChartType="ChartType.Pie" InputData="CustomersGender" @bind-SelectedIndex="Index"
+              InputLabels="@GenderLabels" Width="300px" Height="300px" />
+    <MudText Typo="Typo.h6">Selected portion of the chart: @Index </MudText>
+</MudPaper>
+
+<MudPaper Class="pa-4 text-center mt-3">
+    <MudText Typo="Typo.h4" Class="font-weight-bold mb-2">High Paid User</MudText>
+    <MudChart ChartType="ChartType.Pie" InputData="WhoIsTheHighPaidCash" @bind-SelectedIndex="Index"
+              InputLabels="@RankLabels" Width="300px" Height="300px" />
+    <MudText Typo="Typo.h6">Selected portion of the chart: @Index </MudText>
+</MudPaper>
+
+<MudPaper Class="pa-4 text-center mt-3">
+    <MudText Typo="Typo.h4" Class="font-weight-bold mb-2">Active User Properties</MudText>
+    <MudChart ChartType="ChartType.Pie" InputData="GetActiveUsers" @bind-SelectedIndex="Index"
+              InputLabels="@ActiveLabels" Width="300px" Height="300px" />
+    <MudText Typo="Typo.h6">Selected portion of the chart: @Index </MudText>
+</MudPaper>
+
+@code {
+    private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
+
+    private double[] CustomersInGameClass;
+    private double[] CustomersGender;
+    private double[] WhoIsTheHighPaidCash;
+    private double[] GetActiveUsers;
+
+    string[] ClassLabels = { "Sovereign", "Knight" ,"Elf", "Magician", "DarkElf",
+                        "DragonKnight", "Witchcraft", "Warrior" };
+    string[] GenderLabels = { "Female", "Male" };
+    string[] RankLabels = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+    string[] ActiveLabels = { "NonActive Soon", "Active", "NonActive" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        base.OnInitialized();
+    }
+
+    private async Task LoadData()
+    {
+        CustomersInGameClass = await _chartService.GetUserClassChart();
+        CustomersGender = await _chartService.GetUserGenderChart();
+        WhoIsTheHighPaidCash = await _chartService.GetWhoIsTheHighPaidCash();
+        GetActiveUsers = await _chartService.GetActiveUsers();
+    }
+
+}

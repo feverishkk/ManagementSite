@@ -1,4 +1,5 @@
-﻿using CommonDatabase.Models.TotalItems;
+﻿using CommonDatabase.Models.Accessories;
+using CommonDatabase.Models.TotalItems;
 using CommonDatabase.Models.Weapons;
 using Management.Application.Dto.CommonDb.Customers;
 using Management.Application.Dto.CommonDb.TotalItems;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services.CommonDb
 {
-    public class CommonDbService : ICommonDbService
+    public class CommonDbService : ICommonDbRepository
     {
         private readonly HttpClient _httpClient;
 
@@ -19,12 +20,27 @@ namespace Management.Application.Services.CommonDb
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<TotalWeaponsDto>> GetAllWeapon()
+        public async Task<IEnumerable<Belt>> GetBelt()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<TotalWeaponsDto>>("Weapon/GetAllWeapons");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Belt>>("GetItems/GetBelt");
         }
 
-        
+        public async Task<IEnumerable<EarRing>> GetEarRings()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<EarRing>>("GetItems/GetEarRings");
+        }
+
+        public async Task<IEnumerable<Acc>> GetAcc()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Acc>>("GetItems/GetAcc");
+        }
+
+        //public async Task<IEnumerable<TotalWeaponsDto>> GetAllWeapon()
+        //{
+        //    return await _httpClient.GetFromJsonAsync<IEnumerable<TotalWeaponsDto>>("Weapon/GetAllWeapons");
+        //}
+
+
 
 
     }
