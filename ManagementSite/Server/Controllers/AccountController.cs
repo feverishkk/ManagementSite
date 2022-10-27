@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using Management.Application.Validator;
 
 namespace ManagementSite.Server.Controllers
 {
@@ -42,6 +43,14 @@ namespace ManagementSite.Server.Controllers
             {
                 return BadRequest();
             }
+
+            RegisterValidator registerValidator = new RegisterValidator();
+            var validationResult = registerValidator.Validate(registerDto);
+            if(validationResult.IsValid is false)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             if ((await _userManager.FindByEmailAsync(registerDto.Email)) == null)
             {
                 var user = new ApplicationUser()
@@ -71,29 +80,33 @@ namespace ManagementSite.Server.Controllers
                         return Ok(new RegisterResult { Successful = false, Errors = errors });
                     }
                 }
-
-                var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-                if (result.Succeeded==false)
+                var passwordMatch1 = registerDto.Password;
+                var passwordMatch2 = registerDto.ConfirmPassword;
+                if (passwordMatch1 == passwordMatch2)
                 {
-                    var errors = result.Errors.Select(errors => errors.Description);
+                    var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-                    return Ok(new RegisterResult { Successful = false, Errors = errors });
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
+                    if (result.Succeeded == false)
+                    {
+                        var errors = result.Errors.Select(errors => errors.Description);
 
-                    string subject = "Confirmation Email Address";
-                    //userId에 Email이 포함된다.
-                    var userId = await _userManager.FindByIdAsync(user.Id);
-                    var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        return Ok(new RegisterResult { Successful = false, Errors = errors });
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
 
-                    var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
-                                                      new { userId = userId, token = emailToken },
-                                                      protocol: HttpContext.Request.Scheme);
+                        string subject = "Confirmation Email Address";
+                        //userId에 Email이 포함된다.
+                        var userId = await _userManager.FindByIdAsync(user.Id);
+                        var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    await _emailSender.SendEmail(user.Email, subject, confirmationLink);
+                        var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
+                                                          new { userId = userId, token = emailToken },
+                                                          protocol: HttpContext.Request.Scheme);
+
+                        await _emailSender.SendEmail(user.Email, subject, confirmationLink);
+                    }
                 }
             }
 
@@ -190,6 +203,13 @@ namespace ManagementSite.Server.Controllers
                 return BadRequest();
             }
 
+            ChangePasswordValidator changePWValidator = new ChangePasswordValidator();
+            var validationResult = changePWValidator.Validate(changePasswordDto);
+            if(validationResult.IsValid is false)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var result = await _userManager.ChangePasswordAsync(await user, changePasswordDto.OldPassword,
                                                                 changePasswordDto.NewPassword);
 
@@ -212,6 +232,13 @@ namespace ManagementSite.Server.Controllers
             {
                 return Ok(new ForgotPasswordResult { Successful = false, Error = "User Id cannot be null" });
             }
+
+            ForgotPasswordValidator forgotPWValidator = new ForgotPasswordValidator();
+            var validationResult = forgotPWValidator.Validate(forgotPasswordDto);
+            if(validationResult.IsValid is false)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             else
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -233,6 +260,12 @@ namespace ManagementSite.Server.Controllers
             if (resetPasswordDto == null || !ModelState.IsValid)
             {
                 return Ok(new ResetPasswordResult { Successful = false, Errors = "Please Refresh and Try Again." });
+            }
+            ResetPasswordValidator resetPWValidator = new ResetPasswordValidator();
+            var validationResult = resetPWValidator.Validate(resetPasswordDto);
+            if(validationResult.IsValid is false)
+            {
+                return BadRequest(validationResult.Errors);
             }
             else
             {
