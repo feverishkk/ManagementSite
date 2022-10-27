@@ -9,8 +9,6 @@ namespace Management.Application.Dto.Account
 {
     public class ForgotPasswordDto
     {
-        [Required]
-        [EmailAddress]
         public string Email { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace CommonDatabase.Models.Customers
     {
         public int UserId { get; set; }
         public string ID { get; set; }
-        public string Email_Address { get; set; }
+        public string EmailAddress { get; set; }
         public string UserName { get; set; }
         public DateTime MemberSince { get; set; }
         public string PreferPayment { get; set; }
@@ -19,6 +19,6 @@ namespace CommonDatabase.Models.Customers
         public int IsEmailConfirmed { get; set; }
         public string MobileNumber { get; set; }
         public string Country { get; set; }
-        public long PaidCash { get; set; }
+        public int PaidCash { get; set; }
     }
 }

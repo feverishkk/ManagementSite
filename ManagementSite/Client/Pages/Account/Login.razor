@@ -2,7 +2,7 @@
 
 <h3>Login</h3>
 
-@if(ShowErrors==true)
+@if (ShowErrors == true)
 {
     <div class="alert alert-danger" role="alert">
         <p>@Errors</p>
@@ -10,14 +10,14 @@
 }
 
 <EditForm Model="model" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
+    <FluentValidationValidator />
+    <ValidationSummary />
 
-    <MudTextField Label="Email" @bind-Value="model.Email" For="@(()=>model.Email)" Required
-                  RequiredError="Email is Required" />
+    <MudTextField Label="Email" @bind-Value="model.Email" For="@(()=>model.Email)" Required />
+    <ValidationMessage For="@(()=>model.Email)" />
 
-    <MudTextField Label="Password" @bind-Value="model.Password" For="@(()=>model.Password)" Required
-                  RequiredError="Password is Required" InputType="InputType.Password" />
+    <MudTextField Label="Password" @bind-Value="model.Password" For="@(()=>model.Password)" Required InputType="InputType.Password" />
+    <ValidationMessage For="@(()=>model.Password)" />
 
     <div class="d-flex align-center justify-space-between">
         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
@@ -27,7 +27,7 @@
 
 </EditForm>
 
-    @code {
+@code {
     private LoginDto model = new();
     private bool ShowErrors { get; set; } = false;
     private string Errors { get; set; } = string.Empty;
@@ -42,7 +42,7 @@
     {
         var result = await _accountService.Login(model);
 
-        if(!result.Successful)
+        if (!result.Successful)
         {
             Errors = result.Errors;
             ShowErrors = true;

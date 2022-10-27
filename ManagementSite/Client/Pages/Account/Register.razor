@@ -13,6 +13,66 @@
 }
 
 <EditForm Model="model" OnValidSubmit="OnValidSubmit">
+    <FluentValidationValidator />
+    <ValidationSummary />
+    <MudGrid>
+        <MudItem xs="12" sm="7">
+            <MudCard>
+
+                <MudCardContent>
+                    <MudTextField Label="UserName" @bind-Value="model.UserName" For="@(()=>model.UserName)" />
+                    <ValidationMessage For="@(()=>model.UserName)" />
+
+                    <MudTextField Label="Given Name" @bind-Value="model.GivenName" For="@(()=>model.GivenName)" />
+                    <ValidationMessage For="@(()=>model.GivenName)" />
+
+                    <MudTextField Label="Family Name" @bind-Value="model.FamilyName" For="@(()=>model.FamilyName)" />
+                    <ValidationMessage For="@(()=>model.FamilyName)" />
+
+                    <MudTextField Label="Email" InputType="InputType.Email" Class="mt-3"
+                                  @bind-Value="model.Email" For="@(()=>model.Email)" />
+                    <ValidationMessage For="@(()=>model.Email)" />
+
+                    <MudTextField Label="Confirm Email" InputType="InputType.Email" Class="mt-3"
+                                  @bind-Value="model.ConfirmEmail" For="@(()=>model.ConfirmEmail)" />
+                    <ValidationMessage For="@(()=>model.ConfirmEmail)" />
+
+                    <MudTextField Label="Password" InputType="InputType.Password" Class="mt-3"
+                                  @bind-Value="model.Password" For="@(()=>model.Password)" />
+                    <ValidationMessage For="@(()=>model.Password)" />
+
+                    <MudTextField Label="Confirm Password" InputType="InputType.Password" Class="mt-3"
+                                  @bind-Value="model.ConfirmPassword" For="@(()=>model.ConfirmEmail)" />
+                    <ValidationMessage For="@(()=>model.ConfirmEmail)" />
+
+                    <MudTextField Label="Department" @bind-Text="model.Department" For="@(()=>model.Department)" />
+                    <ValidationMessage For="@(()=>model.Department)" />
+
+                    <MudTextField Label="Department Number" @bind-Text="model.DepartmentNumber" For="(()=>model.DepartmentNumber)" />
+                    <ValidationMessage For="@(()=>model.DepartmentNumber)" />
+                    <MudSelect @bind-Value="model.Role" For="@(()=>model.Role)" Label="Role List">
+                        @foreach (RoleList roles in Enum.GetValues(typeof(RoleList)))
+                        {
+                            <MudSelectItem Value="@roles">@roles</MudSelectItem>
+                        }
+                    </MudSelect>
+
+                </MudCardContent>
+
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
+                        Register
+                    </MudButton>
+                </MudCardActions>
+
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+@*
+ 원본
+<EditForm Model="model" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     <MudGrid>
@@ -57,10 +117,13 @@
             </MudCard>
         </MudItem>
     </MudGrid>
-</EditForm>
+</EditForm>*@
 
 @code {
-    private RegisterDto model { get; set; }
+    RegisterDto model { get; set; }
+    //private RegisterValidator _validations { get; set; }
+
+    MudForm form;
 
     public bool ShowErrors { get; set; } = false;
     public IEnumerable<string> Errors { get; set; }
@@ -84,6 +147,5 @@
             _navigationManager.NavigateTo("/login");
         }
     }
-
 
 }
