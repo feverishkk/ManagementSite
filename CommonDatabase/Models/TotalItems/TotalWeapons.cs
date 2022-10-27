@@ -14,7 +14,8 @@ namespace CommonDatabase.Models.TotalItems
         public int TotalWeaponId { get; set; }
         public string Image { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public string Damage { get; set; } = string.Empty;
+        public int Damage1 { get; set; }
+        public int Damage2 { get; set; }
         public string Class { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 

@@ -1,4 +1,5 @@
 ﻿@page "/customeringameinfo/{UserId}"
+@using Management.Application.Dto.Accessories
 
 <MudTable Items="@InGameInfo" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
     <HeaderContent>
@@ -8,7 +9,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Game Character Name">@context.UserName</MudTd>
-        <MudTd DataLabel="GuildName">@context.GuildName</MudTd>
+        <MudTd DataLabel="GuildName">@context?.GuildName</MudTd>
         <MudTd DataLabel="Game Character Class"> @context.UserClass</MudTd>
     </RowTemplate>
 </MudTable>
@@ -46,7 +47,7 @@
     </RowTemplate>
 </MudTable>
 
-
+@* 원본
 <MudCard>
     <MudForm Model="@BeltModel" @ref="@form">
         <MudCardContent>
@@ -62,42 +63,27 @@
             Update
         </MudButton>
     </MudForm>
-</MudCard>
+</MudCard>*@
 
 
-
-<div class="d-flex flex-wrap mt-4">
-    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
-    <MudSpacer />
-</div>
 
 
 @code {
     [Parameter]
     public string UserId { get; set; }
 
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = true;
-    private bool bordered = false;
-
     MudForm form;
+    private MudTable<CustomersDto> table;
+
     public Belt BeltModel = new Belt();
     private EarRing EarRingModel = new EarRing();
-    //private Acc Accs = new Acc();
 
-    private MudTable<CustomersDto> table;
 
     private IEnumerable<CustomersInGameInfoDto> InGameInfo = new List<CustomersInGameInfoDto>();
     private IEnumerable<CustomerEquipmentDto> CustomersEquipment = new List<CustomerEquipmentDto>();
 
     private IEnumerable<Belt> Belts = new List<Belt>();
     private IEnumerable<EarRing> EarRings = new List<EarRing>();
-    //private IEnumerable<Acc> Acc = new List<Acc>();
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -111,16 +97,17 @@
         CustomersEquipment = await _customersService.CustomersEquipment(UserId);
         Belts = await _commonDbService.GetBelt();
         //EarRings = await _commDbService.GetEarRings();
-        //Acc = await _commonDbService.GetAcc();
+        //Accs = await _commonDbService.GetAcc();
     }
 
     public async Task OnSelect(Belt belt, string userId)
     {
-        Console.WriteLine("Fired!!");
         ArrayList userInfo = new ArrayList();
+
         userInfo.Add(belt.BeltId);
         userInfo.Add(userId);
         await _customersService.UpdateCustomerEquipment(userInfo);
+
         StateHasChanged();
     }
 

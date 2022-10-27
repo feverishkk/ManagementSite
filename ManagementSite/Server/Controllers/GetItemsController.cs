@@ -46,20 +46,15 @@ namespace ManagementSite.Server.Controllers
         }
 
 
-        //[HttpGet]
-        //public IActionResult GetAcc()
-        //{
-        //    var acc = _commonDbContext.Acc?.Include(a => a.Belt)?.Include(a => a.Neckless)
-        //                                  ?.Include(a => a.EarRing)?.Include(a => a.Ring1)
-        //                                  ?.Include(a => a.Ring2)?.DefaultIfEmpty().ToList()
-        //                                  ?? new List<Acc>().DefaultIfEmpty();
-        //    if (acc != null)
-        //    {
-        //        return Ok(acc);
-        //    }
+        [HttpGet]
+        public IActionResult GetAcc()
+        {
+            var acc = _commonDbContext.Acc?.Include(a => a.Belt)?.Include(a => a.Neckless)
+                                          ?.Include(a => a.EarRing)?.Include(a => a.Ring1)
+                                          ?.Include(a => a.Ring2).ToList();
 
-        //    return BadRequest();
-        //}
+            return BadRequest();
+        }
 
 
     }

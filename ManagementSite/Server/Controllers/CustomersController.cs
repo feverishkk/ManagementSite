@@ -4,6 +4,7 @@ using Management.Application.Interfaces.CommonDb.GenericRepository;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -19,14 +20,11 @@ namespace ManagementSite.Server.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly CommonDbContext _commonDbContext;
-        private readonly IGenericRepository<Belt> _beltRepo;
 
-        public CustomersController(CommonDbContext commonDbContext, IGenericRepository<Belt> beltRepo)
+        public CustomersController(CommonDbContext commonDbContext)
         {
             _commonDbContext = commonDbContext;
-            _beltRepo = beltRepo;
         }
-
 
         [HttpGet]
         public IActionResult GetAllCustomers()
@@ -44,7 +42,9 @@ namespace ManagementSite.Server.Controllers
             {
                 return NotFound();
             }
+
             var result = _commonDbContext.CustomerInGameInfo.Where(u => u.ID == userId).ToList();
+
             return Ok(result);
         }
 
@@ -77,39 +77,28 @@ namespace ManagementSite.Server.Controllers
         [HttpPost]
         public IActionResult UpdateCustomerEquipment([FromBody] ArrayList userInfo)
         {
-
-            // 일단 파라미터를 들고 오는거 됌!
-            // 
             var userSelectedValue = (int)(long)userInfo[0];
             var userId = userInfo[1].ToString();
 
-            var user = _commonDbContext.CustomerEquipment.Where(x => x.ID == userId).Select(x => x.Belt);
-            
-            if (user!=null)
+            if(userId is null || userSelectedValue is 0)
             {
-                var userBeltId = user.Select(x => x.BeltId).FirstOrDefault() ?? 0;
-                userBeltId = userSelectedValue;
-                                
-                //var userBelt = user.Belt.BeltId == null ? null : user.Belt.BeltId;
-                
-                //var users = user.Select(x => x.BeltId);
-                //var userBeltId = users == null ? user.Select(x=>x.BeltId) : 0;
-                
-                //userBeltId = userBeltId!=null ? userBeltId.Value : 0;
-                //userBeltId = userSelectedValue;
-
-                //user.Belt.BeltId = userBeltId != null ? userBeltId : 0;
-                _commonDbContext.CustomerEquipment.Update((CustomerEquipment)user);
-                _commonDbContext.SaveChanges();
-                return Ok(user);
+                return BadRequest();
             }
 
-            //_commonDbContext.Belt.Update(user);
+            object[] paramItems = new object[]
+            {
+                new SqlParameter("@paramUserId", userId),
+                new SqlParameter("@paramSelectedValue", userSelectedValue)
+            };
 
-            // 1. userId와 바꿀 값을 들고 온다.      -------v
-            // 2. CustomerEquipment의 Id를 비교하고 -------v
-            // 3. CustomerEquipment의 프로퍼티를 정의해주고 -------v <<<<<< null 에러
-            // 3. 해당 ID의 belt id를 update해준다.
+            int items = _commonDbContext.Database.ExecuteSqlRaw
+                        ("UPDATE CustomerEquipment SET BeltId = @paramSelectedValue WHERE [ID] = @paramUserId ", 
+                        paramItems);
+
+            if(items == 0)
+            {
+                return BadRequest();
+            }
 
             return Ok();
         }
