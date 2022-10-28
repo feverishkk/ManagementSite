@@ -1,32 +1,44 @@
 ﻿using CommonDatabase.Models.Accessories;
+using CommonDatabase.Models.Customers;
+using CommonDatabase.Models.TotalItems;
+using CommonDatabase.Models.Weapons;
+using Management.Application.Dto.Accessories;
+using Management.Application.Dto.CommonDb.Customers;
+using Management.Application.Dto.CommonDb.TotalItems;
 using Management.Application.Interfaces.CommonDb;
-using Management.Application.Services.CommonDb.GenericService;
-using ManagementDbContext.DbContext;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Management.Application.Services.CommonDb
 {
-    public class GetItemService : GenericService<Belt>, IGetItemRepository 
+    public class GetItemService : IGetItemRepository
     {
-        public GetItemService(CommonDbContext _commonDbContext) : base(_commonDbContext)
-        {
+        private readonly HttpClient _httpClient;
 
+        public GetItemService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
         }
 
-        public IEnumerable<Belt> GetItems()
+        public async Task<IEnumerable<Belt>> GetBelt()
         {
-            //return (IEnumerable<Belt>)_commonDbContext.Belt.OrderByDescending(d => d.Name).ToList();
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Belt>>("GetItems/GetBelt");
         }
 
-        IEnumerable<Belt> IGetItemRepository.GetItems()
+        public async Task<IEnumerable<EarRing>> GetEarRings()
         {
-            throw new NotImplementedException();
+            return await _httpClient.GetFromJsonAsync<IEnumerable<EarRing>>("GetItems/GetEarRings");
         }
+
+        public async Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerTotalWeapons>>("GetItems/GetAllWeapons");
+        }
+
+
+
+
     }
 }

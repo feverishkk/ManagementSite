@@ -1,15 +1,17 @@
 ﻿using CommonDatabase.Models.Accessories;
-using Management.Application.Interfaces.CommonDb.GenericRepository;
-using System;
+using CommonDatabase.Models.Customers;
+using CommonDatabase.Models.TotalItems;
+using Management.Application.Dto.CommonDb.Customers;
+using Management.Application.Dto.CommonDb.TotalItems;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces.CommonDb
 {
-    public interface IGetItemRepository : IGenericRepository<Belt> 
+    public interface IGetItemRepository
     {
-        IEnumerable<Belt> GetItems();
+        Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon();
+        Task<IEnumerable<Belt>> GetBelt();
+        Task<IEnumerable<EarRing>> GetEarRings();
     }
 }

@@ -93,7 +93,7 @@
     {
         InGameInfo = await _customersService.CustomersInGameInfo(UserId);
         CustomersEquipment = await _customersService.CustomersEquipment(UserId);
-        Belts = await _commonDbService.GetBelt();
+        Belts = await _getItemService.GetBelt();
         //EarRings = await _commDbService.GetEarRings();
         //Accs = await _commonDbService.GetAcc();
     }

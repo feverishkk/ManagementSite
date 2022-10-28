@@ -37,9 +37,10 @@ namespace ManagementSite.Client
             builder.Services.AddTransient<IAccountRepository, AccountService>();
             builder.Services.AddTransient<IManagerRepository, ManagerService>();
             builder.Services.AddTransient<ICustomerRepository, CustomerService>();
-            builder.Services.AddTransient<ICommonDbRepository, CommonDbService>();
+            builder.Services.AddTransient<IGetItemRepository, GetItemService>();
             builder.Services.AddTransient<IChartRepository, ChartService>();
             builder.Services.AddTransient<IUpdateItemRepository, UpdateItemService>();
+            builder.Services.AddTransient<ICreateItemRepository, CreateItemService>();
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericService<>));
 

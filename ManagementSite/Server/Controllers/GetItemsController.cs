@@ -58,16 +58,6 @@ namespace ManagementSite.Server.Controllers
             return Ok(earRings);
         }
 
-        [HttpGet]
-        public IActionResult GetAcc()
-        {
-            var acc = _commonDbContext.Acc.Include(a => a.Belt).Include(a => a.Neckless)
-                                          .Include(a => a.EarRing).Include(a => a.Ring1)
-                                          .Include(a => a.Ring2).ToList();
-
-            return BadRequest();
-        }
-
         public IActionResult GetAllWeapons()
         {
             var result = _customerTotalWeaponRepo.GetAll();

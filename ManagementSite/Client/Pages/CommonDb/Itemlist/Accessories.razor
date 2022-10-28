@@ -1,0 +1,101 @@
+﻿@page "/acc"
+
+<MudTable Items="@Belts" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
+
+    <ToolBarContent>
+        <MudText Typo="Typo.h6"> List</MudText>
+        <MudSpacer />
+         <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="OpenDialog">
+                Create Item
+            </MudButton>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh>BeltId</MudTh>
+        @*<MudTh>Image</MudTh>*@
+        <MudTh>Name</MudTh>
+        <MudTh>AC</MudTh>
+        <MudTh>Class</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Options</MudTh>
+    </HeaderContent>
+
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context?.BeltId</MudTd>
+        @*<MudTd DataLabel="Image">
+            <img src="@context.Image" style="width:100px;height:100px;" />
+        </MudTd>*@
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="AC">@context.AC</MudTd>
+        <MudTd DataLabel="Class">@context.Class</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudTd DataLabel="Options">
+           <MudButton ButtonType="ButtonType.Submit" Color="Color.Error" Variant="Variant.Filled"
+                      OnClick="@(()=>OnDelete(context.BeltId))">
+               Delete Item
+           </MudButton>
+        </MudTd>
+    </RowTemplate>
+
+    <PagerContent>
+        <MudTablePager PageSizeOptions="pageSizeOptions" />
+    </PagerContent>
+
+</MudTable>
+
+<div class="d-flex flex-wrap mt-4">
+    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSpacer />
+</div>
+
+@code {
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+
+    private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
+
+    private IEnumerable<Belt> Belts = new List<Belt>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        Belts = await _getItemService.GetBelt();
+    }
+
+    private async Task OpenDialog()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("model", new Belt());
+
+        var options = new DialogOptions { DisableBackdropClick = true };
+        var dialog = _dialogService.Show<CreateModal>("Create a Acc", parameters, options);
+
+        // wait modal to close
+        var result = await dialog.Result;
+
+        var notCancelled = !result.Cancelled;
+        if(notCancelled is true && result.Data!=null)
+        {
+            Belt accInfo = result.Data as Belt;
+            await _createItemService.CreateAccItem(accInfo);
+
+            StateHasChanged();
+        }
+       
+    }
+
+    private void OnDelete(int itemId)
+    {
+        
+    }
+
+}

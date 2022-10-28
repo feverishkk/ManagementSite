@@ -45,12 +45,15 @@
 @inject NavigationManager _navigationManager
 @inject HttpClient _httpClient
 @inject AuthenticationStateProvider _authenticationStateProvider
+@inject IDialogService _dialogService
 
 @inject IAccountRepository _accountService
 @inject IManagerRepository _managerService
-@inject ICustomerRepository _customersService
-@inject ICommonDbRepository _commonDbService
-@inject IChartRepository _chartService;
-@inject IUpdateItemRepository _updateItemService
 
+@inject ICustomerRepository _customersService
+@inject IChartRepository _chartService
+
+@inject IGetItemRepository _getItemService
+@inject ICreateItemRepository _createItemService
+@inject IUpdateItemRepository _updateItemService
 
