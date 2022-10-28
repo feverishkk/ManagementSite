@@ -1,4 +1,5 @@
 ﻿using CommonDatabase.Models.Accessories;
+using CommonDatabase.Models.Customers;
 using CommonDatabase.Models.TotalItems;
 using Management.Application.Dto.CommonDb.Customers;
 using Management.Application.Dto.CommonDb.TotalItems;
@@ -9,7 +10,7 @@ namespace Management.Application.Interfaces.CommonDb
 {
     public interface ICommonDbRepository
     {
-        //Task<IEnumerable<TotalWeaponsDto>> GetAllWeapon();
+        Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon();
         Task<IEnumerable<Belt>> GetBelt();
         Task<IEnumerable<EarRing>> GetEarRings();
         Task<IEnumerable<Acc>> GetAcc();

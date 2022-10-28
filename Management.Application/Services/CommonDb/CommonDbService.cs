@@ -1,4 +1,5 @@
 ﻿using CommonDatabase.Models.Accessories;
+using CommonDatabase.Models.Customers;
 using CommonDatabase.Models.TotalItems;
 using CommonDatabase.Models.Weapons;
 using Management.Application.Dto.Accessories;
@@ -36,10 +37,10 @@ namespace Management.Application.Services.CommonDb
             return await _httpClient.GetFromJsonAsync<IEnumerable<Acc>>("GetItems/GetAcc");
         }
 
-        //public async Task<IEnumerable<TotalWeaponsDto>> GetAllWeapon()
-        //{
-        //    return await _httpClient.GetFromJsonAsync<IEnumerable<TotalWeaponsDto>>("Weapon/GetAllWeapons");
-        //}
+        public async Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerTotalWeapons>>("GetItems/GetAllWeapons");
+        }
 
 
 

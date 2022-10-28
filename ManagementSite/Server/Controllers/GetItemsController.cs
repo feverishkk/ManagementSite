@@ -8,26 +8,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Management.Application.Interfaces.CommonDb.GenericRepository;
+using CommonDatabase.Models.Equipment;
+using CommonDatabase.Models.Weapons;
+using CommonDatabase.Models.Customers;
 
 namespace ManagementSite.Server.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class GetItemsController : ControllerBase
+    public partial class GetItemsController : ControllerBase
     {
+        private readonly CommonDbContext _commonDbContext;
+
         private readonly IGenericRepository<Belt> _beltRepo;
         private readonly IGenericRepository<EarRing> _earRingRepo;
         private readonly IGenericRepository<Acc> _accRepo;
-        private readonly CommonDbContext _commonDbContext;
-
-        public GetItemsController(IGenericRepository<Belt> beltRepo, IGenericRepository<EarRing> earRingRepo,
-                                  IGenericRepository<Acc> accRepo, CommonDbContext commonDbContext)
+        private readonly IGenericRepository<Armor> _armorRepo;
+        private readonly IGenericRepository<Dagger> _daggerRepo;
+        private readonly IGenericRepository<CustomerTotalWeapons> _customerTotalWeaponRepo;
+        
+        public GetItemsController(CommonDbContext commonDbContext, IGenericRepository<Dagger> daggerRepo,
+                                  IGenericRepository<Belt> beltRepo, IGenericRepository<EarRing> earRingRepo,
+                                  IGenericRepository<Acc> accRepo, IGenericRepository<Armor> armorRepo,
+                                  IGenericRepository<CustomerTotalWeapons> customerTotalWeaponRepo)
         {
+            _commonDbContext = commonDbContext;
+            _daggerRepo = daggerRepo;
             _beltRepo = beltRepo;
             _earRingRepo = earRingRepo;
             _accRepo = accRepo;
-            _commonDbContext = commonDbContext;
+            _armorRepo = armorRepo;
+            _customerTotalWeaponRepo = customerTotalWeaponRepo;
         }
+        
 
         [HttpGet]
         public IActionResult GetBelt()
@@ -45,16 +58,24 @@ namespace ManagementSite.Server.Controllers
             return Ok(earRings);
         }
 
-
         [HttpGet]
         public IActionResult GetAcc()
         {
-            var acc = _commonDbContext.Acc?.Include(a => a.Belt)?.Include(a => a.Neckless)
-                                          ?.Include(a => a.EarRing)?.Include(a => a.Ring1)
-                                          ?.Include(a => a.Ring2).ToList();
+            var acc = _commonDbContext.Acc.Include(a => a.Belt).Include(a => a.Neckless)
+                                          .Include(a => a.EarRing).Include(a => a.Ring1)
+                                          .Include(a => a.Ring2).ToList();
 
             return BadRequest();
         }
+
+        public IActionResult GetAllWeapons()
+        {
+            var result = _customerTotalWeaponRepo.GetAll();
+
+            return Ok(result);
+        }
+
+
 
 
     }

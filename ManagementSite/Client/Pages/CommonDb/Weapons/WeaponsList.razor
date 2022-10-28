@@ -1,20 +1,52 @@
-﻿@*@page "/weaponslist"
-@using Management.Application.Dto.CommonDb.TotalItems
-@using Management.Application.Interfaces.CommonDb
+﻿@page "/itemlist/weapons"
 
-<h3>Weapon List</h3>
+<MudTable Items="@TotalWeapons">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Weapon List</MudText>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>No</MudTh>
+        @*이미지 주석한 이유는 nc개인서버에서 링크만 빼와서 사용하는거라 양심이 좀ㅎㅎ;;;;
+          동작은 함
+        <MudTh>Image</MudTh>*@
+        <MudTh>Name</MudTh>
+        <MudTh>Damage - Small Monster</MudTh>
+        <MudTh>Damage - Big Monster</MudTh>
+        <MudTh>Class</MudTh>
+        <MudTh>Description</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="No">@context.TotalWeaponId</MudTd>
+        @*<MudTd DataLabel="Image">
+            <img src="@context.Image" style="height:100px; width:100px" />
+        </MudTd>*@
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Damage - Small Monster">@context.Damage1</MudTd>
+        <MudTd DataLabel="Damage - Big Monster">@context.Damage2</MudTd>
+        <MudTd DataLabel="Class">@context.Class</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+    </RowTemplate>
+    <PagerContent>
+    <MudTablePager PageSizeOptions="pageSizeOptions"></MudTablePager>
+    </PagerContent>
+</MudTable>
 
-<p>
-    Testing..
-</p>
 
 @code {
-    private IEnumerable<TotalWeaponsDto> TotalWeapons { get; set; } = new List<TotalWeaponsDto>();
+    private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
+
+    private CustomerTotalWeapons totalWeapons = new();
+    private IEnumerable<CustomerTotalWeapons> TotalWeapons { get; set; } = new List<CustomerTotalWeapons>();
 
     protected override async Task OnInitializedAsync()
     {
-        TotalWeapons = await _commonDbService.GetAllWeapon();
+        await LoadData();
         await base.OnInitializedAsync();
     }
 
-}*@
+    private async Task LoadData()
+    {
+        TotalWeapons = await _commonDbService.GetAllWeapon();
+    }
+
+}

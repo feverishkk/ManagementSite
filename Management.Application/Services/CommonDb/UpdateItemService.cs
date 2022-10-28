@@ -1,6 +1,8 @@
-﻿using Management.Application.Dto.CommonDb.Customers;
+﻿using CommonDatabase.Models.Accessories;
+using Management.Application.Dto.CommonDb.Customers;
 using Management.Application.Interfaces.CommonDb;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services.CommonDb
 {
-    public class UpdateItemService : IUpdateItemService
+    public class UpdateItemService : IUpdateItemRepository
     {
         private readonly HttpClient _httpClient;
 
@@ -20,15 +22,11 @@ namespace Management.Application.Services.CommonDb
             _httpClient = httpClient;
         }
 
-        public Task<IEnumerable<CustomerEquipmentDto>> UpdateCustomerEquipment(string userId, int beltId)
+        public async Task<Belt> UpdateCustomerEquipment(ArrayList userInfo)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.PostAsJsonAsync("/UpdateItems/UpdateCustomerEquipment", userInfo);
+            return await response.Content.ReadFromJsonAsync<Belt>();
         }
-
-        //public async Task<IEnumerable<CustomerEquipmentDto>> UpdateCustomerEquipment(string userId, int beltId)
-        //{
-        //    return await _httpClient.PostAsJsonAsync<IEnumerable<CustomerEquipmentDto>>($"/Items/UpdateBelt?userId={userId}", beltId);
-        //}
 
 
     }

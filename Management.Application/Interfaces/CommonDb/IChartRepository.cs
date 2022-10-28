@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Management.Application.Interfaces.CommonDb.GenericRepository
+namespace Management.Application.Interfaces.CommonDb
 {
     public interface IChartRepository
     {

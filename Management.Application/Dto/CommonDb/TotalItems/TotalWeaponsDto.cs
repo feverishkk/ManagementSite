@@ -11,20 +11,12 @@ namespace Management.Application.Dto.CommonDb.TotalItems
     public class TotalWeaponsDto
     {
         [Key]
-        public int WeaponId { get; set; }
-        public string Image { get; set; }
-        public string Name { get; set; }
-        public string Damage { get; set; }
-        public string Class { get; set; }
-        public string Description { get; set; }
-        //public DaggerDto Dagger { get; set; }
-
-        //public OneHandBowDto OneHandBow { get; set; }
-        //public OneHandStickDto OneHandStick { get; set; }
-        //public OneHandSwordDto OneHandSword { get; set; }
-
-        //public TwoHandBowDto TwoHandBow { get; set; }
-        //public TwoHandStickDto TwoHandStick { get; set; }
-        //public TwoHandSwordDto TwoHandSword { get; set; }
+        public int TotalWeaponId { get; set; }
+        public string Image { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public int Damage1 { get; set; }
+        public int Damage2 { get; set; }
+        public string Class { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
     }
 }

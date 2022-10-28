@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonDatabase.Models.TotalItems
+namespace CommonDatabase.Models.Customers
 {
-    public class TotalWeapons
+    public class CustomerTotalWeapons
     {
         [Key]
         public int TotalWeaponId { get; set; }

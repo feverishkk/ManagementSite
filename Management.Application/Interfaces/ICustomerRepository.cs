@@ -14,7 +14,5 @@ namespace Management.Application.Interfaces
         Task<IEnumerable<CustomersDto>> GetAllCustomers();
         Task<IEnumerable<CustomersInGameInfoDto>> CustomersInGameInfo(string userId);
         Task<IEnumerable<CustomerEquipmentDto>> CustomersEquipment(string userId);
-        //Task<CustomerEquipmentDto> UpdateCustomerEquipment(CustomerEquipmentDto customerEquipment);
-        Task<Belt> UpdateCustomerEquipment(ArrayList userInfo);
     }
 }

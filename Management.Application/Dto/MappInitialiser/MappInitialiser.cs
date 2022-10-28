@@ -40,7 +40,7 @@ namespace Management.Application.Dto.MappInitialiser
             CreateMap<CustomersInGameInfo, CustomersInGameInfoDto>().ReverseMap();
 
             // Total
-            CreateMap<TotalWeapons, TotalWeaponsDto>().ReverseMap();
+            CreateMap<CustomerTotalWeapons, TotalWeaponsDto>().ReverseMap();
             CreateMap<TotalEquipment, TotalEquipmentDto>().ReverseMap();
             CreateMap<TotalAccessories, TotalAccessoriesDto>().ReverseMap();
 

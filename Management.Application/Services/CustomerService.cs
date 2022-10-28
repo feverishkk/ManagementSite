@@ -34,17 +34,5 @@ namespace Management.Application.Services
             return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerEquipmentDto>>("Customers/GetCustomerEquipment?userId=" + userId);
         }
 
-        //public async Task<CustomerEquipmentDto> UpdateCustomerEquipment(CustomerEquipmentDto customerEquipment)
-        //{
-        //    var response = await _httpClient.PostAsJsonAsync("/Customers/UpdateCustomerEquipment", customerEquipment);
-        //    return await response.Content.ReadFromJsonAsync<CustomerEquipmentDto>();
-        //}
-
-        public async Task<Belt> UpdateCustomerEquipment(ArrayList userInfo)
-        {
-            var response = await _httpClient.PostAsJsonAsync("/Customers/UpdateCustomerEquipment", userInfo);
-            return await response.Content.ReadFromJsonAsync<Belt>();
-        }
-
     }
 }

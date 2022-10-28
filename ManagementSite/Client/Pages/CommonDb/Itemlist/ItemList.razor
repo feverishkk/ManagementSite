@@ -1,0 +1,15 @@
+﻿@page "/itemlist"
+
+<h3>Itemlist</h3>
+
+<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Warning" OnClick="@(()=>WeaponPage())"> Weapons </MudButton>
+<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success"> Equipment </MudButton>
+<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Secondary"> Acc </MudButton>
+
+@code {
+
+    private void WeaponPage()
+    {
+        _navigationManager.NavigateTo("/itemlist/weapons");
+    }
+}

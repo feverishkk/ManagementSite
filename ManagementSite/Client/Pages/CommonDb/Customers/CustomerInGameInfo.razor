@@ -1,5 +1,4 @@
 ﻿@page "/customeringameinfo/{UserId}"
-@using Management.Application.Dto.Accessories
 
 <MudTable Items="@InGameInfo" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
     <HeaderContent>
@@ -13,6 +12,7 @@
         <MudTd DataLabel="Game Character Class"> @context.UserClass</MudTd>
     </RowTemplate>
 </MudTable>
+
 
 <MudTable Items="@CustomersEquipment" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
     <HeaderContent>
@@ -47,7 +47,7 @@
     </RowTemplate>
 </MudTable>
 
-@* 원본
+
 <MudCard>
     <MudForm Model="@BeltModel" @ref="@form">
         <MudCardContent>
@@ -63,9 +63,7 @@
             Update
         </MudButton>
     </MudForm>
-</MudCard>*@
-
-
+</MudCard>
 
 
 @code {
@@ -106,7 +104,7 @@
 
         userInfo.Add(belt.BeltId);
         userInfo.Add(userId);
-        await _customersService.UpdateCustomerEquipment(userInfo);
+        await _updateItemService.UpdateCustomerEquipment(userInfo);
 
         StateHasChanged();
     }

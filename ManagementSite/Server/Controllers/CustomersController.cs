@@ -26,6 +26,10 @@ namespace ManagementSite.Server.Controllers
             _commonDbContext = commonDbContext;
         }
 
+        /// <summary>
+        /// 모든 고객들을 가져온다.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetAllCustomers()
         {
@@ -35,6 +39,11 @@ namespace ManagementSite.Server.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// 고객들의 인게임 데이터를 가져온다.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetCustomersInGameInfo([FromQuery] string userId)
         {
@@ -48,6 +57,11 @@ namespace ManagementSite.Server.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// 고객들의 인게임 캐릭터의 정보를 가져온다.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetCustomerEquipment([FromQuery] string userId)
         {
@@ -73,38 +87,6 @@ namespace ManagementSite.Server.Controllers
                 return Ok(response);
             }
         }
-
-        [HttpPost]
-        public IActionResult UpdateCustomerEquipment([FromBody] ArrayList userInfo)
-        {
-            var userSelectedValue = (int)(long)userInfo[0];
-            var userId = userInfo[1].ToString();
-
-            if(userId is null || userSelectedValue is 0)
-            {
-                return BadRequest();
-            }
-
-            object[] paramItems = new object[]
-            {
-                new SqlParameter("@paramUserId", userId),
-                new SqlParameter("@paramSelectedValue", userSelectedValue)
-            };
-
-            int items = _commonDbContext.Database.ExecuteSqlRaw
-                        ("UPDATE CustomerEquipment SET BeltId = @paramSelectedValue WHERE [ID] = @paramUserId ", 
-                        paramItems);
-
-            if(items == 0)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
-
-
-
 
     }
 }

@@ -39,6 +39,9 @@ namespace ManagementSite.Client
             builder.Services.AddTransient<ICustomerRepository, CustomerService>();
             builder.Services.AddTransient<ICommonDbRepository, CommonDbService>();
             builder.Services.AddTransient<IChartRepository, ChartService>();
+            builder.Services.AddTransient<IUpdateItemRepository, UpdateItemService>();
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericService<>));
 
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 

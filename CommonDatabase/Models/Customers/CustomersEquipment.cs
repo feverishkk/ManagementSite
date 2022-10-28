@@ -14,7 +14,7 @@ namespace CommonDatabase.Models.Customers
         public string ID { get; set; }
 
         [ForeignKey("TotalWeaponId")]
-        public virtual TotalWeapons TotalWeapons { get; set; } 
+        public virtual CustomerTotalWeapons TotalWeapons { get; set; } 
 
         public virtual TShirt TShirt { get; set; } 
 
