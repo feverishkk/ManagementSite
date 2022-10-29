@@ -31,7 +31,7 @@
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Options">
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Error" Variant="Variant.Filled"
-                       OnClick="@(()=>DeleteAccDialog(context.BeltId))">
+                       OnClick="@(()=>DeleteAccDialog(context.BeltId, context.Name, context.Image))">
                 Delete Item
             </MudButton>
         </MudTd>
@@ -93,11 +93,13 @@
 
     }
 
-    private async Task DeleteAccDialog(int itemId)
+    private async Task DeleteAccDialog(int itemId, string itemName, string itemImage)
     {
         var parameters = new DialogParameters();
         //parameters.Add("model", new Belt());
         parameters.Add("itemId", itemId);
+        parameters.Add("itemName", itemName);
+        parameters.Add("itemImage", itemImage);
 
         var options = new DialogOptions { DisableBackdropClick = false };
         var dialog = _dialogService.Show<DeleteModal>("Delete an Acc", parameters, options);

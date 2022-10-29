@@ -2,8 +2,9 @@
     <DialogContent>
         <MudForm Model="@itemId">
             <MudTextField Label="BeltId" Value="itemId" ReadOnly="true" />
-@*            <MudTextField Label="Image" Value="model.Image" ReadOnly="true" />
-            <MudTextField Label="Name" Value="model.Name" ReadOnly="true" />*@
+            <MudTextField Label="BeltName" Value="itemName" ReadOnly="true" />
+            <img src="item.Image" style="width:200px; height:100px;" />
+            <MudText Typo="Typo.h4" Class="mt-2"> Are you sure? </MudText>
         </MudForm>
 
     </DialogContent>
@@ -16,8 +17,9 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter] public int itemId{ get; set; }
+    [Parameter] public string itemName { get; set; }
+    [Parameter] public string itemImage { get; set; }
     [Parameter] public Belt model { get; set; } = new();
-    public string ReadOnly{ get; set; }
 
     void Submit()
     {
