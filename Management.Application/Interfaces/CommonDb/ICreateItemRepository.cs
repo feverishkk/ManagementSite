@@ -7,8 +7,7 @@ namespace Management.Application.Interfaces.CommonDb
 {
     public interface ICreateItemRepository
     {
-        //Task<Belt> CreateAccItem(ArrayList arrayList);
-        Task<Belt> CreateAccItem(Belt arrayList);
-        Task<Belt> DeleteAccItem(int itemId);
+        Task<string> CreateAccItem(Belt arrayList);
+        Task<string> DeleteAccItem(int itemId);
     }
 }

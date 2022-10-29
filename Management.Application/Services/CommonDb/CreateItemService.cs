@@ -22,22 +22,16 @@ namespace Management.Application.Services.CommonDb
             _httpClient = httpClient;
         }
 
-        //public async Task<Belt> CreateAccItem(ArrayList arrayList)
-        //{
-        //    var response = await _httpClient.PostAsJsonAsync("/Create/CreateAccItem", arrayList);
-        //    return await response.Content.ReadFromJsonAsync<Belt>();
-        //}
-        public async Task<Belt> CreateAccItem(Belt arrayList)
+        public async Task<string> CreateAccItem(Belt arrayList)
         {
             var response = await _httpClient.PostAsJsonAsync("/Create/CreateAccItem", arrayList);
-            return await response.Content.ReadFromJsonAsync<Belt>();
-
+            return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<Belt> DeleteAccItem(int itemId)
+        public async Task<string> DeleteAccItem(int itemId)
         {
             var response = await _httpClient.PostAsJsonAsync("/Create/DeleteAccItem", itemId);
-            return await response.Content.ReadFromJsonAsync<Belt>();
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

@@ -88,7 +88,7 @@
             Belt accInfo = result.Data as Belt;
             await _createItemService.CreateAccItem(accInfo);
 
-            StateHasChanged();
+            _navigationManager.NavigateTo("/acc", true);
         }
 
     }
@@ -96,7 +96,6 @@
     private async Task DeleteAccDialog(int itemId, string itemName, string itemImage)
     {
         var parameters = new DialogParameters();
-        //parameters.Add("model", new Belt());
         parameters.Add("itemId", itemId);
         parameters.Add("itemName", itemName);
         parameters.Add("itemImage", itemImage);
@@ -111,7 +110,8 @@
         {
             Belt accInfo = result.Data as Belt;
             await _createItemService.DeleteAccItem(itemId);
-            StateHasChanged();
+
+            _navigationManager.NavigateTo("/acc", true);
         }
     }
 
