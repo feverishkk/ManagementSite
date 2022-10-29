@@ -34,6 +34,10 @@ namespace Management.Application.Services.CommonDb
 
         }
 
-
+        public async Task<Belt> DeleteAccItem(int itemId)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/Create/DeleteAccItem", itemId);
+            return await response.Content.ReadFromJsonAsync<Belt>();
+        }
     }
 }

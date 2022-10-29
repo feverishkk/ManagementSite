@@ -9,5 +9,6 @@ namespace Management.Application.Interfaces.CommonDb
     {
         //Task<Belt> CreateAccItem(ArrayList arrayList);
         Task<Belt> CreateAccItem(Belt arrayList);
+        Task<Belt> DeleteAccItem(int itemId);
     }
 }

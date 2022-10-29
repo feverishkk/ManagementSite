@@ -1,0 +1,33 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm Model="@itemId">
+            <MudTextField Label="BeltId" Value="itemId" ReadOnly="true" />
+@*            <MudTextField Label="Image" Value="model.Image" ReadOnly="true" />
+            <MudTextField Label="Name" Value="model.Name" ReadOnly="true" />*@
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public int itemId{ get; set; }
+    [Parameter] public Belt model { get; set; } = new();
+    public string ReadOnly{ get; set; }
+
+    void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<Belt>(model));
+    }
+
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+
+}

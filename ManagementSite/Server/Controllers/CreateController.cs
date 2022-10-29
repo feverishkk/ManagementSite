@@ -43,7 +43,7 @@ namespace ManagementSite.Server.Controllers
             {
                 return BadRequest();
             }
-            if (accImageAddress is null || accName is null || accName is null 
+            if (accImageAddress is null || accName is null || accName is null
                 || ac > 0 || accClass is null || accDescription is null)
             {
                 return BadRequest();
@@ -61,10 +61,10 @@ namespace ManagementSite.Server.Controllers
 
             int items = _commonDbContext.Database.ExecuteSqlRaw
                        ("INSERT INTO Belt (BeltId, Image, Name, AC, Class, Description) " +
-                        "VALUES (@paramAccId, @paramImageAddress, @paramAccName, @paramAc, @paramAccClass, @paramAccDesc)", 
+                        "VALUES (@paramAccId, @paramImageAddress, @paramAccName, @paramAc, @paramAccClass, @paramAccDesc)",
                         paramItems);
 
-            if(items is 0)
+            if (items is 0)
             {
                 return BadRequest();
             }
@@ -72,6 +72,34 @@ namespace ManagementSite.Server.Controllers
             return Ok();
 
         }
+
+        [HttpPost]
+        public IActionResult DeleteAccItem([FromBody] int itemId)
+        {
+            if (itemId is 0)
+            {
+                return BadRequest();
+            }
+
+            object[] objects = new object[]
+            {
+                new SqlParameter("@paramBeltId", itemId)
+            };
+
+            int items = _commonDbContext.Database.ExecuteSqlRaw
+                ("DELETE FROM Belt WHERE BeltId=@paramBeltId", objects);
+
+            if(items is 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+
+
+
 
     }
 }
