@@ -1,0 +1,41 @@
+﻿<MudTable Items="@CustomersEquipment" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Weapon</MudTh>
+        <MudTh>TShirt</MudTh>
+        <MudTh>Armor</MudTh>
+        <MudTh>Cape</MudTh>
+        <MudTh>Helmet</MudTh>
+        <MudTh>Neckless</MudTh>
+        <MudTh>Ring 1</MudTh>
+        <MudTh>Ring 2</MudTh>
+        <MudTh>Belt</MudTh>
+        <MudTh>Boots</MudTh>
+        <MudTh>Ear Ring</MudTh>
+        <MudTh>Guard</MudTh>
+        <MudTh>Globe</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Weapon">@context.TotalWeapons.Name</MudTd>
+        <MudTd DataLabel="TShirt">@context?.TShirt?.Name</MudTd>
+        <MudTd DataLabel="Armor">@context?.Armor?.Name</MudTd>
+        <MudTd DataLabel="Cape"> @context?.Cape?.Name</MudTd>
+        <MudTd DataLabel="Helmet"> @context?.Helmet?.Name  </MudTd>
+        <MudTd DataLabel="Neckless"> @context?.Neckless?.Name  </MudTd>
+        <MudTd DataLabel="Ring 1"> @context?.Ring1?.Name</MudTd>
+        <MudTd DataLabel="Ring 2"> @context?.Ring2?.Name</MudTd>
+        <MudTd DataLabel="Belt"> @context?.Belt?.Name</MudTd>
+        <MudTd DataLabel="Boots"> @context?.Boots?.Name</MudTd>
+        <MudTd DataLabel="Ear Ring"> @context?.EarRing?.Name</MudTd>
+        <MudTd DataLabel="Guard"> @context?.Guard?.Name</MudTd>
+        <MudTd DataLabel="Globe"> @context?.Globe?.Name</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    [Parameter]
+    public IEnumerable<CustomerEquipmentViewModel> CustomersEquipment { get; set; } = new List<CustomerEquipmentViewModel>();
+
+    
+
+
+}

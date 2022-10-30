@@ -1,0 +1,17 @@
+﻿<MudTable Items="@InGameInfo" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Game Character Name</MudTh>
+        <MudTh>Guild Name</MudTh>
+        <MudTh>Game Character Class</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Game Character Name">@context.UserName</MudTd>
+        <MudTd DataLabel="GuildName">@context?.GuildName</MudTd>
+        <MudTd DataLabel="Game Character Class"> @context.UserClass</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code{
+    [Parameter]
+    public IEnumerable<CustomersInGameInfoViewModel> InGameInfo { get; set; } = new List<CustomersInGameInfoViewModel>();
+}

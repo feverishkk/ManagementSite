@@ -1,0 +1,72 @@
+﻿@page "/customeringameinfo/{UserId}"
+@*@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]*@
+
+<CustomersInGameInfo InGameInfo="InGameInfo" />
+
+<MudSpacer />
+
+<CustomerEquipment CustomersEquipment="@CustomersEquipment" />
+
+<MudSpacer />
+
+<MudCard>
+    <MudForm Model="@BeltModel" @ref="@form">
+        <MudCardContent>
+            <MudSelect Label="Belt" @bind-Value="BeltModel.BeltId" For="@(()=>BeltModel.BeltId)">
+                @foreach (var belt in Belts)
+                {
+                    <MudSelectItem Value="@belt.BeltId">@belt.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(BeltModel, UserId))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    MudForm form;
+    private MudTable<CustomersViewModel> table;
+
+    public Belt BeltModel = new Belt();
+    private EarRing EarRingModel = new EarRing();
+
+    private IEnumerable<CustomersInGameInfoViewModel> InGameInfo { get; set; } = new List<CustomersInGameInfoViewModel>();
+    private IEnumerable<CustomerEquipmentViewModel> CustomersEquipment { get; set; } = new List<CustomerEquipmentViewModel>();
+
+    private IEnumerable<Belt> Belts = new List<Belt>();
+    private IEnumerable<EarRing> EarRings = new List<EarRing>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadData()
+    {
+        InGameInfo = await _customersHttpService.CustomersInGameInfo(UserId);
+        CustomersEquipment = await _customersHttpService.CustomersEquipment(UserId);
+        Belts = await _getItemHttpService.GetBelt();
+        //EarRings = await _commDbService.GetEarRings();
+        //Accs = await _commonDbService.GetAcc();
+    }
+
+    public async Task OnSelect(Belt belt, string userId)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(belt.BeltId);
+        userInfo.Add(userId);
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+
+}
