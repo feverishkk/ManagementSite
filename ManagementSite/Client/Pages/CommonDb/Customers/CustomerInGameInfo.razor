@@ -71,14 +71,14 @@
     public string UserId { get; set; }
 
     MudForm form;
-    private MudTable<CustomersDto> table;
+    private MudTable<CustomersViewModel> table;
 
     public Belt BeltModel = new Belt();
     private EarRing EarRingModel = new EarRing();
 
 
-    private IEnumerable<CustomersInGameInfoDto> InGameInfo = new List<CustomersInGameInfoDto>();
-    private IEnumerable<CustomerEquipmentDto> CustomersEquipment = new List<CustomerEquipmentDto>();
+    private IEnumerable<CustomersInGameInfoViewModel> InGameInfo = new List<CustomersInGameInfoViewModel>();
+    private IEnumerable<CustomerEquipmentViewModel> CustomersEquipment = new List<CustomerEquipmentViewModel>();
 
     private IEnumerable<Belt> Belts = new List<Belt>();
     private IEnumerable<EarRing> EarRings = new List<EarRing>();

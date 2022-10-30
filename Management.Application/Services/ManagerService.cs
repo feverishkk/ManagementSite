@@ -1,4 +1,4 @@
-﻿using Management.Application.Dto.Managers;
+﻿using Management.Application.ViewModel.Managers;
 using Management.Application.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,9 +17,9 @@ namespace Management.Application.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<ManagersDto>> GetAllManagers()
+        public async Task<IEnumerable<ManagersViewModel>> GetAllManagers()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<ManagersDto>>("/Manager/GetAllManagers");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<ManagersViewModel>>("/Manager/GetAllManagers");
         }
 
         public async Task<ManagerResult> GetManagersInfo(string userId)
@@ -28,7 +28,7 @@ namespace Management.Application.Services
             return await response.Content.ReadFromJsonAsync<ManagerResult>();
         }
 
-        public async Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoDto managerInfoDto)
+        public async Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoViewModel managerInfoDto)
         {
             var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerInfo", managerInfoDto);
             return await response.Content.ReadFromJsonAsync<ManagerResult>();

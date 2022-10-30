@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Management.Application.Dto.Account;
+using Management.Application.ViewModel.Account;
 
 namespace Management.Application.Validator
 {
-    public class RegisterValidator : AbstractValidator<RegisterDto>
+    public class RegisterValidator : AbstractValidator<RegisterViewModel>
     {
         public RegisterValidator()
         {

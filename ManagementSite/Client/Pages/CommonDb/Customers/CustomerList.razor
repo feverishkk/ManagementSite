@@ -73,10 +73,10 @@
 
     private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
 
-    private MudTable<CustomersDto> table;
+    private MudTable<CustomersViewModel> table;
 
-    private IEnumerable<CustomersDto> CustomerUserList = new List<CustomersDto>();
-    private CustomersDto Customer { get; set; }
+    private IEnumerable<CustomersViewModel> CustomerUserList = new List<CustomersViewModel>();
+    private CustomersViewModel Customer { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,7 +85,7 @@
 
     private async Task LoadData()
     {
-        Customer = new CustomersDto();
+        Customer = new CustomersViewModel();
         CustomerUserList = await _customersService.GetAllCustomers();
         table.SetRowsPerPage(10);
     }

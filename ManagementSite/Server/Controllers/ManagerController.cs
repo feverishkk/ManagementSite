@@ -1,4 +1,4 @@
-﻿using Management.Application.Dto.Managers;
+﻿using Management.Application.ViewModel.Managers;
 using Management.Domain.Models;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ManagementSite.Server.Controllers
 {
+    /// <summary>
+    /// 사이트 담당 운영자들 정보
+    /// </summary>
     [Route("[controller]/[action]")]
     [ApiController]
     public class ManagerController : ControllerBase
@@ -125,7 +128,7 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateManagerInfo([FromBody] UpdateManagerInfoDto managerInfoDto)
+        public async Task<IActionResult> UpdateManagerInfo([FromBody] UpdateManagerInfoViewModel managerInfoDto)
         {
             if(managerInfoDto == null)
             {

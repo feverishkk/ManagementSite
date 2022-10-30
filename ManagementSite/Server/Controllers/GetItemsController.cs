@@ -14,6 +14,9 @@ using CommonDatabase.Models.Customers;
 
 namespace ManagementSite.Server.Controllers
 {
+    /// <summary>
+    /// 개별 아이템을 가져온다.
+    /// </summary>
     [Route("[controller]/[action]")]
     [ApiController]
     public partial class GetItemsController : ControllerBase
@@ -58,6 +61,7 @@ namespace ManagementSite.Server.Controllers
             return Ok(earRings);
         }
 
+        [HttpGet]
         public IActionResult GetAllWeapons()
         {
             var result = _customerTotalWeaponRepo.GetAll();

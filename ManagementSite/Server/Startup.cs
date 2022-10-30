@@ -1,5 +1,5 @@
 using Blazored.LocalStorage;
-using Management.Application.Dto.MappInitialiser;
+using Management.Application.ViewModel.MappInitialiser;
 using Management.Application.Interfaces;
 using Management.Application.Interfaces.CommonDb.GenericRepository;
 using Management.Application.Services;

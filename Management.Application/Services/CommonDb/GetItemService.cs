@@ -2,9 +2,9 @@
 using CommonDatabase.Models.Customers;
 using CommonDatabase.Models.TotalItems;
 using CommonDatabase.Models.Weapons;
-using Management.Application.Dto.Accessories;
-using Management.Application.Dto.CommonDb.Customers;
-using Management.Application.Dto.CommonDb.TotalItems;
+using Management.Application.ViewModel.Accessories;
+using Management.Application.ViewModel.CommonDb.Customers;
+using Management.Application.ViewModel.CommonDb.TotalItems;
 using Management.Application.Interfaces.CommonDb;
 using System.Collections.Generic;
 using System.Net.Http;

@@ -2,7 +2,7 @@ using Blazored.LocalStorage;
 using CommonDatabase.Models.Accessories;
 using CommonDatabase.Models.TotalItems;
 using Management.Application.Authentication;
-using Management.Application.Dto.CommonDb.TotalItems;
+using Management.Application.ViewModel.CommonDb.TotalItems;
 using Management.Application.Interfaces;
 using Management.Application.Interfaces.CommonDb;
 using Management.Application.Interfaces.CommonDb.GenericRepository;

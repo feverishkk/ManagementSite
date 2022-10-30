@@ -1,8 +1,8 @@
 ﻿using CommonDatabase.Models.Accessories;
 using CommonDatabase.Models.Customers;
 using CommonDatabase.Models.TotalItems;
-using Management.Application.Dto.CommonDb.Customers;
-using Management.Application.Dto.CommonDb.TotalItems;
+using Management.Application.ViewModel.CommonDb.Customers;
+using Management.Application.ViewModel.CommonDb.TotalItems;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

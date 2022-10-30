@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace ManagementSite.Server.Controllers
 {
+    /// <summary>
+    /// 고객들의 정보 관련
+    /// </summary>
     [Route("[controller]/[action]")]
     [ApiController]
     public class CustomersController : ControllerBase

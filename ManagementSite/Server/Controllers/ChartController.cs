@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace ManagementSite.Server.Controllers
 {
+    /// <summary>
+    /// 차트 관련
+    /// </summary>
     [Route("[controller]/[action]")]
     [ApiController]
     public class ChartController : ControllerBase

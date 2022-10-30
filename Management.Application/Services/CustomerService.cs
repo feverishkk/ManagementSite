@@ -1,6 +1,6 @@
 ﻿using CommonDatabase.Models.Accessories;
-using Management.Application.Dto.CommonDb.Customers;
-using Management.Application.Dto.Customers;
+using Management.Application.ViewModel.CommonDb.Customers;
+using Management.Application.ViewModel.Customers;
 using Management.Application.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,19 +19,19 @@ namespace Management.Application.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<CustomersDto>> GetAllCustomers()
+        public async Task<IEnumerable<CustomersViewModel>> GetAllCustomers()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersDto>>("Customers/GetAllCustomers");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersViewModel>>("Customers/GetAllCustomers");
         }
 
-        public async Task<IEnumerable<CustomersInGameInfoDto>> CustomersInGameInfo(string userId)
+        public async Task<IEnumerable<CustomersInGameInfoViewModel>> CustomersInGameInfo(string userId)
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersInGameInfoDto>>("Customers/GetCustomersInGameInfo?userId=" + userId);
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomersInGameInfoViewModel>>("Customers/GetCustomersInGameInfo?userId=" + userId);
         }
 
-        public async Task<IEnumerable<CustomerEquipmentDto>> CustomersEquipment(string userId)
+        public async Task<IEnumerable<CustomerEquipmentViewModel>> CustomersEquipment(string userId)
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerEquipmentDto>>("Customers/GetCustomerEquipment?userId=" + userId);
+            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerEquipmentViewModel>>("Customers/GetCustomerEquipment?userId=" + userId);
         }
 
     }

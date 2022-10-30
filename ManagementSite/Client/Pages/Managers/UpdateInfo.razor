@@ -24,11 +24,11 @@
     public string UserId { get; set; }
 
     private ManagerResult ApplicationUsers;
-    private UpdateManagerInfoDto model;
+    private UpdateManagerInfoViewModel model;
 
     protected override async Task OnInitializedAsync()
     {
-        model = new UpdateManagerInfoDto();
+        model = new UpdateManagerInfoViewModel();
         await LoadData();
 
         await base.OnInitializedAsync();

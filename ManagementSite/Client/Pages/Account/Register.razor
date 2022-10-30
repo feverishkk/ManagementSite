@@ -73,7 +73,7 @@
 
 
 @code {
-    RegisterDto model { get; set; }
+    RegisterViewModel model { get; set; }
     //private RegisterValidator _validations { get; set; }
 
     MudForm form;
@@ -84,7 +84,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        model = new RegisterDto();
+        model = new RegisterViewModel();
     }
 
     private async Task OnValidSubmit()

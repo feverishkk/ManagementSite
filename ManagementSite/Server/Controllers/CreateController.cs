@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ManagementSite.Server.Controllers
 {
+    /// <summary>
+    /// 아이템 CRUD
+    /// </summary>
     [Route("[controller]/[action]")]
     [ApiController]
     public class CreateController : ControllerBase

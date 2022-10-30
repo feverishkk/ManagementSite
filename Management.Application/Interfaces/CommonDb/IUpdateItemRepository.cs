@@ -1,5 +1,5 @@
 ﻿using CommonDatabase.Models.Accessories;
-using Management.Application.Dto.CommonDb.Customers;
+using Management.Application.ViewModel.CommonDb.Customers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;

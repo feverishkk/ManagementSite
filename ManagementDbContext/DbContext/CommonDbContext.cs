@@ -5,12 +5,6 @@ using CommonDatabase.Models.TotalItems;
 using CommonDatabase.Models.Weapons;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using CommonDatabase.Models.Customers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManagementDbContext.DbContext
 {

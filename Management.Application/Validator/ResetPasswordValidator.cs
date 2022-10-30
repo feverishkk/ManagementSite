@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Management.Application.Dto.Account;
+using Management.Application.ViewModel.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Validator
 {
-    public class ResetPasswordValidator : AbstractValidator<ResetPasswordDto>
+    public class ResetPasswordValidator : AbstractValidator<ResetPasswordViewModel>
     {
         public ResetPasswordValidator()
         {

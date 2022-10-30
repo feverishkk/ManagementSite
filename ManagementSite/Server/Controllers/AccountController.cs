@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Management.Application.Interfaces;
 using System.Threading.Tasks;
-using Management.Application.Dto.Account;
+using Management.Application.ViewModel.Account;
 using Microsoft.AspNetCore.Identity;
 using Management.Domain.Models;
 using System;
@@ -15,6 +15,9 @@ using Management.Application.Validator;
 
 namespace ManagementSite.Server.Controllers
 {
+    /// <summary>
+    /// 계정 관련
+    /// </summary>
     [ApiController]
     [Route("[controller]/[action]")]
     public class AccountController : ControllerBase
@@ -37,7 +40,7 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerDto)
         {
             if (!ModelState.IsValid || registerDto == null)
             {
@@ -137,7 +140,7 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginDto)
         {
             if (!ModelState.IsValid || loginDto == null)
             {
@@ -195,7 +198,7 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel changePasswordDto)
         {
             var user = _userManager.FindByEmailAsync(changePasswordDto.Email);
             if (user == null || changePasswordDto == null)
@@ -225,7 +228,7 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel forgotPasswordDto)
         {
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
             if (user == null || !ModelState.IsValid)
@@ -255,7 +258,7 @@ namespace ManagementSite.Server.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel resetPasswordDto)
         {
             if (resetPasswordDto == null || !ModelState.IsValid)
             {

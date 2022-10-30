@@ -1,6 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Management.Application.Authentication;
-using Management.Application.Dto.Account;
+using Management.Application.ViewModel.Account;
 using Management.Application.Interfaces;
 using Management.Domain.Models;
 using ManagementDbContext.DbContext;
@@ -30,13 +30,13 @@ namespace Management.Application.Services
             _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<RegisterResult> Register(RegisterDto registerDto)
+        public async Task<RegisterResult> Register(RegisterViewModel registerDto)
         {
             var response = await _httpClient.PostAsJsonAsync("Account/Register", registerDto);
             return await response.Content.ReadFromJsonAsync<RegisterResult>();
         }
 
-        public async Task<LoginResult> Login(LoginDto loginDto)
+        public async Task<LoginResult> Login(LoginViewModel loginDto)
         {
             var response = await _httpClient.PostAsJsonAsync("Account/Login", loginDto);
             var loginResult = JsonSerializer.Deserialize<LoginResult>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });    
@@ -58,19 +58,19 @@ namespace Management.Application.Services
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<ChangePasswordResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        public async Task<ChangePasswordResult> ChangePassword(ChangePasswordViewModel changePasswordDto)
         {
             var result = await _httpClient.PostAsJsonAsync("Account/ChangePassword", changePasswordDto);
             return await result.Content.ReadFromJsonAsync<ChangePasswordResult>();
         }
 
-        public async Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+        public async Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordDto)
         {
             var result = await _httpClient.PostAsJsonAsync("Account/ForgotPassword", forgotPasswordDto);
             return await result.Content.ReadFromJsonAsync<ForgotPasswordResult>();
         }
 
-        public async Task<ResetPasswordResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+        public async Task<ResetPasswordResult> ResetPassword(ResetPasswordViewModel resetPasswordDto)
         {
             var result = await _httpClient.PostAsJsonAsync("Account/ResetPassword", resetPasswordDto);
             return await result.Content.ReadFromJsonAsync<ResetPasswordResult>();

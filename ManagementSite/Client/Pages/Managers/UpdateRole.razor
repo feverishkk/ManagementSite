@@ -52,12 +52,12 @@
 
     public RoleList RoleList { get; set; }
 
-    private UpdateManagerRoleDto model { get; set; }
+    private UpdateManagerRoleViewModel model { get; set; }
     public string CurrentUserRole { get; set; }
 
     protected override void OnInitialized()
     {
-        model = new UpdateManagerRoleDto();
+        model = new UpdateManagerRoleViewModel();
         base.OnInitialized();
     }
     protected override async Task OnParametersSetAsync()

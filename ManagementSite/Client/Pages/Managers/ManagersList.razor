@@ -1,7 +1,7 @@
 ﻿@page "/managerlist"
 
 <MudTable Items="@Managers" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped"
-          Filter="new Func<ManagersDto, bool>(FilterFunction)" @ref="table">
+          Filter="new Func<ManagersViewModel, bool>(FilterFunction)" @ref="table">
 
     <ToolBarContent>
         <MudText Typo="Typo.h6">Managers List</MudText>
@@ -81,9 +81,9 @@
 
     private int[] pageSizeOptions = new int[] { 5, 10, 15, 20 };
 
-    private MudTable<ManagersDto> table;
+    private MudTable<ManagersViewModel> table;
 
-    private IEnumerable<ManagersDto> Managers = new List<ManagersDto>();
+    private IEnumerable<ManagersViewModel> Managers = new List<ManagersViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -122,9 +122,9 @@
         _navigationManager.NavigateTo($"/manager/updateinfo/{user.Id}");
     }
 
-    private bool FilterFunction(ManagersDto managers) => FilterFunc(managers, searchString);
+    private bool FilterFunction(ManagersViewModel managers) => FilterFunc(managers, searchString);
 
-    private bool FilterFunc(ManagersDto managers, string searchString)
+    private bool FilterFunc(ManagersViewModel managers, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString)) return true;
 

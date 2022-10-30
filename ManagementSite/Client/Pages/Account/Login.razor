@@ -28,14 +28,14 @@
 </EditForm>
 
 @code {
-    private LoginDto model = new();
+    private LoginViewModel model = new();
     private bool ShowErrors { get; set; } = false;
     private string Errors { get; set; } = string.Empty;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        model = new LoginDto();
+        model = new LoginViewModel();
     }
 
     private async Task OnValidSubmit()

@@ -31,7 +31,7 @@
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Options">
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Error" Variant="Variant.Filled"
-                       OnClick="@(()=>DeleteAccDialog(context.BeltId, context.Name, context.Image))">
+                       OnClick="@(()=>DeleteDialog(context.BeltId, context.Name, context.Image))">
                 Delete Item
             </MudButton>
         </MudTd>
@@ -93,7 +93,7 @@
 
     }
 
-    private async Task DeleteAccDialog(int itemId, string itemName, string itemImage)
+    private async Task DeleteDialog(int itemId, string itemName, string itemImage)
     {
         var parameters = new DialogParameters();
         parameters.Add("itemId", itemId);
