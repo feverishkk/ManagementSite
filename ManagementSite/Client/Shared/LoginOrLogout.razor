@@ -1,0 +1,28 @@
+﻿<AuthorizeView>
+
+    <Authorized>
+        <MudText Typo="Typo.h6" > Good day! @context.User.Identity.Name </MudText>
+
+        <MudIconButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Class="ml-3"
+                       Icon="@Icons.Material.Filled.Logout" Color="Color.Secondary" OnClick="OnLogout" />
+    </Authorized>
+
+    <NotAuthorized>
+        <MudIconButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" OnClick="OnLogin" 
+        Icon="@Icons.Material.Filled.Login" Color="Color.Error"/>
+    </NotAuthorized>
+
+</AuthorizeView>
+
+@code {
+    private async Task OnLogout()
+    {
+        await _accountService.Logout();
+        _navigationManager.NavigateTo("/");
+    }
+
+    private async Task OnLogin()
+    {
+        _navigationManager.NavigateTo("/login");
+    }
+}

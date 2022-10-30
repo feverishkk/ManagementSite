@@ -1,0 +1,21 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <MudNavLink Match="NavLinkMatch.All" Href="changepassword">change password</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="managerlist">manager list</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="customerlist">customer list</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="userclasschart">chart</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="itemlist">item list</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="weapons">weapons list</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="equipment">equipment list</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="accessories">accessories list</MudNavLink>
+    </Authorized>
+    <NotAuthorized>
+        <MudNavLink Match="NavLinkMatch.All" Href="login">login</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="register">register</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="forgotpassword">forgot password</MudNavLink>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+}

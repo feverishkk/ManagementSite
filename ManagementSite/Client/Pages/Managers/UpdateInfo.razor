@@ -1,4 +1,5 @@
 ﻿@page "/manager/updateinfo/{UserId}"
+@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]
 
 <h3>UpdateInfo</h3>
 

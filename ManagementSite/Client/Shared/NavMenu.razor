@@ -1,38 +1,32 @@
 ﻿<MudLayout>
+
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
+        <LoginOrLogout />
     </MudAppBar>
+
     <MudDrawer @bind-Open="@open" Elevation="1">
+
         <MudDrawerHeader>
-            <MudText Typo="Typo.h6">My App</MudText>
+            <MudText Typo="Typo.h6">Management Site</MudText>
         </MudDrawerHeader>
+
         <MudNavMenu>
-            <MudNavLink Match="NavLinkMatch.All" Href="counter">counter</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="fetchdata">fetchdata</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="register">register</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="login">login</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="changepassword">change password</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="forgotpassword">forgot password</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="managerlist">manager list</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="customerlist">customer list</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="userclasschart">chart</MudNavLink>
-            <p>--------------------------------</p>
-            <MudNavLink Match="NavLinkMatch.All" Href="itemlist">item list</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="weapons">weapons list</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="equipment">equipment list</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="accessories">accessories list</MudNavLink>
+            <MainMenu />
         </MudNavMenu>
+
     </MudDrawer>
+
     <MudMainContent Class="pt-16 px-16">
         <MudContainer Class="mt-6">
             @*<MudAlert Severity="Severity.Success" Class="mt-16">Text inside MudContainer</MudAlert>*@
         </MudContainer>
     </MudMainContent>
+
 </MudLayout>
 
-@code{
+@code {
     bool open = false;
 
     void ToggleDrawer()

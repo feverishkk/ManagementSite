@@ -1,4 +1,5 @@
 ﻿@page "/customeringameinfo/{UserId}"
+@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]
 
 <MudTable Items="@InGameInfo" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
     <HeaderContent>

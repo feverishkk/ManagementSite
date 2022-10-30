@@ -1,4 +1,5 @@
 ﻿@page "/customerlist"
+@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]
 
 <MudTable Items="@CustomerUserList" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @ref="table">
 
