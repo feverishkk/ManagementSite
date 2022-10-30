@@ -75,7 +75,6 @@
 
 @code {
     RegisterViewModel model { get; set; }
-    //private RegisterValidator _validations { get; set; }
 
     MudForm form;
 
@@ -90,7 +89,7 @@
 
     private async Task OnValidSubmit()
     {
-        var result = await _accountService.Register(model);
+        var result = await _accountHttpService.Register(model);
         if (!result.Successful)
         {
             Errors = result.Errors;

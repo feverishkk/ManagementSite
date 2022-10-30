@@ -41,7 +41,7 @@
 
     private async Task OnValidSubmit()
     {
-        var result = await _accountService.Login(model);
+        var result = await _accountHttpService.Login(model);
 
         if (!result.Successful)
         {

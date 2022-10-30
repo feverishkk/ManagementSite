@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerHttpRepository
     {
         Task<IEnumerable<CustomersViewModel>> GetAllCustomers();
         Task<IEnumerable<CustomersInGameInfoViewModel>> CustomersInGameInfo(string userId);

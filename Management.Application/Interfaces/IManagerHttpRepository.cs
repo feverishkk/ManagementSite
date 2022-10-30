@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces
 {
-    public interface IManagerRepository
+    public interface IManagerHttpRepository
     {
         Task<IEnumerable<ManagersViewModel>> GetAllManagers();
         Task<ManagerResult> GetManagersInfo(string userId);

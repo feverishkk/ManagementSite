@@ -62,7 +62,7 @@
     }
     protected override async Task OnParametersSetAsync()
     {
-        var result = await _managerService.GetUserRole(UserId);
+        var result = await _managerHttpService.GetUserRole(UserId);
 
         if (!result.Successful)
         {
@@ -82,7 +82,7 @@
         paramList.Add(UserId); // 현재 로그인되어 있는 유저의 Id
         paramList.Add(CurrentUserRole); // 타켓유저의 Role
         paramList.Add(RoleList.ToString()); // 바꿀 Role의 이름
-        var result = await _managerService.UpdateManagerRole(paramList);
+        var result = await _managerHttpService.UpdateManagerRole(paramList);
         if (!result.Successful)
         {
             ErrorMessages = "Error!";

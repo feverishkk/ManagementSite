@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services
 {
-    public class AccountService : IAccountRepository
+    public class AccountHttpService : IAccountHttpRepository
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        public AccountService(HttpClient httpClient, ILocalStorageService localStorage, 
+        public AccountHttpService(HttpClient httpClient, ILocalStorageService localStorage, 
                               AuthenticationStateProvider authenticationStateProvider)
         {
             _httpClient = httpClient;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces.CommonDb
 {
-    public interface IGetItemRepository
+    public interface IGetItemHttpRepository
     {
         Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon();
         Task<IEnumerable<Belt>> GetBelt();

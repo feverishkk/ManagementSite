@@ -52,10 +52,10 @@
 
     private async Task LoadData()
     {
-        CustomersInGameClass = await _chartService.GetUserClassChart();
-        CustomersGender = await _chartService.GetUserGenderChart();
-        WhoIsTheHighPaidCash = await _chartService.GetWhoIsTheHighPaidCash();
-        GetActiveUsers = await _chartService.GetActiveUsers();
+        CustomersInGameClass = await _chartHttpService.GetUserClassChart();
+        CustomersGender = await _chartHttpService.GetUserGenderChart();
+        WhoIsTheHighPaidCash = await _chartHttpService.GetWhoIsTheHighPaidCash();
+        GetActiveUsers = await _chartHttpService.GetActiveUsers();
     }
 
 }

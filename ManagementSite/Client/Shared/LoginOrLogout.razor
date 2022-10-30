@@ -17,11 +17,11 @@
 @code {
     private async Task OnLogout()
     {
-        await _accountService.Logout();
+        await _accountHttpService.Logout();
         _navigationManager.NavigateTo("/");
     }
 
-    private async Task OnLogin()
+    private void OnLogin()
     {
         _navigationManager.NavigateTo("/login");
     }

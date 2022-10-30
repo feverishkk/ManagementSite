@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services.CommonDb
 {
-    public class UpdateItemService : IUpdateItemRepository
+    public class UpdateItemHttpService : IUpdateItemHttpRepository
     {
         private readonly HttpClient _httpClient;
 
 
-        public UpdateItemService(HttpClient httpClient)
+        public UpdateItemHttpService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

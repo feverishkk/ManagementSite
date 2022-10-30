@@ -93,13 +93,13 @@
 
     private async Task LoadData()
     {
-        Managers = await _managerService.GetAllManagers();
+        Managers = await _managerHttpService.GetAllManagers();
         table.SetRowsPerPage(10);
     }
 
     private async Task DeleteSubmit(string userId)
     {
-        var user = await _managerService.DeleteManager(userId);
+        var user = await _managerHttpService.DeleteManager(userId);
         if (!user.Successful)
         {
             Succesful = false;

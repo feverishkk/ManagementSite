@@ -92,9 +92,9 @@
 
     private async Task LoadData()
     {
-        InGameInfo = await _customersService.CustomersInGameInfo(UserId);
-        CustomersEquipment = await _customersService.CustomersEquipment(UserId);
-        Belts = await _getItemService.GetBelt();
+        InGameInfo = await _customersHttpService.CustomersInGameInfo(UserId);
+        CustomersEquipment = await _customersHttpService.CustomersEquipment(UserId);
+        Belts = await _getItemHttpService.GetBelt();
         //EarRings = await _commDbService.GetEarRings();
         //Accs = await _commonDbService.GetAcc();
     }
@@ -105,7 +105,7 @@
 
         userInfo.Add(belt.BeltId);
         userInfo.Add(userId);
-        await _updateItemService.UpdateCustomerEquipment(userInfo);
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
 
         StateHasChanged();
     }

@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services.CommonDb
 {
-    public class CreateItemService : ICreateItemRepository
+    public class CreateItemHttpService : ICreateItemHttpRepository
     {
         private readonly HttpClient _httpClient;
 
-        public CreateItemService(HttpClient httpClient)
+        public CreateItemHttpService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

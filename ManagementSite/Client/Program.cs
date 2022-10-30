@@ -34,13 +34,13 @@ namespace ManagementSite.Client
             builder.Services.AddMudServices();
             builder.Services.AddBlazoredLocalStorage();
 
-            builder.Services.AddTransient<IAccountRepository, AccountService>();
-            builder.Services.AddTransient<IManagerRepository, ManagerService>();
-            builder.Services.AddTransient<ICustomerRepository, CustomerService>();
-            builder.Services.AddTransient<IGetItemRepository, GetItemService>();
-            builder.Services.AddTransient<IChartRepository, ChartService>();
-            builder.Services.AddTransient<IUpdateItemRepository, UpdateItemService>();
-            builder.Services.AddTransient<ICreateItemRepository, CreateItemService>();
+            builder.Services.AddTransient<IAccountHttpRepository, AccountHttpService>();
+            builder.Services.AddTransient<IManagerHttpRepository, ManagerHttpService>();
+            builder.Services.AddTransient<ICustomerHttpRepository, CustomerHttpService>();
+            builder.Services.AddTransient<IGetItemHttpRepository, GetItemHttpService>();
+            builder.Services.AddTransient<IChartHttpRepository, ChartHttpService>();
+            builder.Services.AddTransient<IUpdateItemHttpRepository, UpdateItemHttpService>();
+            builder.Services.AddTransient<ICreateItemHttpRepository, CreateItemHttpService>();
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericService<>));
 

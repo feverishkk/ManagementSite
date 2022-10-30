@@ -47,7 +47,7 @@
 
     private async Task LoadData()
     {
-        TotalWeapons = await _getItemService.GetAllWeapon();
+        TotalWeapons = await _getItemHttpService.GetAllWeapon();
     }
 
 }

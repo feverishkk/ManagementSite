@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces.CommonDb
 {
-    public interface IUpdateItemRepository
+    public interface IUpdateItemHttpRepository
     {
         Task<Belt> UpdateCustomerEquipment(ArrayList userInfo);
     }

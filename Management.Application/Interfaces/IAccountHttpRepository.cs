@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces
 {
-    public interface IAccountRepository
+    public interface IAccountHttpRepository
     {
         Task<RegisterResult> Register(RegisterViewModel registerDto);
         Task<LoginResult> Login(LoginViewModel loginDto);

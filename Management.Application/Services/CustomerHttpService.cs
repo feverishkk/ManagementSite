@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services
 {
-    public class CustomerService : ICustomerRepository
+    public class CustomerHttpService : ICustomerHttpRepository
     {
         private readonly HttpClient _httpClient;
 
-        public CustomerService(HttpClient httpClient)
+        public CustomerHttpService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

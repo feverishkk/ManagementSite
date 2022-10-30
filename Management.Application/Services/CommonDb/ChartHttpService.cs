@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services.CommonDb
 {
-    public class ChartService : IChartRepository
+    public class ChartHttpService : IChartHttpRepository
     {
         private readonly HttpClient _httpClient;
 
-        public ChartService(HttpClient httpClient)
+        public ChartHttpService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

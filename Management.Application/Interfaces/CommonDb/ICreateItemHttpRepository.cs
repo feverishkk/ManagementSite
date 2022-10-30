@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces.CommonDb
 {
-    public interface ICreateItemRepository
+    public interface ICreateItemHttpRepository
     {
         Task<string> CreateAccItem(Belt arrayList);
         Task<string> DeleteAccItem(int itemId);

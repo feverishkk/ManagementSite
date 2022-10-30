@@ -87,7 +87,7 @@
     private async Task LoadData()
     {
         Customer = new CustomersViewModel();
-        CustomerUserList = await _customersService.GetAllCustomers();
+        CustomerUserList = await _customersHttpService.GetAllCustomers();
         table.SetRowsPerPage(10);
     }
 

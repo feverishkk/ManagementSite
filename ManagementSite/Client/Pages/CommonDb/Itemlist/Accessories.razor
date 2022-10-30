@@ -69,7 +69,7 @@
 
     private async Task LoadData()
     {
-        Belts = await _getItemService.GetBelt();
+        Belts = await _getItemHttpService.GetBelt();
     }
 
     private async Task CreateDialog()
@@ -87,7 +87,7 @@
         if (notCancelled is true && result.Data != null)
         {
             Belt accInfo = result.Data as Belt;
-            await _createItemService.CreateAccItem(accInfo);
+            await _createItemHttpService.CreateAccItem(accInfo);
 
             _navigationManager.NavigateTo("/acc", true);
         }
@@ -110,7 +110,7 @@
         if (notCancelled is true && result.Data != null)
         {
             Belt accInfo = result.Data as Belt;
-            await _createItemService.DeleteAccItem(itemId);
+            await _createItemHttpService.DeleteAccItem(itemId);
 
             _navigationManager.NavigateTo("/acc", true);
         }

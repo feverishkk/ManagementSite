@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Services
 {
-    public class ManagerService : IManagerRepository
+    public class ManagerHttpService : IManagerHttpRepository
     {
         private readonly HttpClient _httpClient;
 
-        public ManagerService(HttpClient httpClient)
+        public ManagerHttpService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

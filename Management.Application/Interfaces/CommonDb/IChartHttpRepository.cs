@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Management.Application.Interfaces.CommonDb
 {
-    public interface IChartRepository
+    public interface IChartHttpRepository
     {
         Task<double[]> GetUserClassChart();
         Task<double[]> GetUserGenderChart();

@@ -1,5 +1,4 @@
 using Blazored.LocalStorage;
-using Management.Application.ViewModel.MappInitialiser;
 using Management.Application.Interfaces;
 using Management.Application.Interfaces.CommonDb.GenericRepository;
 using Management.Application.Services;
@@ -83,7 +82,6 @@ namespace ManagementSite.Server
             services.AddMvc().AddControllersAsServices();
 
             services.AddControllers().AddNewtonsoftJson();
-            services.AddAutoMapper(typeof(MappInitialiser));
             services.AddBlazoredLocalStorage();
 
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
