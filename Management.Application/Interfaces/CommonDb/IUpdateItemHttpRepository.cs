@@ -9,5 +9,7 @@ namespace Management.Application.Interfaces.CommonDb
     public interface IUpdateItemHttpRepository
     {
         Task<Belt> UpdateCustomerEquipment(ArrayList userInfo);
+        //Task<Belt> UpdateAccItem(Belt arrayList);
+        Task<string> UpdateAccItem(Belt arrayList);
     }
 }

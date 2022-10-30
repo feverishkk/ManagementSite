@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ManagementSite.Server.Controllers
 {
@@ -57,6 +59,48 @@ namespace ManagementSite.Server.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult UpdateAccItem([FromBody] Belt arrayList)
+        {
+            if (arrayList is null)
+            {
+                return BadRequest();
+            }
+
+            var itemId = arrayList.BeltId;
+            if (itemId is 0)
+            {
+                return BadRequest();
+            }
+            var itemImage = arrayList.Image.ToString();
+            var itemName = arrayList.Name.ToString();
+            var itemAc = arrayList.AC;
+            var itemClass = arrayList.Class.ToString();
+            var itemDesc = arrayList.Description.ToString();
+
+            object[] paramItems = new object[]
+            {
+                new SqlParameter("@paramItemId", itemId),
+                new SqlParameter("@paramItemImage", itemImage),
+                new SqlParameter("@paramItemName", itemName),
+                new SqlParameter("@paramItemAc",itemAc),
+                new SqlParameter("@paramItemClass", itemClass),
+                new SqlParameter("@paramItemDesc",itemDesc)
+            };
+
+            int items = _commonDbContext.Database.ExecuteSqlRaw
+                        ("UPDATE Belt SET Image = @paramItemImage, Name = @paramItemName, AC = @paramItemAc, " +
+                         "Class = @paramItemClass, Description = @paramItemDesc " +
+                         "WHERE BeltId = @paramItemId", paramItems);
+
+            if(items is 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+
+        }
 
 
 

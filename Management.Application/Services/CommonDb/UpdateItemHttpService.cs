@@ -28,6 +28,10 @@ namespace Management.Application.Services.CommonDb
             return await response.Content.ReadFromJsonAsync<Belt>();
         }
 
-
+        public async Task<string> UpdateAccItem(Belt arrayList)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/UpdateItems/UpdateAccItem", arrayList);
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }
