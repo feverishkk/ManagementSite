@@ -1,5 +1,5 @@
 ﻿@page "/itemlist"
-@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]
+@*@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]*@
 <h3>Itemlist</h3>
 
 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Warning" OnClick="@(()=>WeaponPage())"> Weapons </MudButton>

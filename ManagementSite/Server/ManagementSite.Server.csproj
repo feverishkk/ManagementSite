@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Management.Application\Management.Application.csproj" />
+    <ProjectReference Include="..\..\Management.Infrastructure.IoC\Management.Infrastructure.IoC.csproj" />
     <ProjectReference Include="..\..\Management.Infrastructure.Shared\Management.Infrastructure.Shared.csproj" />
     <ProjectReference Include="..\..\ManagementDbContext\ManagementDbContext.csproj" />
     <ProjectReference Include="..\Client\ManagementSite.Client.csproj" />

@@ -4,6 +4,7 @@ using Management.Application.Interfaces.CommonDb.GenericRepository;
 using Management.Application.Services;
 using Management.Application.Services.CommonDb.GenericService;
 using Management.Domain.Models;
+using Management.Infrastructure.IoC;
 using Management.Infrastructure.Shared.EmailSender;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -34,50 +35,14 @@ namespace ManagementSite.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthenticationCore();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            });
+            services.AddIdentityDI();
+            services.AddJwtDI();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<CommonDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CommonDbConnection")));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
-            {
-                option.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["JwtIssuer"],
-                    ValidAudience = Configuration["JwtAudience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
-                };
-            });
-
-            // ForgotPassword & ResetPassword 토큰 제한시간, 즉 24시간내에 비밀번호를 바꿔야 된다는 뜻.
-            services.Configure<DataProtectionTokenProviderOptions>(options =>
-            {
-                options.TokenLifespan = TimeSpan.FromHours(24);
-            });
-           
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder => builder
-                       .AllowAnyOrigin()
-                       .AllowAnyHeader()
-                       .AllowAnyMethod());                     
-            });
 
             services.AddMvc().AddControllersAsServices();
 
