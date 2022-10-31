@@ -1,44 +1,24 @@
 ﻿@page "/"
-@*
-@using Microsoft.AspNetCore.WebUtilities
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
-
-<AuthorizeView>
-    <Authorized>
-        @context.User.Identity.Name
-    </Authorized>
-    <NotAuthorized>
-        <h5>Please Login :)</h5>
-
-        <p>
-            Click <a href="query-string-display?name=John">here</a>
-            to send a query string parameter to the component.
-        </p>
-
-    </NotAuthorized>
-</AuthorizeView>
-@code {
-    
-}*@
+@page "/home"
+@page "/index"
 
 @if (user is not null)
 {
-    <h3>@user.Identity.Name</h3>
+    
+    <MudSpacer />
+    
+    <MudText Typo="Typo.h2" Class="mt-5">@user.Identity.Name</MudText>
     <div class="m-2 p-2">
-        Is Authenticated: @user.Identity.IsAuthenticated
+        <MudText Typo="Typo.h2">Is Authenticated: @user.Identity.IsAuthenticated</MudText>
     </div>
     <div class="m-2 p-2">
-        Authentication Type: @user.Identity.AuthenticationType
+        <MudText Typo="Typo.h2">Authentication Type: @user.Identity.AuthenticationType</MudText>
     </div>
     <div class="m-2 p-2">
-        Admin Role: @user.IsInRole("Admin")
+       <MudText Typo="Typo.h2">Admin Role: @user.IsInRole("Admin")</MudText>
     </div>
     <div class="m-2 p-2">
-        <h5>Claims</h5>
+        <MudText Typo="Typo.h5">Claims</MudText>
         @foreach (var claim in user.Claims)
         {
             <span>

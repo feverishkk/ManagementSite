@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IAccountHttpRepository _accountService
+
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -33,7 +33,7 @@
 
     private async Task onClick()
     {
-        await _accountService.Logout();
+        await _accountHttpService.Logout();
         _navigationManager.NavigateTo("/");
     }
 }

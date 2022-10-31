@@ -3,8 +3,8 @@
 <h3>Itemlist</h3>
 
 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Warning" OnClick="@(()=>WeaponPage())"> Weapons </MudButton>
-<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success"> Equipment </MudButton>
-<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Secondary"> Acc </MudButton>
+<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" OnClick="@(()=>EquipmentPage())"> Equipment </MudButton>
+<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(()=>AccPage())"> Acc </MudButton>
 
 @code {
 
@@ -12,4 +12,15 @@
     {
         _navigationManager.NavigateTo("/itemlist/totalweapons");
     }
+
+    private void EquipmentPage()
+    {
+        _navigationManager.NavigateTo("/itemlist/totalequipments");
+    }
+
+    private void AccPage()
+    {
+        _navigationManager.NavigateTo("/itemlist/totalacc");
+    }
+
 }
