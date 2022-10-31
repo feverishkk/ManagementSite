@@ -1,33 +1,50 @@
 ﻿<AuthorizeView>
+
     <Authorized>
         <MudPaper>
             <MudNavMenu>
+
                 <MudNavGroup Title="Home">
                     <MudNavLink Match="NavLinkMatch.All" Href="/">Home</MudNavLink>
                 </MudNavGroup>
+
                 <MudNavGroup Title="Profile">
                     <MudNavLink Match="NavLinkMatch.All" Href="changepassword">Change Password</MudNavLink>
                 </MudNavGroup>
+
                 <MudNavGroup Title="Managers">
                     <MudNavLink Match="NavLinkMatch.All" Href="managerlist">Manager List</MudNavLink>
                 </MudNavGroup>
+
                 <MudNavGroup Title="Customers">
                     <MudNavLink Match="NavLinkMatch.All" Href="customerlist">Customer List</MudNavLink>
                 </MudNavGroup>
+
                 <MudNavGroup Title="Items">
-                    <MudNavLink Match="NavLinkMatch.All" Href="itemlist">Total Item List</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="weapons">Weapons List</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="equipment">Equipment List</MudNavLink>
+                    <MudNavLink  Match="NavLinkMatch.All" Href="itemlist">Total Item List</MudNavLink>
+
+                    <MudNavGroup Title="Weapon List">
+                         <MudNavLink Match="NavLinkMatch.All" Href="weapon/onehandsword">One Hand Sword</MudNavLink>
+                    </MudNavGroup>
+
+                    <MudNavGroup Title="Equipment List">
+                         <MudNavLink Match="NavLinkMatch.All" Href="eqp/armor">Armor</MudNavLink>
+                    </MudNavGroup>
+
+
                     <MudNavGroup Title="Accessories List">
                          <MudNavLink Match="NavLinkMatch.All" Href="acc/belt">Belt</MudNavLink>
                     </MudNavGroup>
                 </MudNavGroup>
+
                 <MudNavGroup Title="Statistics">
                     <MudNavLink Match="NavLinkMatch.All" Href="userclasschart">Chart</MudNavLink>
                 </MudNavGroup>
+
             </MudNavMenu>
         </MudPaper>
     </Authorized>
+
     <NotAuthorized>
         <MudNavLink Match="NavLinkMatch.All" Href="login">Login</MudNavLink>
         <MudNavLink Match="NavLinkMatch.All" Href="register">Register</MudNavLink>

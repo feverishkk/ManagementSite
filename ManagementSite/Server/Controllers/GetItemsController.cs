@@ -28,12 +28,15 @@ namespace ManagementSite.Server.Controllers
         private readonly IGenericRepository<Acc> _accRepo;
         private readonly IGenericRepository<Armor> _armorRepo;
         private readonly IGenericRepository<Dagger> _daggerRepo;
-        private readonly IGenericRepository<CustomerTotalWeapons> _customerTotalWeaponRepo;
+        private readonly IGenericRepository<TotalWeapons> _totalWeaponRepo;
+        private readonly IGenericRepository<TotalEquipment> _totalEquipmentRepo;
+        private readonly IGenericRepository<TotalAccessories> _totalAccRepo;
         
         public GetItemsController(CommonDbContext commonDbContext, IGenericRepository<Dagger> daggerRepo,
                                   IGenericRepository<Belt> beltRepo, IGenericRepository<EarRing> earRingRepo,
                                   IGenericRepository<Acc> accRepo, IGenericRepository<Armor> armorRepo,
-                                  IGenericRepository<CustomerTotalWeapons> customerTotalWeaponRepo)
+                                  IGenericRepository<TotalWeapons> totalWeaponRepo, IGenericRepository<TotalEquipment> equipmentRepo,
+                                  IGenericRepository<TotalAccessories> totalAccRepo)
         {
             _commonDbContext = commonDbContext;
             _daggerRepo = daggerRepo;
@@ -41,7 +44,9 @@ namespace ManagementSite.Server.Controllers
             _earRingRepo = earRingRepo;
             _accRepo = accRepo;
             _armorRepo = armorRepo;
-            _customerTotalWeaponRepo = customerTotalWeaponRepo;
+            _totalWeaponRepo = totalWeaponRepo;
+            _totalEquipmentRepo = equipmentRepo;
+            _totalAccRepo = totalAccRepo;
         }
         
 
@@ -64,13 +69,25 @@ namespace ManagementSite.Server.Controllers
         [HttpGet]
         public IActionResult GetAllWeapons()
         {
-            var result = _customerTotalWeaponRepo.GetAll();
+            var result = _totalWeaponRepo.GetAll();
 
             return Ok(result);
         }
 
+        [HttpGet]
+        public IActionResult GetAllEquipment()
+        {
+            var result = _totalEquipmentRepo.GetAll();
 
+            return Ok(result);
+        }
 
+        [HttpGet]
+        public IActionResult GetAllAcc()
+        {
+            var result = _totalAccRepo.GetAll();
 
+            return Ok(result);
+        }
     }
 }

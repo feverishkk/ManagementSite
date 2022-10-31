@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CommonDatabase.Models.Customers
 {
-    public class CustomerTotalWeapons
+    public class TotalWeapons
     {
         [Key]
         public int TotalWeaponId { get; set; }

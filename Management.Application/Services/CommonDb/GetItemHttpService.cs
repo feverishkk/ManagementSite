@@ -32,13 +32,20 @@ namespace Management.Application.Services.CommonDb
             return await _httpClient.GetFromJsonAsync<IEnumerable<EarRing>>("GetItems/GetEarRings");
         }
 
-        public async Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon()
+        public async Task<IEnumerable<TotalWeapons>> GetAllWeapon()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<CustomerTotalWeapons>>("GetItems/GetAllWeapons");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<TotalWeapons>>("GetItems/GetAllWeapons");
         }
 
+        public async Task<IEnumerable<TotalEquipment>> GetAllEquipment()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<TotalEquipment>>("GetItems/GetAllEquipment");
+        }
 
-
+        public async Task<IEnumerable<TotalAccessories>> GetAllAcc()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<TotalAccessories>>("GetItems/GetAllAcc");
+        }
 
     }
 }

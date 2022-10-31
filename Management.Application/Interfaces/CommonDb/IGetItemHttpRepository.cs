@@ -10,7 +10,9 @@ namespace Management.Application.Interfaces.CommonDb
 {
     public interface IGetItemHttpRepository
     {
-        Task<IEnumerable<CustomerTotalWeapons>> GetAllWeapon();
+        Task<IEnumerable<TotalWeapons>> GetAllWeapon();
+        Task<IEnumerable<TotalEquipment>> GetAllEquipment();
+        Task<IEnumerable<TotalAccessories>> GetAllAcc();
         Task<IEnumerable<Belt>> GetBelt();
         Task<IEnumerable<EarRing>> GetEarRings();
     }

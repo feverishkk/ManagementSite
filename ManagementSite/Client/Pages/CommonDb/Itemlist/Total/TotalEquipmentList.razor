@@ -1,9 +1,9 @@
-﻿@page "/itemlist/totalequipment"
+﻿@page "/itemlist/totaleqp"
 @attribute [Authorize]
 
 <MudTable Items="@TotalEquipments">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Weapon List</MudText>
+        <MudText Typo="Typo.h6">Equipment List</MudText>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>No</MudTh>
@@ -11,19 +11,17 @@
           동작은 함
         <MudTh>Image</MudTh>*@
         <MudTh>Name</MudTh>
-        <MudTh>Damage - Small Monster</MudTh>
-        <MudTh>Damage - Big Monster</MudTh>
+        <MudTh>AC</MudTh>
         <MudTh>Class</MudTh>
         <MudTh>Description</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="No">@context.TotalWeaponId</MudTd>
+        <MudTd DataLabel="No">@context.TotalEqpId</MudTd>
         @*<MudTd DataLabel="Image">
             <img src="@context.Image" style="height:100px; width:100px" />
         </MudTd>*@
         <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Damage - Small Monster">@context.Damage1</MudTd>
-        <MudTd DataLabel="Damage - Big Monster">@context.Damage2</MudTd>
+        <MudTd DataLabel="AC">@context.AC</MudTd>
         <MudTd DataLabel="Class">@context.Class</MudTd>
         <MudTd DataLabel="Description">@context.Description</MudTd>
     </RowTemplate>
@@ -36,8 +34,8 @@
 @code {
     private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
 
-    private CustomerEquipment totalEquipment = new();
-    private IEnumerable<CustomerEquipment> TotalEquipments { get; set; } = new List<CustomerEquipment>();
+    private TotalEquipment totalWeapons = new();
+    private IEnumerable<TotalEquipment> TotalEquipments { get; set; } = new List<TotalEquipment>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,7 +45,7 @@
 
     private async Task LoadData()
     {
-        TotalEquipments = await _getItemHttpService.GetAllWeapon();
+        TotalEquipments = await _getItemHttpService.GetAllEquipment();
     }
 
 }
