@@ -27,13 +27,13 @@ namespace ManagementDbContext.DbContext
         public DbSet<TotalEquipment> TotalEquipment { get; set; } = default;
         public DbSet<TotalAccessories> TotalAccessories { get; set; } = default;
 
-        public DbSet<DefendEquipment> Armor { get; set; } = default;
-        public DbSet<DefendEquipment> TShirt { get; set; } = default;
-        public DbSet<DefendEquipment> Cape { get; set; } = default;
-        public DbSet<DefendEquipment> Globe { get; set; } = default;
-        public DbSet<DefendEquipment> Guard { get; set; } = default;
-        public DbSet<DefendEquipment> Helmet { get; set; } = default;
-        public DbSet<DefendEquipment> Boots { get; set; } = default;
+        public DbSet<Armor> Armor { get; set; } = default;
+        public DbSet<TShirt> TShirt { get; set; } = default;
+        public DbSet<Cape> Cape { get; set; } = default;
+        public DbSet<Globe> Globe { get; set; } = default;
+        public DbSet<Guard> Guard { get; set; } = default;
+        public DbSet<Helmet> Helmet { get; set; } = default;
+        public DbSet<Boots> Boots { get; set; } = default;
 
         public DbSet<Neckless> Neckless { get; set; } = default;
         public DbSet<Belt> Belt { get; set; } = default;
@@ -41,13 +41,13 @@ namespace ManagementDbContext.DbContext
         public DbSet<Ring2> Ring2 { get; set; } = default;
         public DbSet<EarRing> EarRing { get; set; } = default;
 
-        public DbSet<Weapon> Dagger { get; set; } = default;
-        public DbSet<Weapon> OneHandBow { get; set; } = default;
-        public DbSet<Weapon> OneHandSword { get; set; } = default;
-        public DbSet<Weapon> OneHandStick { get; set; } = default;
-        public DbSet<Weapon> TwoHandSword { get; set; } = default;
-        public DbSet<Weapon> TwoHandBow { get; set; } = default;
-        public DbSet<Weapon> TwoHandStick { get; set; } = default;
+        public DbSet<Dagger> Dagger { get; set; } = default;
+        public DbSet<OneHandBow> OneHandBow { get; set; } = default;
+        public DbSet<OneHandSword> OneHandSword { get; set; } = default;
+        public DbSet<OneHandStick> OneHandStick { get; set; } = default;
+        public DbSet<TwoHandSword> TwoHandSword { get; set; } = default;
+        public DbSet<TwoHandBow> TwoHandBow { get; set; } = default;
+        public DbSet<TwoHandStick> TwoHandStick { get; set; } = default;
 
 
         protected override void OnModelCreating(ModelBuilder builder)

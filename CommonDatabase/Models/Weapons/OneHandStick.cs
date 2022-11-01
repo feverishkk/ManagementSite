@@ -5,7 +5,7 @@ namespace CommonDatabase.Models.Weapons
     public class OneHandStick
     {
         [Key]
-        public int WeaponId { get; set; }
+        public int OneHandStickId { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
         public int Damage1 { get; set; }

@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonDatabase", "CommonDat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonDatabase", "CommonDatabase\CommonDatabase.csproj", "{F7A40547-BB5C-4AAA-992A-8378CB88C578}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameSite", "GameSite", "{D93397E5-D897-4300-86CA-0098C6E46CC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGameSite", "MyGameSite\MyGameSite.csproj", "{BFB5B187-3A82-4B1A-9097-E4BFF8F53C64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,10 @@ Global
 		{F7A40547-BB5C-4AAA-992A-8378CB88C578}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7A40547-BB5C-4AAA-992A-8378CB88C578}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7A40547-BB5C-4AAA-992A-8378CB88C578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB5B187-3A82-4B1A-9097-E4BFF8F53C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB5B187-3A82-4B1A-9097-E4BFF8F53C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB5B187-3A82-4B1A-9097-E4BFF8F53C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB5B187-3A82-4B1A-9097-E4BFF8F53C64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +90,7 @@ Global
 		{3B76C844-27FC-4488-A002-22FC35A12F4F} = {7AE20F45-237A-4F15-A80E-2B5DCD8967FC}
 		{659C7941-3E90-4FF6-B526-C4DF55729B5D} = {7AE20F45-237A-4F15-A80E-2B5DCD8967FC}
 		{F7A40547-BB5C-4AAA-992A-8378CB88C578} = {98C8BD5E-16ED-4411-83AF-5B4E48A3E639}
+		{BFB5B187-3A82-4B1A-9097-E4BFF8F53C64} = {D93397E5-D897-4300-86CA-0098C6E46CC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD498718-DF06-49E1-AD71-C1D480B65561}

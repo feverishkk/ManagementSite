@@ -1,0 +1,46 @@
+﻿@using CommonDatabase.Models.Accessories
+@model IEnumerable<EarRing>
+
+<div style="height:300px">
+    <h4>귀걸이</h4>
+    <hr />
+    <div class="float-right">
+        <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/33/82/557c3f50f6149b3688b628d7.jpg" />
+    </div>
+    <p class="text-left ">
+        액세서리의 한 종류. <br />
+        대부분의 귀걸이에는 물리 방어력(AC) 대신 캐릭터의 최대 HP와 최대 MP에 관계된 옵션이 주로 붙어있으며, HP 회복, MP 회복 옵션이 붙은 귀걸이의 경우에는 상당히 인기가 높은 편이다.<br />
+        처음에는 1개만 착용할 수 있으나 60레벨이 되면 귀걸이 슬롯 개방을 하여 최대 2개를 착용한다. 이에 대한 자세한 내용은 귀걸이 슬롯 개방에서 확인할 수 있다.<br />
+    </p>
+</div>
+
+
+<h4 class="mt-5"> EarRing </h4>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>AC</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.EarRingId</th>
+                <th class="text-center table-active">
+                    <img src="@item.Image" style="width:65px; height:65px;" /> 
+                    <br /> @item.Name 
+                </th>
+                <th>@item.Class</th>
+                <th>@item.AC</th>
+                <th>@item.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>

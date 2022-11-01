@@ -1,0 +1,90 @@
+﻿<div class="mt-5 container">
+    <h5> Item Classification </h5>
+    <hr />
+</div>
+
+<table class="container table table-bordered">
+    <thead>
+
+        <tr style="width:100px;height:100px;">
+            <th class="myTrHeader text-center">
+                <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/36/93/66daabdeab40dde821d35877.jpg" />
+                <br />
+                <a asp-controller="Weapon" asp-action="Dagger"> Dagger </a>
+            </th>
+            <th class="text-left">
+                <p>
+                    가장 빠른 공격속도를 가진 무기.
+                    클래스에 따라 한손검을 착용했을 때보다
+                    5~30% 정도 빠른 공격 속도를 보여준다.
+                </p>
+            </th>
+        </tr>
+
+        <tr>
+            <th class="text-center">
+                <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/43/87/1e7ee1cd2391262a38d8119b.jpg" />
+                <br />
+                <a asp-controller="Weapon" asp-action="OneHandSword"> One Hand Sword </a>
+            </th>
+            <th class="text-left">
+                <p>
+                    방패와 동시에 착용할 수 있어 특수 효과를
+                    가진 방패와 동시에 착용하는 경우가 많은 무기.
+                </p>
+            </th>
+        </tr>
+
+        <tr>
+            <th class="text-center">
+                <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/53/56/c3105a2714a09cd016245234.jpg" />
+                <br />
+                <a asp-controller="Weapon" asp-action="TwoHandSword"> Two Hand Sword </a>
+            </th>
+            <th class="text-left">
+                <p>
+                    군주와 기사, 용기사가 주로 사용하는 무기.
+                    특히 기사는 양손검 착용 시에만 쓸 수 있는 기술이
+                    많아 특히 인기가 높다.
+                </p>
+            </th>
+        </tr>
+
+        <tr>
+            <th class="text-center">
+                <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/61/22/852a417c1aef1dea36419d6d.jpg" />
+                <br />
+                <a asp-controller="Weapon" asp-action="Bow"> Bow </a>
+            </th>
+            <th class="text-left">
+                <p>
+                    대표적인 원거리 무기로 공격 시 화살이 필요하다.
+                    한손활은 방패와 동시에 착용할 수 있으며
+                    양손활은 한손활보다 사정거리가 2칸 더 길다.
+                </p>
+            </th>
+        </tr>
+
+        <tr>
+            <th class="text-center">
+                <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/98/90/82e4808efe54509a719f164a.jpg" />
+                <br />
+                <a asp-controller="Weapon" asp-action="Stick"> Stick </a>
+            </th>
+            <th class="text-left">
+                <p>
+                    주로 마법사가 착용하는 무기.
+                    주로 INT와 SP 등 마법의 효과를 높여주는
+                    옵션을 많이 가지고 있다.
+                </p>
+            </th>
+        </tr>
+
+    </thead>
+</table>
+
+<style>
+    .myTrHeader {
+        width: 500px;
+    }
+</style>

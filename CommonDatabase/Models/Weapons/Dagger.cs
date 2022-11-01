@@ -2,10 +2,10 @@
 
 namespace CommonDatabase.Models.Weapons
 {
-    public class Dagger : Weapon
+    public class Dagger 
     {
         [Key]
-        public int WeaponId { get; set; }
+        public int DaggerId { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
         public int Damage1 { get; set; }

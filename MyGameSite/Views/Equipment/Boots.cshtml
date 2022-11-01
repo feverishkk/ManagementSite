@@ -1,0 +1,45 @@
+﻿@using CommonDatabase.Models.Equipment
+@model IEnumerable<Boots>
+
+<div style="height:300px">
+    <h4>부츠</h4>
+    <hr />
+    <div class="float-right">
+        <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/70/67/8e1ce421edb265b3243647a9.jpg" />
+    </div>
+
+    <p class="text-left ">
+        부츠는 발 부위(슬롯)에 착용하는 방어구로, 기본적으로 투구와 망토, 장갑, 방패와 거의 비슷한 수준의 물리 방어력(AC)을 제공하는 아이템이다. <br />
+        전체적으로 HP와 MP에 관계된 옵션을 가지고 있는 편이며, 착용하면 수중에서 호흡할 수 있는 수중 부츠처럼 특별한 것도 존재한다.<br />
+    </p>
+</div>
+
+<h4> Boots </h4>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>AC</th>
+            <th>Class</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.BootsId</th>
+                <th class="text-center table-active">
+                    <img src="@item.Image" style="width:65px; height:65px;" /> 
+                    <br /> @item.Name 
+                </th>
+                <th>@item.Class</th>
+                <th>@item.AC</th>
+                <th>@item.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>

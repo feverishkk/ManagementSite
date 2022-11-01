@@ -1,0 +1,96 @@
+﻿@using CommonDatabase.Models.Weapons
+@model dynamic
+@{
+    IEnumerable<OneHandBow> oneHandBows = (List<OneHandBow>)ViewBag.Result;
+    IEnumerable<TwoHandBow> twoHandBows = (List<TwoHandBow>)ViewBag.Result2;
+}
+
+<div style="height:300px">
+    <h4>활</h4>
+    <hr />
+    <div class="float-right">
+        <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/39/34/64d7b9e264e62c88bb2336f1.jpg" />
+    </div>
+    <p class="text-left ">
+        <리니지>
+            의 대표적인 원거리 공격용 무기. <br />
+            원거리 공격에 특화된 요정 클래스가 가장 많이 사용하는 무기라고 할 수 있다.<br />
+            활을 사용하기 위해서는 화살이 필요한데, 대부분의 화살은 마을 상점에서 구입할 수 있다. <br />
+            또한 무기 손상 몬스터와 보스 몬스터에게는 대미지가 100% 적용되지 않는다.<br />
+            한편, 2015년 3월 4일 업데이트로 활의 기본 공격력 대미지가 적용되면서 전체적으로 활의 대미지가 올라갔다.<br />
+    </p>
+</div>
+
+
+<h4 class="mt-5"> 한손활과 양손활 </h4>
+<hr />
+<p>
+    양손활이 한손활보다 사정 거리가 약 2칸 정도 더 길다. <br />
+    따라서 일반 공격 및 트리플 애로우 등 각종 원거리 공격에서 우위를 차지할 수 있다.  <br />
+    단, 한손 활의 경우 가더 등의 추가 장비를 할 수 있다는 장점이 있다.
+</p>
+
+<h4>One Hand Bow</h4>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Damage-Samll Monster</th>
+            <th>Damage-Big Monster</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in oneHandBows)
+        {
+            <tr>
+                <th>@item.OneHandBowId</th>
+                <th class="text-center table-active">
+                    <img src="@item.Image" style="width:65px; height:65px;" />
+                    <br /> @item.Name
+                </th>
+                <th>@item.Damage1</th>
+                <th>@item.Damage2</th>
+                <th>@item.Class</th>
+                <th>@item.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4 class="mt-2">Two Hand Bow</h4>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Damage-Samll Monster</th>
+            <th>Damage-Big Monster</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in twoHandBows)
+        {
+            <tr>
+                <th>@item.TwoHandBowId</th>
+                <th class="text-center table-active">
+                    <img src="@item.Image" style="width:65px; height:65px;" />
+                    <br /> @item.Name
+                </th>
+                <th>@item.Damage1</th>
+                <th>@item.Damage2</th>
+                <th>@item.Class</th>
+                <th>@item.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>

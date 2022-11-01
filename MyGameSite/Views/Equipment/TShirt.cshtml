@@ -1,0 +1,42 @@
+﻿@using CommonDatabase.Models.Equipment
+@model IEnumerable<TShirt>
+
+<div style="height:300px">
+    <h4>티셔츠</h4>
+    <hr />
+
+    <p class="text-left ">
+        티셔츠는 갑옷 안에 착용하는 방어구이다.<br />
+        인챈트에 성공하면 방어력 상승 효과를 얻으며, 일부 티셔츠는 여기에 방어력 상승 외의 추가 효과를 얻기도 한다.
+    </p>
+</div>
+
+<h4> TShirt </h4>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>AC</th>
+            <th>Class</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.TShirtId</th>
+                <th class="text-center table-active">
+                    <img src="@item.Image" style="width:65px; height:65px;" /> 
+                    <br /> @item.Name 
+                </th>
+                <th>@item.Class</th>
+                <th>@item.AC</th>
+                <th>@item.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>

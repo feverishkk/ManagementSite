@@ -1,0 +1,47 @@
+﻿@using CommonDatabase.Models.Weapons
+@model IEnumerable<Dagger>
+
+<div style="height:300px">
+    <h4>단검</h4>
+    <hr />
+    <div class="float-right">
+        <img src="https://assets.playnccdn.com/gamedata/powerbook/lineage/38/48/467ad0bf1dd7b6b93a5964ac.jpg" />
+    </div>
+    <p class="text-left ">
+         단검은 <리니지>
+         에 존재하는 무기 중에서 가장 빠른 공격속도를 가진 무기로, 클래스에 따라 한손 도검을 착용했을 때보다 5~30% 정도 빠른 공격속도를 보여준다. <br />
+         이런 단검 중에서 가장 많이 사용되는 무기는 수정 단검과 오리하루콘 단검으로, 모두 언데드 추가 대미지 옵션을 갖추고 있어 특정 사냥터의 효율이 매우 높다는 특징을 가지고 있다.<br />
+         한편 마력의 단검의 경우 MP 흡수 옵션이 있어 인트군주나 인트기사 같은 유형의 캐릭터들이 사냥 도중 MP를 보충하는 용도로 많이 사용하는 편이다.<br />
+    </p>
+</div>
+
+<h4>Dagger</h4>
+<hr />
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Damage-Samll Monster</th>
+            <th>Damage-Big Monster</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.DaggerId</th>
+                <th class="text-center table-active">
+                    <img src="@item.Image" style="width:65px; height:65px;" /> 
+                    <br /> @item.Name 
+                </th>
+                <th>@item.Damage1</th>
+                <th>@item.Damage2</th>
+                <th>@item.Class</th>
+                <th>@item.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>
