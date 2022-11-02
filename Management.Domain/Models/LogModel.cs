@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Management.Domain.Models
 {
-    public class Log
+    public class LogModel
     {
         public int Id { get; set; }
         public string Message { get; set; }

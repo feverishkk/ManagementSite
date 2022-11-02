@@ -20,6 +20,6 @@ namespace ManagementDbContext.DbContext
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = default;
-        public DbSet<Log> Logs { get; set; } = default;
+        public DbSet<LogModel> LogModels { get; set; } = default;
     }
 }

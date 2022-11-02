@@ -12,6 +12,11 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Management.Application.Validator;
+using Microsoft.AspNetCore.Http;
+using Management.Application.Enums.Roles;
+using ManagementDbContext.DbContext;
+using Microsoft.Extensions.Logging;
+using Management.Application.Log;
 
 namespace ManagementSite.Server.Controllers
 {
@@ -25,55 +30,60 @@ namespace ManagementSite.Server.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _applicationDbContext;
 
         private readonly IConfiguration _configuration;
         private readonly IEmailSenderRepository _emailSender;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-                                 IConfiguration configuration, IEmailSenderRepository emailSender, RoleManager<IdentityRole> roleManager)
+                                 IConfiguration configuration, IEmailSenderRepository emailSender, RoleManager<IdentityRole> roleManager,
+                                 IHttpContextAccessor httpContextAccessor, ApplicationDbContext applicationDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _httpContextAccessor = httpContextAccessor;
+            _applicationDbContext = applicationDbContext;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerDto)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
         {
-            if (!ModelState.IsValid || registerDto == null)
+            if (!ModelState.IsValid || registerViewModel == null)
             {
                 return BadRequest();
             }
 
             RegisterValidator registerValidator = new RegisterValidator();
-            var validationResult = registerValidator.Validate(registerDto);
-            if(validationResult.IsValid is false)
+            var validationResult = registerValidator.Validate(registerViewModel);
+            if (validationResult.IsValid is false)
             {
                 return BadRequest(validationResult.Errors);
             }
 
-            if ((await _userManager.FindByEmailAsync(registerDto.Email)) == null)
+            if ((await _userManager.FindByEmailAsync(registerViewModel.Email)) == null)
             {
                 var user = new ApplicationUser()
                 {
-                    UserName = registerDto.Email,
-                    Email = registerDto.Email,
-                    ConfirmEmail = registerDto.ConfirmEmail,
-                    Password = registerDto.Password,
-                    Department = registerDto.Department,
-                    DepartmentNumber = registerDto.DepartmentNumber,
-                    GivenName = registerDto.GivenName,
-                    FamilyName = registerDto.FamilyName,
+                    UserName = registerViewModel.Email,
+                    Email = registerViewModel.Email,
+                    ConfirmEmail = registerViewModel.ConfirmEmail,
+                    Password = registerViewModel.Password,
+                    Department = registerViewModel.Department,
+                    DepartmentNumber = registerViewModel.DepartmentNumber,
+                    GivenName = registerViewModel.GivenName,
+                    FamilyName = registerViewModel.FamilyName,
                     MemberSince = DateTime.UtcNow.Date
                 };
 
-                if (!(await _roleManager.RoleExistsAsync(registerDto.Role.ToString())))
+                if (!(await _roleManager.RoleExistsAsync(registerViewModel.Role.ToString())))
                 {
                     var role = new IdentityRole
                     {
-                        Name = registerDto.Role.ToString(),
+                        Name = registerViewModel.Role.ToString(),
                     };
                     var roleResult = await _roleManager.CreateAsync(role);
                     if (roleResult.Succeeded == false)
@@ -83,11 +93,11 @@ namespace ManagementSite.Server.Controllers
                         return Ok(new RegisterResult { Successful = false, Errors = errors });
                     }
                 }
-                var passwordMatch1 = registerDto.Password;
-                var passwordMatch2 = registerDto.ConfirmPassword;
+                var passwordMatch1 = registerViewModel.Password;
+                var passwordMatch2 = registerViewModel.ConfirmPassword;
                 if (passwordMatch1 == passwordMatch2)
                 {
-                    var result = await _userManager.CreateAsync(user, registerDto.Password);
+                    var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
                     if (result.Succeeded == false)
                     {
@@ -97,7 +107,7 @@ namespace ManagementSite.Server.Controllers
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, registerDto.Role.ToString());
+                        await _userManager.AddToRoleAsync(user, registerViewModel.Role.ToString());
 
                         string subject = "Confirmation Email Address";
                         //userId에 Email이 포함된다.
@@ -112,7 +122,7 @@ namespace ManagementSite.Server.Controllers
                     }
                 }
             }
-
+            GetLogInfo(registerViewModel.Email);
             return Ok(new RegisterResult { Successful = true });
         }
 
@@ -140,16 +150,16 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
-            if (!ModelState.IsValid || loginDto == null)
+            if (!ModelState.IsValid || loginViewModel == null)
             {
                 return BadRequest();
             }
             else
             {
-                var user = await _userManager.FindByEmailAsync(loginDto.Email);
-                var checkPassword = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+                var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                var checkPassword = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
 
                 if (user == null)
                 {
@@ -161,7 +171,7 @@ namespace ManagementSite.Server.Controllers
                 }
                 else
                 {
-                    var result = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password, false, false);
+                    var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, false, false);
                     if (!result.Succeeded)
                     {
                         //실패
@@ -175,7 +185,7 @@ namespace ManagementSite.Server.Controllers
                     {
                         var claims = new[]
                         {
-                            new Claim(ClaimTypes.Name, loginDto.Email)
+                            new Claim(ClaimTypes.Name, loginViewModel.Email),
                         };
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTSettings:SecretKey"]));
@@ -190,7 +200,7 @@ namespace ManagementSite.Server.Controllers
                             signingCredentials: creds
                             );
 
-
+                        GetLogInfo(loginViewModel.Email);
                         return Ok(new LoginResult { Successful = true, Token = new JwtSecurityTokenHandler().WriteToken(token) });
                     }
                 }
@@ -198,23 +208,23 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel changePasswordDto)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel changePasswordViewModel)
         {
-            var user = _userManager.FindByEmailAsync(changePasswordDto.Email);
-            if (user == null || changePasswordDto == null)
+            var user = _userManager.FindByEmailAsync(changePasswordViewModel.Email);
+            if (user == null || changePasswordViewModel == null)
             {
                 return BadRequest();
             }
 
             ChangePasswordValidator changePWValidator = new ChangePasswordValidator();
-            var validationResult = changePWValidator.Validate(changePasswordDto);
-            if(validationResult.IsValid is false)
+            var validationResult = changePWValidator.Validate(changePasswordViewModel);
+            if (validationResult.IsValid is false)
             {
                 return BadRequest(validationResult.Errors);
             }
 
-            var result = await _userManager.ChangePasswordAsync(await user, changePasswordDto.OldPassword,
-                                                                changePasswordDto.NewPassword);
+            var result = await _userManager.ChangePasswordAsync(await user, changePasswordViewModel.OldPassword,
+                                                                changePasswordViewModel.NewPassword);
 
             if (!result.Succeeded)
             {
@@ -222,23 +232,24 @@ namespace ManagementSite.Server.Controllers
             }
             else
             {
+                GetLogInfo(changePasswordViewModel.Email);
                 return Ok(new ChangePasswordResult { Successful = true });
             }
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel forgotPasswordDto)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel forgotPasswordViewModel)
         {
-            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+            var user = await _userManager.FindByEmailAsync(forgotPasswordViewModel.Email);
             if (user == null || !ModelState.IsValid)
             {
                 return Ok(new ForgotPasswordResult { Successful = false, Error = "User Id cannot be null" });
             }
 
             ForgotPasswordValidator forgotPWValidator = new ForgotPasswordValidator();
-            var validationResult = forgotPWValidator.Validate(forgotPasswordDto);
-            if(validationResult.IsValid is false)
+            var validationResult = forgotPWValidator.Validate(forgotPasswordViewModel);
+            if (validationResult.IsValid is false)
             {
                 return BadRequest(validationResult.Errors);
             }
@@ -247,32 +258,33 @@ namespace ManagementSite.Server.Controllers
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
                 var generateLink = Url.Action(nameof(ResetPassword), "Account",
-                                              new { userId = forgotPasswordDto.Email, token = token },
+                                              new { userId = forgotPasswordViewModel.Email, token = token },
                                               protocol: HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmail(forgotPasswordDto.Email, "Reset your Password", generateLink);
+                await _emailSender.SendEmail(forgotPasswordViewModel.Email, "Reset your Password", generateLink);
 
+                GetLogInfo(forgotPasswordViewModel.Email);
                 return Ok(new ForgotPasswordResult { Successful = true });
             }
         }
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel resetPasswordDto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel resetPasswordViewModel)
         {
-            if (resetPasswordDto == null || !ModelState.IsValid)
+            if (resetPasswordViewModel == null || !ModelState.IsValid)
             {
                 return Ok(new ResetPasswordResult { Successful = false, Errors = "Please Refresh and Try Again." });
             }
             ResetPasswordValidator resetPWValidator = new ResetPasswordValidator();
-            var validationResult = resetPWValidator.Validate(resetPasswordDto);
-            if(validationResult.IsValid is false)
+            var validationResult = resetPWValidator.Validate(resetPasswordViewModel);
+            if (validationResult.IsValid is false)
             {
                 return BadRequest(validationResult.Errors);
             }
             else
             {
-                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+                var user = await _userManager.FindByEmailAsync(resetPasswordViewModel.Email);
 
                 if (user == null)
                 {
@@ -280,17 +292,32 @@ namespace ManagementSite.Server.Controllers
                 }
                 else
                 {
-                    var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.ConfirmPassword);
+                    var result = await _userManager.ResetPasswordAsync(user, resetPasswordViewModel.Token, resetPasswordViewModel.ConfirmPassword);
                     if (!result.Succeeded)
                     {
                         return Ok(new ForgotPasswordResult { Successful = false, Error = "Something Went Wrong.. Please Try Again" });
                     }
                     else
                     {
+                        GetLogInfo(resetPasswordViewModel.Email);
                         return Ok(new ResetPasswordResult { Successful = true });
                     }
                 }
             }
+        }
+
+        private void GetLogInfo(string UserName)
+        {
+            var context = _httpContextAccessor.HttpContext.Request;
+            var logResult = new AccountLog()
+            {
+                Host = context.Host.ToString(),
+                Method = context.Method.ToString(),
+                Path = context.Path.ToString(),
+                Port = context.Host.Port.Value,
+                UserName = UserName.ToString(),
+            };
+            Serilog.Log.Information("{@logResult}", logResult);
         }
     }
 }

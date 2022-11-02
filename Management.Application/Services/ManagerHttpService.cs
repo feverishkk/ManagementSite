@@ -28,9 +28,9 @@ namespace Management.Application.Services
             return await response.Content.ReadFromJsonAsync<ManagerResult>();
         }
 
-        public async Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoViewModel managerInfoDto)
+        public async Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoViewModel managerInfoViewModel)
         {
-            var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerInfo", managerInfoDto);
+            var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerInfo", managerInfoViewModel);
             return await response.Content.ReadFromJsonAsync<ManagerResult>();
         }
 

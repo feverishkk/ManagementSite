@@ -1,5 +1,6 @@
 ﻿using CommonDatabase.Models.Accessories;
 using Management.Application.Interfaces.CommonDb.GenericRepository;
+using Management.Application.Log;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ namespace ManagementSite.Server.Controllers
     {
         private readonly IGenericRepository<Belt> _beltRepo;
         private readonly CommonDbContext _commonDbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UpdateItemsController(IGenericRepository<Belt> beltRepo, CommonDbContext commonDbContext)
+        public UpdateItemsController(IGenericRepository<Belt> beltRepo, CommonDbContext commonDbContext, IHttpContextAccessor httpContextAccessor)
         {
             _beltRepo = beltRepo;
             _commonDbContext = commonDbContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -98,11 +101,28 @@ namespace ManagementSite.Server.Controllers
                 return BadRequest();
             }
 
+            GetLogInfo(itemName);
+
             return Ok();
 
         }
 
+        private void GetLogInfo(object? Target = null)
+        {
+            var context = _httpContextAccessor.HttpContext.Request;
 
+            var logResult = new CRUDLog()
+            {
+                Host = context.Host.ToString(),
+                Method = context.Method.ToString(),
+                Path = context.Path.ToString(),
+                Port = context.Host.Port.Value,
+                UserName = _httpContextAccessor.HttpContext.User.Identity.Name,
+                Target = Target.ToString()
+            };
+
+            Serilog.Log.Information("{@logResult}", logResult);
+        }
 
 
 

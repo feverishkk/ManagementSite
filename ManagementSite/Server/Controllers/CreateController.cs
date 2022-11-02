@@ -1,4 +1,5 @@
 ﻿using CommonDatabase.Models.Accessories;
+using Management.Application.Log;
 using ManagementDbContext.DbContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,12 @@ namespace ManagementSite.Server.Controllers
     public class CreateController : ControllerBase
     {
         private readonly CommonDbContext _commonDbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CreateController(CommonDbContext commonDbContext)
+        public CreateController(CommonDbContext commonDbContext, IHttpContextAccessor httpContextAccessor)
         {
             _commonDbContext = commonDbContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost]
@@ -72,35 +75,28 @@ namespace ManagementSite.Server.Controllers
                 return BadRequest();
             }
 
+            GetLogInfo(accName);
+
             return Ok();
 
         }
 
-        [HttpPost]
-        public IActionResult DeleteAccItem([FromBody] int itemId)
+        private void GetLogInfo(object? Target = null)
         {
-            if (itemId is 0)
-            {
-                return BadRequest();
-            }
+            var context = _httpContextAccessor.HttpContext.Request;
 
-            object[] objects = new object[]
+            var logResult = new CRUDLog()
             {
-                new SqlParameter("@paramBeltId", itemId)
+                Host = context.Host.ToString(),
+                Method = context.Method.ToString(),
+                Path = context.Path.ToString(),
+                Port = context.Host.Port.Value,
+                UserName = _httpContextAccessor.HttpContext.User.Identity.Name,
+                Target = Target.ToString()
             };
 
-            int items = _commonDbContext.Database.ExecuteSqlRaw
-                ("DELETE FROM Belt WHERE BeltId=@paramBeltId", objects);
-
-            if(items is 0)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
+            Serilog.Log.Information("{@logResult}", logResult);
         }
-
-
 
 
 

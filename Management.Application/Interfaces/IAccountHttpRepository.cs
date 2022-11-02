@@ -7,11 +7,11 @@ namespace Management.Application.Interfaces
 {
     public interface IAccountHttpRepository
     {
-        Task<RegisterResult> Register(RegisterViewModel registerDto);
-        Task<LoginResult> Login(LoginViewModel loginDto);
+        Task<RegisterResult> Register(RegisterViewModel registerViewModel);
+        Task<LoginResult> Login(LoginViewModel loginViewModel);
         Task Logout();
-        Task<ChangePasswordResult> ChangePassword(ChangePasswordViewModel changePasswordDto);
-        Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordDto);
-        Task<ResetPasswordResult> ResetPassword(ResetPasswordViewModel resetPasswordDto);
+        Task<ChangePasswordResult> ChangePassword(ChangePasswordViewModel changePasswordViewModel);
+        Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel);
+        Task<ResetPasswordResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel);
     }
 }

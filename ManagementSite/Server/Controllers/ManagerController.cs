@@ -41,7 +41,7 @@ namespace ManagementSite.Server.Controllers
             {
                 var role = userRole.FirstOrDefault(obj => obj.UserId == user.Id);
 
-                if (role == null)
+                if (role is null)
                 {
                     user.Role = "None";
                 }
@@ -78,7 +78,7 @@ namespace ManagementSite.Server.Controllers
         {
             var user = _dbContext.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
 
-            if (user == null)
+            if (user is null)
             {
                 return Ok(new ManagerResult { Successful = false, Error = "User is null" });
             }
@@ -94,7 +94,7 @@ namespace ManagementSite.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateManagerRole(ArrayList paramList)
         {
-            if (paramList == null)
+            if (paramList is null)
             {
                 return Ok(new ManagerResult { Successful = false, Error = "user id is null" });
             }
@@ -105,7 +105,7 @@ namespace ManagementSite.Server.Controllers
                 var ChosenRole = paramList[2].ToString();
 
                 var user = _dbContext.ApplicationUsers.FirstOrDefault(u => u.Id == userId.ToString());
-                if (user == null)
+                if (user is null)
                 {
                     return Ok(new ManagerResult { Successful = false, Error = "user is null" });
                 }
@@ -128,24 +128,24 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateManagerInfo([FromBody] UpdateManagerInfoViewModel managerInfoDto)
+        public async Task<IActionResult> UpdateManagerInfo([FromBody] UpdateManagerInfoViewModel managerInfoViewModel)
         {
-            if(managerInfoDto == null)
+            if(managerInfoViewModel is null)
             {
                 return Ok(new ManagerResult { Successful = false, Error = "Your data is null. Please Re-try!" });
             }
 
-            var user = await _userManager.FindByIdAsync(managerInfoDto.UserId);
-            if(user == null)
+            var user = await _userManager.FindByIdAsync(managerInfoViewModel.UserId);
+            if(user is null)
             {
                 return Ok(new ManagerResult { Successful = false, Error = "Cannot find user!" });
             }
             else
             {
-                user.FamilyName = managerInfoDto.FamilyName;
-                user.GivenName = managerInfoDto.GivenName;
-                user.Department = managerInfoDto.Department;
-                user.DepartmentNumber = managerInfoDto.DepartmentNumber;
+                user.FamilyName = managerInfoViewModel.FamilyName;
+                user.GivenName = managerInfoViewModel.GivenName;
+                user.Department = managerInfoViewModel.Department;
+                user.DepartmentNumber = managerInfoViewModel.DepartmentNumber;
 
                 _dbContext.ApplicationUsers.Update(user);
                 await _dbContext.SaveChangesAsync();

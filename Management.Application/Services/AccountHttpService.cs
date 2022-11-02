@@ -30,22 +30,22 @@ namespace Management.Application.Services
             _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<RegisterResult> Register(RegisterViewModel registerDto)
+        public async Task<RegisterResult> Register(RegisterViewModel registerViewModel)
         {
-            var response = await _httpClient.PostAsJsonAsync("Account/Register", registerDto);
+            var response = await _httpClient.PostAsJsonAsync("Account/Register", registerViewModel);
             return await response.Content.ReadFromJsonAsync<RegisterResult>();
         }
 
-        public async Task<LoginResult> Login(LoginViewModel loginDto)
+        public async Task<LoginResult> Login(LoginViewModel loginViewModel)
         {
-            var response = await _httpClient.PostAsJsonAsync("Account/Login", loginDto);
+            var response = await _httpClient.PostAsJsonAsync("Account/Login", loginViewModel);
             var loginResult = JsonSerializer.Deserialize<LoginResult>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });    
             if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
             await _localStorage.SetItemAsync("authToken", loginResult.Token);
-            ((CustomAuthenticationStateProvider)_authenticationStateProvider).AuthenticateUser(loginDto.Email);
+            ((CustomAuthenticationStateProvider)_authenticationStateProvider).AuthenticateUser(loginViewModel.Email);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
 
             return loginResult;
@@ -58,21 +58,21 @@ namespace Management.Application.Services
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<ChangePasswordResult> ChangePassword(ChangePasswordViewModel changePasswordDto)
+        public async Task<ChangePasswordResult> ChangePassword(ChangePasswordViewModel changePasswordViewModel)
         {
-            var result = await _httpClient.PostAsJsonAsync("Account/ChangePassword", changePasswordDto);
+            var result = await _httpClient.PostAsJsonAsync("Account/ChangePassword", changePasswordViewModel);
             return await result.Content.ReadFromJsonAsync<ChangePasswordResult>();
         }
 
-        public async Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordDto)
+        public async Task<ForgotPasswordResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
         {
-            var result = await _httpClient.PostAsJsonAsync("Account/ForgotPassword", forgotPasswordDto);
+            var result = await _httpClient.PostAsJsonAsync("Account/ForgotPassword", forgotPasswordViewModel);
             return await result.Content.ReadFromJsonAsync<ForgotPasswordResult>();
         }
 
-        public async Task<ResetPasswordResult> ResetPassword(ResetPasswordViewModel resetPasswordDto)
+        public async Task<ResetPasswordResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
         {
-            var result = await _httpClient.PostAsJsonAsync("Account/ResetPassword", resetPasswordDto);
+            var result = await _httpClient.PostAsJsonAsync("Account/ResetPassword", resetPasswordViewModel);
             return await result.Content.ReadFromJsonAsync<ResetPasswordResult>();
         }
 

@@ -13,6 +13,6 @@ namespace Management.Application.Interfaces
         Task<ManagerResult> DeleteManager(string userId);
         Task<ManagerResult> GetUserRole(string userId);
         Task<ManagerResult> UpdateManagerRole(ArrayList managerRoleDto);
-        Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoViewModel managerInfoDto);
+        Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoViewModel managerInfoViewModel);
     }
 }

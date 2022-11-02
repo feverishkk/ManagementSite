@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,9 @@ namespace ManagementSite.Server
             services.AddControllers().AddNewtonsoftJson();
             services.AddBlazoredLocalStorage();
 
+            services.AddHttpContextAccessor();
+            services.AddScoped<HttpContextAccessor>();
+
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             services.AddSingleton<IEmailSenderRepository, EmailSender>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericService<>));
@@ -56,6 +60,7 @@ namespace ManagementSite.Server
             services.AddServerSideBlazor();
             services.AddMvcCore();
             services.AddControllersWithViews();
+
             services.AddRazorPages();
             services.AddHttpClient();
         }
