@@ -30,7 +30,7 @@ namespace ManagementSite.Server
 
             try
             {
-                Log.Information("Starting the web application...");
+                //Log.Information("Starting the web application...");
                 CreateHostBuilder(args).Build().Run();
 
             }

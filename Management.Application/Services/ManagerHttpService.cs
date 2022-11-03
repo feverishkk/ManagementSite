@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Management.Domain.Models;
 
 namespace Management.Application.Services
 {
@@ -50,6 +51,11 @@ namespace Management.Application.Services
         {
             var response = await _httpClient.PostAsJsonAsync("/Manager/UpdateManagerRole", managerRoleDto);
             return await response.Content.ReadFromJsonAsync<ManagerResult>();
+        }
+
+        public async Task<IEnumerable<LogModel>> GetLog()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<LogModel>>("/Manager/GetLog");
         }
 
     }

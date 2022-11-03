@@ -154,5 +154,14 @@ namespace ManagementSite.Server.Controllers
             return Ok(new ManagerResult { Successful = true, AppUsers = user });
         }
 
+        [HttpGet]
+        public IActionResult GetLog()
+        {
+            var logResult = _dbContext.LogModels.ToList();
+
+            return Ok(logResult);
+        }
+
+
     }
 }

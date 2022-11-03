@@ -98,7 +98,7 @@
             Belt accInfo = result.Data as Belt;
             await _createItemHttpService.CreateAccItem(accInfo);
 
-            _navigationManager.NavigateTo("/acc", true);
+            _navigationManager.NavigateTo("/acc/belt", true);
         }
 
     }
@@ -119,9 +119,9 @@
         if (notCancelled is true && result.Data != null)
         {
             Belt accInfo = result.Data as Belt;
-            await _createItemHttpService.DeleteAccItem(itemId);
+            await _deleteItemHttpService.DeleteAccItem(itemId);
 
-            _navigationManager.NavigateTo("/acc", true);
+            _navigationManager.NavigateTo("/acc/belt", true);
         }
     }
 
@@ -148,7 +148,7 @@
             Belt accInfo = result.Data as Belt;
             await _updateItemHttpService.UpdateAccItem(accInfo);
 
-            _navigationManager.NavigateTo("/acc", true);
+            _navigationManager.NavigateTo("/acc/belt", true);
         }
 
     }

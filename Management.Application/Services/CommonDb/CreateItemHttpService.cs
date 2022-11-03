@@ -28,10 +28,6 @@ namespace Management.Application.Services.CommonDb
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> DeleteAccItem(int itemId)
-        {
-            var response = await _httpClient.PostAsJsonAsync("/Delete/DeleteAccItem", itemId);
-            return await response.Content.ReadAsStringAsync();
-        }
+        
     }
 }

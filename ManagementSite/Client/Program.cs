@@ -38,10 +38,13 @@ namespace ManagementSite.Client
             builder.Services.AddTransient<IAccountHttpRepository, AccountHttpService>();
             builder.Services.AddTransient<IManagerHttpRepository, ManagerHttpService>();
             builder.Services.AddTransient<ICustomerHttpRepository, CustomerHttpService>();
-            builder.Services.AddTransient<IGetItemHttpRepository, GetItemHttpService>();
+
             builder.Services.AddTransient<IChartHttpRepository, ChartHttpService>();
+
+            builder.Services.AddTransient<IGetItemHttpRepository, GetItemHttpService>();
             builder.Services.AddTransient<IUpdateItemHttpRepository, UpdateItemHttpService>();
             builder.Services.AddTransient<ICreateItemHttpRepository, CreateItemHttpService>();
+            builder.Services.AddTransient<IDeleteItemHttpRepository, DeleteItemHttpService>();
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericService<>));
 

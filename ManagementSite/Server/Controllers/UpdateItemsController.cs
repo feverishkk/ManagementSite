@@ -110,7 +110,7 @@ namespace ManagementSite.Server.Controllers
         private void GetLogInfo(object? Target = null)
         {
             var context = _httpContextAccessor.HttpContext.Request;
-
+            
             var logResult = new CRUDLog()
             {
                 Host = context.Host.ToString(),
@@ -118,7 +118,9 @@ namespace ManagementSite.Server.Controllers
                 Path = context.Path.ToString(),
                 Port = context.Host.Port.Value,
                 UserName = _httpContextAccessor.HttpContext.User.Identity.Name,
-                Target = Target.ToString()
+                Target = Target.ToString(),
+                RemoteIpAddress = context.HttpContext.Connection.RemoteIpAddress.ToString(),
+                StatusCode = context.HttpContext.Response.StatusCode.ToString(),
             };
 
             Serilog.Log.Information("{@logResult}", logResult);

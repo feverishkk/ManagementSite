@@ -14,5 +14,7 @@ namespace Management.Application.Interfaces
         Task<ManagerResult> GetUserRole(string userId);
         Task<ManagerResult> UpdateManagerRole(ArrayList managerRoleDto);
         Task<ManagerResult> UpdateManagerInfo(UpdateManagerInfoViewModel managerInfoViewModel);
+        //LogModel GetLog();
+        Task<IEnumerable<LogModel>> GetLog();
     }
 }
