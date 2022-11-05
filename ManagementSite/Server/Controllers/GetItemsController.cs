@@ -27,19 +27,19 @@ namespace ManagementSite.Server.Controllers
         private readonly IGenericRepository<EarRing> _earRingRepo;
         private readonly IGenericRepository<Acc> _accRepo;
         private readonly IGenericRepository<Armor> _armorRepo;
-        private readonly IGenericRepository<Dagger> _daggerRepo;
+        private readonly IGenericRepository<OneHandSword> _oneHandSwordRepo;
         private readonly IGenericRepository<TotalWeapons> _totalWeaponRepo;
         private readonly IGenericRepository<TotalEquipment> _totalEquipmentRepo;
         private readonly IGenericRepository<TotalAccessories> _totalAccRepo;
         
-        public GetItemsController(CommonDbContext commonDbContext, IGenericRepository<Dagger> daggerRepo,
+        public GetItemsController(CommonDbContext commonDbContext, IGenericRepository<OneHandSword> oneHandSwordRepo,
                                   IGenericRepository<Belt> beltRepo, IGenericRepository<EarRing> earRingRepo,
                                   IGenericRepository<Acc> accRepo, IGenericRepository<Armor> armorRepo,
                                   IGenericRepository<TotalWeapons> totalWeaponRepo, IGenericRepository<TotalEquipment> equipmentRepo,
                                   IGenericRepository<TotalAccessories> totalAccRepo)
         {
             _commonDbContext = commonDbContext;
-            _daggerRepo = daggerRepo;
+            _oneHandSwordRepo = oneHandSwordRepo;
             _beltRepo = beltRepo;
             _earRingRepo = earRingRepo;
             _accRepo = accRepo;
@@ -59,11 +59,17 @@ namespace ManagementSite.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEarRings()
+        public IActionResult GetArmor()
         {
-            var earRings = _earRingRepo.GetAll();
+            var result = _armorRepo.GetAll();
+            return Ok(result);
+        }
 
-            return Ok(earRings);
+        [HttpGet]
+        public IActionResult GetOneHandSword()
+        {
+            var result = _oneHandSwordRepo.GetAll();
+            return Ok(result);
         }
 
         [HttpGet]

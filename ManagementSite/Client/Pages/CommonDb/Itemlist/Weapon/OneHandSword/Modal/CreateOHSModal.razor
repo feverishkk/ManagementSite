@@ -1,0 +1,35 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm Model="@model">
+            <MudNumericField Label="OneHandSwordId" @bind-Value="model.OneHandSwordId" For="@(()=>model.OneHandSwordId)" />
+            <MudTextField Label="Image" @bind-Value="model.Image" For="@(()=>model.Image)" />
+            <MudTextField Label="Name" @bind-Value="model.Name" For="@(()=>model.Name)" />
+            <MudNumericField Label="Damage1" @bind-Value="model.Damage1" For="@(()=>model.Damage1)" />
+            <MudNumericField Label="Damage2" @bind-Value="model.Damage2" For="@(()=>model.Damage2)" />
+            <MudTextField Label="Class" @bind-Value="model.Class" For="@(()=>model.Class)" />
+            <MudTextField Label="Description" @bind-Value="model.Description" For="@(()=>model.Description)" />
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public OneHandSword model { get; set; } = new();
+
+    void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<OneHandSword>(model));
+    }
+
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+
+}

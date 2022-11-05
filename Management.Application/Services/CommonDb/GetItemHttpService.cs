@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using CommonDatabase.Models.Equipment;
 
 namespace Management.Application.Services.CommonDb
 {
@@ -27,9 +28,14 @@ namespace Management.Application.Services.CommonDb
             return await _httpClient.GetFromJsonAsync<IEnumerable<Belt>>("GetItems/GetBelt");
         }
 
-        public async Task<IEnumerable<EarRing>> GetEarRings()
+        public async Task<IEnumerable<Armor>> GetArmor()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<EarRing>>("GetItems/GetEarRings");
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Armor>>("GetItems/GetArmor");
+        }
+
+        public async Task<IEnumerable<OneHandSword>> GetOneHandSword()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<OneHandSword>>("GetItems/GetOneHandSword");
         }
 
         public async Task<IEnumerable<TotalWeapons>> GetAllWeapon()

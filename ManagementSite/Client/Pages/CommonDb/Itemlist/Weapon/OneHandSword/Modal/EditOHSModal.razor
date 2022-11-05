@@ -1,0 +1,52 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm Model="@model" Style="width:500px; height:500px;">
+            <MudTextField Label="OneHandSwordId" @bind-Value="itemId" For="@(()=>itemId)" ReadOnly="true" />
+            <MudTextField Label="Image" @bind-Value="model.Image" For="@(()=>itemImage)" />
+            <MudTextField Label="Name" @bind-Value="model.Name" For="@(()=>itemName)" />
+            <MudNumericField Label="Damage1" @bind-Value="model.Damage1" For="@(()=>itemDamage1)" />
+            <MudNumericField Label="Damage2" @bind-Value="model.Damage2" For="@(()=>itemDamage2)" />
+            <MudTextField Label="Class" @bind-Value="model.Class" For="@(()=>itemClass)" />
+            <MudTextField Label="Description" @bind-Value="model.Description" For="@(()=>itemDesc)" />
+            <MudText Typo="Typo.h6" Class="text-center">
+                Before Image
+                <MudSpacer />
+                <img src="@itemImage" class="align-content-center" />
+            </MudText>
+
+        </MudForm>
+
+        <MudText Typo="Typo.h4" Class="mt-2 text-center"> Are you sure to change? </MudText>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public OneHandSword model { get; set; } = new();
+
+    [Parameter] public int itemId { get; set; }
+    [Parameter] public string itemImage { get; set; }
+    [Parameter] public string itemName { get; set; }
+    [Parameter] public int itemDamage1 { get; set; }
+    [Parameter] public int itemDamage2 { get; set; }
+    [Parameter] public string itemClass { get; set; }
+    [Parameter] public string itemDesc { get; set; }
+
+    void Submit()
+    {
+        model.OneHandSwordId = itemId;
+        MudDialog.Close(DialogResult.Ok<OneHandSword>(model));
+    }
+
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+
+}

@@ -1,11 +1,11 @@
-﻿@page "/acc/belt"
-@using ManagementSite.Client.Pages.CommonDb.Itemlist.Acc.Belt.Modal
+﻿@page "/eqp/armor"
+@using ManagementSite.Client.Pages.CommonDb.Itemlist.Equipment.Armor.Modal
 @attribute [Authorize]
 
-<MudTable Items="@AccBelt" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
+<MudTable Items="@EqpArmor" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
 
     <ToolBarContent>
-        <MudText Typo="Typo.h6"> List</MudText>
+        <MudText Typo="Typo.h6">Armor List</MudText>
         <MudSpacer />
         <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="CreateDialog">
             Create Item
@@ -13,8 +13,8 @@
     </ToolBarContent>
 
     <HeaderContent>
-        <MudTh>BeltId</MudTh>
-        @*<MudTh>Image</MudTh>*@
+        <MudTh>ArmorId</MudTh>
+        <MudTh>Image</MudTh>
         <MudTh>Name</MudTh>
         <MudTh>AC</MudTh>
         <MudTh>Class</MudTh>
@@ -23,10 +23,10 @@
     </HeaderContent>
 
     <RowTemplate>
-        <MudTd DataLabel="Id">@context?.BeltId</MudTd>
-        @*<MudTd DataLabel="Image">
+        <MudTd DataLabel="Id">@context.ArmorId</MudTd>
+        <MudTd DataLabel="Image">
         <img src="@context.Image" style="width:100px;height:100px;" />
-        </MudTd>*@
+        </MudTd>
         <MudTd DataLabel="Name"> @context.Name </MudTd>
         <MudTd DataLabel="AC">@context.AC</MudTd>
         <MudTd DataLabel="Class">@context.Class</MudTd>
@@ -34,13 +34,13 @@
         <MudTd DataLabel="Options">
 
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Warning" Variant="Variant.Filled"
-                       OnClick="@(()=>EditDialog(context.BeltId, context.Name, context.Image,
+                       OnClick="@(()=>EditDialog(context.ArmorId, context.Name, context.Image,
                                                  context.Class, context.AC, context.Description))">
                 Edit Item
             </MudButton>
 
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Error" Variant="Variant.Filled"
-                       OnClick="@(()=>DeleteDialog(context.BeltId, context.Name, context.Image))">
+                       OnClick="@(()=>DeleteDialog(context.ArmorId, context.Name, context.Image))">
                 Delete Item
             </MudButton>
 
@@ -69,7 +69,7 @@
 
     private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
 
-    private IEnumerable<Belt> AccBelt = new List<Belt>();
+    private IEnumerable<Armor> EqpArmor = new List<Armor>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,27 +78,28 @@
 
     private async Task LoadData()
     {
-        AccBelt = await _getItemHttpService.GetBelt();
+        EqpArmor = await _getItemHttpService.GetArmor();
     }
 
     private async Task CreateDialog()
     {
         var parameters = new DialogParameters();
-        parameters.Add("model", new Belt());
+        parameters.Add("model", new Armor());
 
         var options = new DialogOptions { DisableBackdropClick = true };
-        var dialog = _dialogService.Show<CreateBeltModal>("Create an Acc", parameters, options);
+        var dialog = _dialogService.Show<CreateArmorModal>("Create an Armor", parameters, options);
 
         // wait modal to close
         var result = await dialog.Result;
 
         var notCancelled = !result.Cancelled;
-        if (notCancelled is true && result.Data != null)
+        if (notCancelled is true && result.Data is not null)
         {
-            Belt beltInfo = result.Data as Belt;
-            await _createItemHttpService.CreateBelt(beltInfo);
+            Armor armorInfo = result.Data as Armor;
 
-            _navigationManager.NavigateTo("/acc/belt", true);
+            await _createItemHttpService.CreateArmor(armorInfo);
+
+            _navigationManager.NavigateTo("/eqp/armor", true);
         }
 
     }
@@ -111,17 +112,18 @@
         parameters.Add("itemImage", itemImage);
 
         var options = new DialogOptions { DisableBackdropClick = false };
-        var dialog = _dialogService.Show<DeleteBeltModal>("Delete an Acc", parameters, options);
+        var dialog = _dialogService.Show<DeleteArmorModal>("Delete an Armor", parameters, options);
 
         var result = await dialog.Result;
 
         var notCancelled = !result.Cancelled;
-        if (notCancelled is true && result.Data != null)
+        if (notCancelled is true && result.Data is not null)
         {
-            Belt beltInfo = result.Data as Belt;
-            await _deleteItemHttpService.DeleteBelt(itemId);
+            Armor armorInfo = result.Data as Armor;
 
-            _navigationManager.NavigateTo("/acc/belt", true);
+            await _deleteItemHttpService.DeleteArmor(itemId);
+
+            _navigationManager.NavigateTo("/eqp/armor", true);
         }
     }
 
@@ -138,17 +140,18 @@
         parameters.Add("itemDesc", itemDesc);
 
         var options = new DialogOptions { DisableBackdropClick = false };
-        var dialog = _dialogService.Show<EditBeltModal>("Edit an Acc", parameters, options);
+        var dialog = _dialogService.Show<EditArmorModal>("Edit an Armor", parameters, options);
 
         var result = await dialog.Result;
 
         var notCancelled = !result.Cancelled;
-        if (notCancelled is true && result.Data != null)
+        if (notCancelled is true && result.Data is not null)
         {
-            Belt beltInfo = result.Data as Belt;
-            await _updateItemHttpService.UpdateBelt(beltInfo);
+            Armor armorInfo = result.Data as Armor;
 
-            _navigationManager.NavigateTo("/acc/belt", true);
+            await _updateItemHttpService.UpdateArmor(armorInfo);
+
+            _navigationManager.NavigateTo("/eqp/armor", true);
         }
 
     }

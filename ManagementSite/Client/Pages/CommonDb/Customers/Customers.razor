@@ -35,13 +35,11 @@
     private MudTable<CustomersViewModel> table;
 
     public Belt BeltModel = new Belt();
-    private EarRing EarRingModel = new EarRing();
 
     private IEnumerable<CustomersInGameInfoViewModel> InGameInfo { get; set; } = new List<CustomersInGameInfoViewModel>();
     private IEnumerable<CustomerEquipmentViewModel> CustomersEquipment { get; set; } = new List<CustomerEquipmentViewModel>();
 
     private IEnumerable<Belt> Belts = new List<Belt>();
-    private IEnumerable<EarRing> EarRings = new List<EarRing>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,8 +52,6 @@
         InGameInfo = await _customersHttpService.CustomersInGameInfo(UserId);
         CustomersEquipment = await _customersHttpService.CustomersEquipment(UserId);
         Belts = await _getItemHttpService.GetBelt();
-        //EarRings = await _commDbService.GetEarRings();
-        //Accs = await _commonDbService.GetAcc();
     }
 
     public async Task OnSelect(Belt belt, string userId)

@@ -1,8 +1,9 @@
-﻿@page "/acc/belt"
-@using ManagementSite.Client.Pages.CommonDb.Itemlist.Acc.Belt.Modal
+﻿@page "/weapon/onehandsword"
+@using ManagementSite.Client.Pages.CommonDb.Itemlist.Weapon.OneHandSword.Modal
+
 @attribute [Authorize]
 
-<MudTable Items="@AccBelt" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
+<MudTable Items="@WeaponOneHandSwords" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
 
     <ToolBarContent>
         <MudText Typo="Typo.h6"> List</MudText>
@@ -13,34 +14,36 @@
     </ToolBarContent>
 
     <HeaderContent>
-        <MudTh>BeltId</MudTh>
-        @*<MudTh>Image</MudTh>*@
+        <MudTh>OneHandSwordId</MudTh>
+        <MudTh>Image</MudTh>
         <MudTh>Name</MudTh>
-        <MudTh>AC</MudTh>
+        <MudTh>Damage - Small Monster</MudTh>
+        <MudTh>Damage - Big Monster</MudTh>
         <MudTh>Class</MudTh>
         <MudTh>Description</MudTh>
         <MudTh>Options</MudTh>
     </HeaderContent>
 
     <RowTemplate>
-        <MudTd DataLabel="Id">@context?.BeltId</MudTd>
-        @*<MudTd DataLabel="Image">
-        <img src="@context.Image" style="width:100px;height:100px;" />
-        </MudTd>*@
+        <MudTd DataLabel="Id">@context?.OneHandSwordId</MudTd>
+        <MudTd DataLabel="Image">
+            <img src="@context.Image" style="width:100px;height:100px;" />
+        </MudTd>
         <MudTd DataLabel="Name"> @context.Name </MudTd>
-        <MudTd DataLabel="AC">@context.AC</MudTd>
+        <MudTd DataLabel="Damage1">@context.Damage1</MudTd>
+        <MudTd DataLabel="Damage2">@context.Damage2</MudTd>
         <MudTd DataLabel="Class">@context.Class</MudTd>
         <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="Options">
 
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Warning" Variant="Variant.Filled"
-                       OnClick="@(()=>EditDialog(context.BeltId, context.Name, context.Image,
-                                                 context.Class, context.AC, context.Description))">
+                       OnClick="@(()=>EditDialog(context.OneHandSwordId, context.Image, context.Name, context.Class, 
+                                                 context.Damage1, context.Damage2, context.Description))">
                 Edit Item
             </MudButton>
 
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Error" Variant="Variant.Filled"
-                       OnClick="@(()=>DeleteDialog(context.BeltId, context.Name, context.Image))">
+                       OnClick="@(()=>DeleteDialog(context.OneHandSwordId, context.Name, context.Image))">
                 Delete Item
             </MudButton>
 
@@ -69,7 +72,7 @@
 
     private int[] pageSizeOptions = new int[] { 5, 10, 15, 50, 100 };
 
-    private IEnumerable<Belt> AccBelt = new List<Belt>();
+    private IEnumerable<OneHandSword> WeaponOneHandSwords = new List<OneHandSword>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,16 +81,16 @@
 
     private async Task LoadData()
     {
-        AccBelt = await _getItemHttpService.GetBelt();
+        WeaponOneHandSwords = await _getItemHttpService.GetOneHandSword();
     }
 
     private async Task CreateDialog()
     {
         var parameters = new DialogParameters();
-        parameters.Add("model", new Belt());
+        parameters.Add("model", new OneHandSword());
 
         var options = new DialogOptions { DisableBackdropClick = true };
-        var dialog = _dialogService.Show<CreateBeltModal>("Create an Acc", parameters, options);
+        var dialog = _dialogService.Show<CreateOHSModal>("Create an One Hand Sword", parameters, options);
 
         // wait modal to close
         var result = await dialog.Result;
@@ -95,10 +98,10 @@
         var notCancelled = !result.Cancelled;
         if (notCancelled is true && result.Data != null)
         {
-            Belt beltInfo = result.Data as Belt;
-            await _createItemHttpService.CreateBelt(beltInfo);
+            OneHandSword oneHandSwordInfo = result.Data as OneHandSword;
+            await _createItemHttpService.CreateOneHandSword(oneHandSwordInfo);
 
-            _navigationManager.NavigateTo("/acc/belt", true);
+            _navigationManager.NavigateTo("/weapon/onehandsword", true);
         }
 
     }
@@ -111,44 +114,45 @@
         parameters.Add("itemImage", itemImage);
 
         var options = new DialogOptions { DisableBackdropClick = false };
-        var dialog = _dialogService.Show<DeleteBeltModal>("Delete an Acc", parameters, options);
+        var dialog = _dialogService.Show<DeleteOHSModal>("Delete an One Hand Sword", parameters, options);
 
         var result = await dialog.Result;
 
         var notCancelled = !result.Cancelled;
         if (notCancelled is true && result.Data != null)
         {
-            Belt beltInfo = result.Data as Belt;
-            await _deleteItemHttpService.DeleteBelt(itemId);
+            OneHandSword oneHandSwordInfo = result.Data as OneHandSword;
+            await _deleteItemHttpService.DeleteOneHandSword(itemId);
 
-            _navigationManager.NavigateTo("/acc/belt", true);
+            _navigationManager.NavigateTo("/weapon/onehandsword", true);
         }
     }
 
 
-    private async Task EditDialog(int itemId, string itemName, string itemImage, string itemClass,
-                                  int itemAc, string itemDesc)
+    private async Task EditDialog(int itemId, string itemImage, string itemName, string itemClass,
+                                  int itemDamage1, int itemDamage2, string itemDesc)
     {
         var parameters = new DialogParameters();
         parameters.Add("itemId", itemId);
-        parameters.Add("itemName", itemName);
         parameters.Add("itemImage", itemImage);
+        parameters.Add("itemName", itemName);
         parameters.Add("itemClass", itemClass);
-        parameters.Add("itemAc", itemAc);
+        parameters.Add("itemDamage1", itemDamage1);
+        parameters.Add("itemDamage2", itemDamage2);
         parameters.Add("itemDesc", itemDesc);
 
         var options = new DialogOptions { DisableBackdropClick = false };
-        var dialog = _dialogService.Show<EditBeltModal>("Edit an Acc", parameters, options);
+        var dialog = _dialogService.Show<EditOHSModal>("Edit an One Hand Sword", parameters, options);
 
         var result = await dialog.Result;
 
         var notCancelled = !result.Cancelled;
         if (notCancelled is true && result.Data != null)
         {
-            Belt beltInfo = result.Data as Belt;
-            await _updateItemHttpService.UpdateBelt(beltInfo);
+            OneHandSword oneHandSwordInfo = result.Data as OneHandSword;
+            await _updateItemHttpService.UpdateOneHandSword(oneHandSwordInfo);
 
-            _navigationManager.NavigateTo("/acc/belt", true);
+            _navigationManager.NavigateTo("/weapon/onehandsword", true);
         }
 
     }

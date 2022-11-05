@@ -316,6 +316,8 @@ namespace ManagementSite.Server.Controllers
                 Path = context.Path.ToString(),
                 Port = context.Host.Port.Value,
                 UserName = UserName.ToString(),
+                RemoteIpAddress = context.HttpContext.Connection.RemoteIpAddress.ToString(),
+                StatusCode = context.HttpContext.Response.StatusCode.ToString(),
             };
             Serilog.Log.Information("{@logResult}", logResult);
         }

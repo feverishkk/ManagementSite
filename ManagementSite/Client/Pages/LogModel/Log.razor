@@ -1,0 +1,167 @@
+﻿@page "/log"
+@using System.Numerics
+
+<MudText Typo="Typo.h4" Class="m-3"> Logging List </MudText>
+<MudTable Items="@LogModels" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>Level</MudTh>
+        <MudTh>Log Model</MudTh>
+        <MudTh>Path</MudTh>
+        <MudTh>Target</MudTh>
+        <MudTh>Host</MudTh>
+        <MudTh>Port</MudTh>
+        <MudTh>Method</MudTh>
+        <MudTh>UserName</MudTh>
+        <MudTh>IP Address</MudTh>
+        <MudTh>Status Code</MudTh>
+        <MudTh>Exception</MudTh>
+        <MudTh>TimeStamp</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        @{
+
+            string myString = context.Message.Replace("}", "").Replace("\"", "");
+
+            var Model = myString.Split('{')[0];
+            var Path = myString.Split(',')[1].Split(':')[1];
+
+            var PathAccount = myString.Split(',')[0].Split(':')[1];
+
+            var Target = myString.Contains("{ Target: ") ? myString.Split('{')[1].Split(',')[0].Split(":")[1] : " - ";
+
+            var Host = myString.Split(',')[2].Split(':')[1];
+            var HostAccount = myString.Split(',')[1].Split(':')[1];
+
+            var Port = myString.Split(',')[3].Split(':')[1];
+            var PortAccount = myString.Split(',')[2].Split(':')[1];
+
+            var Method = myString.Split(',')[4].Split(':')[1];
+            var MethodAccount = myString.Split(',')[3].Split(':')[1];
+
+            var UserName = myString.Split(',')[5].Split(':')[1];
+            var UserNameAccount = myString.Split(',')[4].Split(':')[1];
+
+            var IpAddr = myString.Split(',')[6].Replace("RemoteIpAddress:", "");
+            var IpAddrAccount = myString.Split(',')[5].Replace("RemoteIpAddress:", "");
+
+            var StatusCode = myString.Split(',').Last().Replace("StatusCode: ", "");
+            var StatusCodeAccount = myString.Split(',')[6].Replace("StatusCode: ", "");
+        }
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Level">@context.Level</MudTd>
+
+        <MudTd DataLabel="Log Model">
+            @Model
+        </MudTd>
+        <MudTd DataLabel="Path">
+            @if (@Path.Contains("Item") is true)
+            {
+                @Path
+            }
+            else
+            {
+                @PathAccount
+            }
+        </MudTd>
+        <MudTd DataLabel="Target">
+            @Target
+        </MudTd>
+        <MudTd DataLabel="Host">
+            @if (@Path.Contains("Item") is true)
+            {
+                @Host
+            }
+            else
+            {
+                @HostAccount
+            }
+        </MudTd>
+        <MudTd DataLabel="Port">
+            @if (@Path.Contains("Item") is true)
+            {
+                @Port
+            }
+            else
+            {
+                @PortAccount
+            }
+        </MudTd>
+        <MudTd DataLabel="Method">
+            @if (@Path.Contains("Item") is true)
+            {
+                @Method
+            }
+            else
+            {
+                @MethodAccount
+            }
+        </MudTd>
+        <MudTd DataLabel="UserName">
+            @if (@Path.Contains("Item") is true)
+            {
+                @UserName
+            }
+            else
+            {
+                @UserNameAccount
+            }
+        </MudTd>
+        <MudTd DataLabel="IP Address">
+            @if (@Path.Contains("Item") is true)
+            {
+                @IpAddr
+            }
+            else
+            {
+                @IpAddrAccount
+            }
+        </MudTd>
+        <MudTd DataLabel="Status Code">
+            @if (@Path.Contains("Item") is true)
+            {
+                @StatusCode
+            }
+            else
+            {
+                @StatusCodeAccount
+            }
+        </MudTd>
+
+        <MudTd DataLabel="TimeStamp">
+            @if (@context.Exception is null)
+            {
+                @nullException
+            }
+            else
+            {
+                @context.Exception
+            }
+        </MudTd>
+        <MudTd DataLabel="TimeStamp"> @context.TimeStamp </MudTd>
+
+    </RowTemplate>
+
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{ 10, 30, 50, 100 }" />
+    </PagerContent>
+</MudTable>
+
+
+@code {
+    private string nullException { get; set; } = "-";
+    public string faltalException { get; set; } = "Fatal Exception Occurred!";
+    private IEnumerable<LogModel> LogModels = new List<LogModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task LoadData()
+    {
+        LogModels = await _managerHttpService.GetLog();
+    }
+
+}

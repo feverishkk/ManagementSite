@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ManagementDbContext.DbContext
 {
     /// <summary>
-    /// 고객들을 관리하는 Context
+    /// 고객들과 아이템을 관리하는 Context
     /// </summary>
     public class CommonDbContext : IdentityDbContext
     {

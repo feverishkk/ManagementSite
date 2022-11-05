@@ -20,8 +20,6 @@ namespace ManagementSite.Server
             Log.Logger = new LoggerConfiguration()
                         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                         .WriteTo.Console()
-                        .WriteTo.File(new JsonFormatter(), "logs/log.txt",
-                                      rollingInterval: RollingInterval.Day)
                         .WriteTo.MSSqlServer(
                             connectionString: config.GetConnectionString("DefaultConnection"),
                             sinkOptions: new MSSqlServerSinkOptions { TableName = "LogModels" }
@@ -30,13 +28,7 @@ namespace ManagementSite.Server
 
             try
             {
-                //Log.Information("Starting the web application...");
                 CreateHostBuilder(args).Build().Run();
-
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectively");
             }
             finally
             {

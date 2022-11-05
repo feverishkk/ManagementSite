@@ -1,4 +1,6 @@
 ﻿using CommonDatabase.Models.Accessories;
+using CommonDatabase.Models.Equipment;
+using CommonDatabase.Models.Weapons;
 using Management.Application.Interfaces.CommonDb;
 using System;
 using System.Collections;
@@ -22,12 +24,23 @@ namespace Management.Application.Services.CommonDb
             _httpClient = httpClient;
         }
 
-        public async Task<string> CreateAccItem(Belt arrayList)
+        public async Task<string> CreateBelt(Belt belt)
         {
-            var response = await _httpClient.PostAsJsonAsync("/Create/CreateAccItem", arrayList);
+            var response = await _httpClient.PostAsJsonAsync("/CreateItem/CreateBelt", belt);
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task<string> CreateArmor(Armor armor)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/CreateItem/CreateArmor", armor);
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> CreateOneHandSword(OneHandSword oneHandSword)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/CreateItem/CreateOneHandSword", oneHandSword);
+            return await response.Content.ReadAsStringAsync();
+        }
         
     }
 }

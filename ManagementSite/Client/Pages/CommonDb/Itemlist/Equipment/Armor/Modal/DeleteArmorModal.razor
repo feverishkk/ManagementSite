@@ -1,0 +1,37 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm Model="@itemId">
+            <MudTextField Label="ArmorId" Value="itemId" ReadOnly="true" />
+            <MudTextField Label="ArmorName" Value="itemName" ReadOnly="true" />
+            <img src="@itemImage" style="width:200px; height:100px;" />
+            <MudText Typo="Typo.h4" Class="mt-2"> Are you sure? </MudText>
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public int itemId{ get; set; }
+    [Parameter] public string itemName { get; set; }
+    [Parameter] public string itemImage { get; set; }
+
+    [Parameter] public Armor model { get; set; } = new();
+
+    void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<Armor>(model));
+    }
+
+    void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+
+}
