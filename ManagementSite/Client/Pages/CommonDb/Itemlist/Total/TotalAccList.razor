@@ -1,5 +1,5 @@
 ﻿@page "/itemlist/totalAcc"
-@attribute [Authorize]
+@attribute [Authorize (Roles = "SuperAdministrator, ServerAdministrator, Basic")]
 
 <MudTable Items="@TotalAcc">
     <ToolBarContent>
@@ -7,9 +7,7 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>No</MudTh>
-        @*이미지 주석한 이유는 nc서버에서 링크만 빼와서 사용하는거라 양심이 좀ㅎㅎ;;;;
-          동작은 함
-        <MudTh>Image</MudTh>*@
+        <MudTh>Image</MudTh>
         <MudTh>Name</MudTh>
         <MudTh>AC</MudTh>
         <MudTh>Class</MudTh>
@@ -17,9 +15,9 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="No">@context.TotalAccId</MudTd>
-        @*<MudTd DataLabel="Image">
+        <MudTd DataLabel="Image">
             <img src="@context.Image" style="height:100px; width:100px" />
-        </MudTd>*@
+        </MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="AC">@context.AC</MudTd>
         <MudTd DataLabel="Class">@context.Class</MudTd>

@@ -1,5 +1,6 @@
 ﻿@page "/log"
 @using System.Numerics
+@attribute [Authorize (Roles = "SuperAdministrator")]
 
 <MudText Typo="Typo.h4" Class="m-3"> Logging List </MudText>
 <MudTable Items="@LogModels" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">

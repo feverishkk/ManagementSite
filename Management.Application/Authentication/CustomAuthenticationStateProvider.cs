@@ -40,7 +40,10 @@ namespace Management.Application.Authentication
 
         public void AuthenticateUser(string email)
         {
-            var authenticateUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "apiauth"));
+            var authenticateUser = new ClaimsPrincipal(new ClaimsIdentity(new[] 
+            { 
+                new Claim(ClaimTypes.Name, email)
+            }, "jwtauth"));
             var authState = Task.FromResult(new AuthenticationState(authenticateUser));
 
             NotifyAuthenticationStateChanged(authState);

@@ -1,5 +1,5 @@
 ﻿@page "/managerlist"
-@*@attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]*@
+@attribute [Authorize(Roles = "SuperAdministrator")]
 
 <MudTable Items="@Managers" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped"
           Filter="new Func<ManagersViewModel, bool>(FilterFunction)" @ref="table">

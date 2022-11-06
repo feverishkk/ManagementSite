@@ -1,6 +1,6 @@
 ﻿@page "/acc/belt"
 @using ManagementSite.Client.Pages.CommonDb.Itemlist.Acc.Belt.Modal
-@attribute [Authorize]
+@attribute [Authorize (Roles = "SuperAdministrator")]
 
 <MudTable Items="@AccBelt" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
 

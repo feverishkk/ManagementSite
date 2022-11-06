@@ -1,7 +1,7 @@
 ﻿@page "/weapon/onehandsword"
 @using ManagementSite.Client.Pages.CommonDb.Itemlist.Weapon.OneHandSword.Modal
 
-@attribute [Authorize]
+@attribute [Authorize (Roles = "SuperAdministrator")]
 
 <MudTable Items="@WeaponOneHandSwords" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
 

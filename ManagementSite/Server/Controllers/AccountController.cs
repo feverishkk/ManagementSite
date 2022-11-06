@@ -160,6 +160,7 @@ namespace ManagementSite.Server.Controllers
             {
                 var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
                 var checkPassword = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
+                var userRole = _userManager.GetRolesAsync(user).Result[0];
 
                 if (user == null)
                 {
@@ -186,6 +187,8 @@ namespace ManagementSite.Server.Controllers
                         var claims = new[]
                         {
                             new Claim(ClaimTypes.Name, loginViewModel.Email),
+                            new Claim(ClaimTypes.NameIdentifier, loginViewModel.Email),
+                            new Claim(ClaimTypes.Role, userRole),
                         };
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTSettings:SecretKey"]));
@@ -200,7 +203,7 @@ namespace ManagementSite.Server.Controllers
                             signingCredentials: creds
                             );
 
-                        GetLogInfo(loginViewModel.Email);
+                        //GetLogInfo(loginViewModel.Email);
                         return Ok(new LoginResult { Successful = true, Token = new JwtSecurityTokenHandler().WriteToken(token) });
                     }
                 }
