@@ -10,9 +10,13 @@
 
 <MudSpacer />
 
-<ChangeCustomerBelt Belts="@Belts" UserId="@UserId" />
-<ChangeCustomerArmor Armors="@Armors" UserId="@UserId" />
-<ChangeCustomerWeapon TotalWeapons="@Weapons" UserId="@UserId" />
+<CascadingValue Value="@UserId">
+
+    <ChangeCustomerBelt Belts="@Belts"  />
+    <ChangeCustomerArmor Armors="@Armors" />
+    <ChangeCustomerWeapon TotalWeapons="@Weapons" />
+
+</CascadingValue>
 
 @code {
     [Parameter]
@@ -43,6 +47,6 @@
         Weapons = await _getItemHttpService.GetAllWeapon();
     }
 
-    
+
 
 }

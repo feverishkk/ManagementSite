@@ -19,7 +19,7 @@
     [Parameter]
     public IEnumerable<Armor> Armors { get; set; } = new List<Armor>();
 
-    [Parameter]
+    [CascadingParameter]
     public string UserId{ get; set; }
 
     private Armor ArmorModel { get; set; } = new Armor();
