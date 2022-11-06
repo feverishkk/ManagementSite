@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonDatabase.Models.Equipment;
 using CommonDatabase.Models.Weapons;
+using CommonDatabase.Models.UpdateModel;
+using CommonDatabase.Models.Customers;
 
 namespace Management.Application.Services.CommonDb
 {
@@ -24,10 +26,16 @@ namespace Management.Application.Services.CommonDb
             _httpClient = httpClient;
         }
 
-        public async Task<Belt> UpdateCustomerEquipment(ArrayList userInfo)
+        public async Task<AccAndEqpUpdateModel> UpdateCustomerEquipment(ArrayList userInfo)
         {
             var response = await _httpClient.PostAsJsonAsync("/UpdateItems/UpdateCustomerEquipment", userInfo);
-            return await response.Content.ReadFromJsonAsync<Belt>();
+            return await response.Content.ReadFromJsonAsync<AccAndEqpUpdateModel>();
+        }
+
+        public async Task<TotalWeapons> UpdateCustomerWeapon(ArrayList userInfo)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/UpdateItems/UpdateCustomerWeapon", userInfo);
+            return await response.Content.ReadFromJsonAsync<TotalWeapons>();
         }
 
         public async Task<string> UpdateBelt(Belt belt)

@@ -1,6 +1,6 @@
 ﻿@page "/acc/belt"
 @using ManagementSite.Client.Pages.CommonDb.Itemlist.Acc.Belt.Modal
-@attribute [Authorize (Roles = "SuperAdministrator")]
+@attribute [Authorize(Roles = "SuperAdministrator")]
 
 <MudTable Items="@AccBelt" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
 
@@ -14,7 +14,7 @@
 
     <HeaderContent>
         <MudTh>BeltId</MudTh>
-        @*<MudTh>Image</MudTh>*@
+        <MudTh>Image</MudTh>
         <MudTh>Name</MudTh>
         <MudTh>AC</MudTh>
         <MudTh>Class</MudTh>
@@ -24,9 +24,9 @@
 
     <RowTemplate>
         <MudTd DataLabel="Id">@context?.BeltId</MudTd>
-        @*<MudTd DataLabel="Image">
-        <img src="@context.Image" style="width:100px;height:100px;" />
-        </MudTd>*@
+        <MudTd DataLabel="Image">
+            <img src="@context.Image" style="width:100px;height:100px;" />
+        </MudTd>
         <MudTd DataLabel="Name"> @context.Name </MudTd>
         <MudTd DataLabel="AC">@context.AC</MudTd>
         <MudTd DataLabel="Class">@context.Class</MudTd>

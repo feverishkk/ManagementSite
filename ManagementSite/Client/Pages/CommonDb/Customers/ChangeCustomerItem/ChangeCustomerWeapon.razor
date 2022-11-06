@@ -1,0 +1,37 @@
+﻿<MudCard>
+    <MudForm Model="@WeaponModel">
+        <MudCardContent>
+            <MudSelect Label="Weapon" @bind-Value="WeaponModel.TotalWeaponId" For="@(()=>WeaponModel.TotalWeaponId)">
+                @foreach (var weapons in TotalWeapons)
+                {
+                    <MudSelectItem Value="@weapons.TotalWeaponId">@weapons.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(WeaponModel.TotalWeaponId))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code{
+    [Parameter]
+    public string UserId { get; set; }
+
+    public TotalWeapons WeaponModel = new TotalWeapons();
+
+    [Parameter]
+    public IEnumerable<TotalWeapons> TotalWeapons { get; set; } = new List<TotalWeapons>();
+
+    private async Task OnSelect(int userSelectedWeaponId)
+    {
+        ArrayList userInfo = new ArrayList();
+        userInfo.Add(userSelectedWeaponId);
+        userInfo.Add(this.UserId);
+
+        await _updateItemHttpService.UpdateCustomerWeapon(userInfo);
+
+        StateHasChanged();
+    }
+}

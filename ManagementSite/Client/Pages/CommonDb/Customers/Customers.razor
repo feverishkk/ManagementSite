@@ -1,4 +1,5 @@
 ﻿@page "/customeringameinfo/{UserId}"
+@using ManagementSite.Client.Pages.CommonDb.Customers.ChangeCustomerItem
 @attribute [Authorize(Roles = "SuperAdministrator, ServerAdministrator")]
 
 <CustomersInGameInfo InGameInfo="InGameInfo" />
@@ -9,23 +10,9 @@
 
 <MudSpacer />
 
-<MudCard>
-    <MudForm Model="@BeltModel" @ref="@form">
-        <MudCardContent>
-            <MudSelect Label="Belt" @bind-Value="BeltModel.BeltId" For="@(()=>BeltModel.BeltId)">
-                @foreach (var belt in Belts)
-                {
-                    <MudSelectItem Value="@belt.BeltId">@belt.Name</MudSelectItem>
-                }
-            </MudSelect>
-        </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(BeltModel, UserId))">
-            Update
-        </MudButton>
-    </MudForm>
-</MudCard>
-
+<ChangeCustomerBelt Belts="@Belts" UserId="@UserId" />
+<ChangeCustomerArmor Armors="@Armors" UserId="@UserId" />
+<ChangeCustomerWeapon TotalWeapons="@Weapons" UserId="@UserId" />
 
 @code {
     [Parameter]
@@ -34,12 +21,12 @@
     MudForm form;
     private MudTable<CustomersViewModel> table;
 
-    public Belt BeltModel = new Belt();
-
     private IEnumerable<CustomersInGameInfoViewModel> InGameInfo { get; set; } = new List<CustomersInGameInfoViewModel>();
     private IEnumerable<CustomerEquipmentViewModel> CustomersEquipment { get; set; } = new List<CustomerEquipmentViewModel>();
 
     private IEnumerable<Belt> Belts = new List<Belt>();
+    private IEnumerable<Armor> Armors = new List<Armor>();
+    private IEnumerable<TotalWeapons> Weapons = new List<TotalWeapons>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -52,17 +39,10 @@
         InGameInfo = await _customersHttpService.CustomersInGameInfo(UserId);
         CustomersEquipment = await _customersHttpService.CustomersEquipment(UserId);
         Belts = await _getItemHttpService.GetBelt();
+        Armors = await _getItemHttpService.GetArmor();
+        Weapons = await _getItemHttpService.GetAllWeapon();
     }
 
-    public async Task OnSelect(Belt belt, string userId)
-    {
-        ArrayList userInfo = new ArrayList();
-
-        userInfo.Add(belt.BeltId);
-        userInfo.Add(userId);
-        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
-
-        StateHasChanged();
-    }
+    
 
 }

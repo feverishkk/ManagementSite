@@ -1,0 +1,38 @@
+﻿<MudCard>
+    <MudForm Model="@BeltModel">
+        <MudCardContent>
+            <MudSelect Label="Belt" @bind-Value="BeltModel.BeltId" For="@(()=>BeltModel.BeltId)">
+                @foreach (var belt in Belts)
+                {
+                    <MudSelectItem Value="@belt.BeltId">@belt.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(BeltModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    public Belt BeltModel = new Belt();
+
+    [Parameter]
+    public IEnumerable<Belt> Belts { get; set; } = new List<Belt>();
+
+    public async Task OnSelect(Belt belt)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(belt.BeltId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Belt");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+}

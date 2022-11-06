@@ -39,6 +39,7 @@ namespace ManagementSite.Server.Controllers
         {
             var userSelectedValue = (int)(long)userInfo[0];
             var userId = userInfo[1].ToString();
+            var model = userInfo[2].ToString();
 
             if (userId is null || userSelectedValue is 0)
             {
@@ -48,11 +49,12 @@ namespace ManagementSite.Server.Controllers
             object[] paramItems = new object[]
             {
                 new SqlParameter("@paramUserId", userId),
-                new SqlParameter("@paramSelectedValue", userSelectedValue)
+                new SqlParameter("@paramSelectedValue", userSelectedValue),
+                new SqlParameter("@paramModel", model),
             };
 
             int items = _commonDbContext.Database.ExecuteSqlRaw
-                        ("UPDATE CustomerEquipment SET BeltId = @paramSelectedValue WHERE [ID] = @paramUserId ",
+                        ($"UPDATE CustomerEquipment SET {model}Id = @paramSelectedValue WHERE [ID] = @paramUserId ",
                         paramItems);
 
             if (items == 0)
@@ -65,7 +67,34 @@ namespace ManagementSite.Server.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult UpdateCustomerWeapon(ArrayList userInfo)
+        {
+            var userSelection = (int)(long)userInfo[0];
+            var userId = userInfo[1].ToString();
 
+            if(userId is null || userSelection is 0)
+            {
+                return BadRequest();
+            }
+
+            object[] parameItems = new object[]
+            {
+                new SqlParameter("@paramUserSelection", userSelection),
+                new SqlParameter("@paramUserId", userId),
+            };
+
+            int item = _commonDbContext.Database.ExecuteSqlRaw(
+                "UPDATE CustomerEquipment SET TotalWeaponId = @paramUserSelection " +
+                "WHERE [ID] = @paramUserId ", parameItems);
+
+            if (item is 0)
+                return BadRequest();
+
+            GetLogInfo(userSelection);
+
+            return Ok();
+        }
 
         /// <summary>
         /// Items목록에서 벨트, 갑옷, 한손검의 정보를 변경하는 기능.
