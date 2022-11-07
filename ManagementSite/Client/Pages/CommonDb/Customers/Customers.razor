@@ -60,8 +60,8 @@
 
     private async Task LoadAccessories()
     {
-        InGameInfo = await _customersHttpService.CustomersInGameInfo(UserId);
-        CustomersEquipment = await _customersHttpService.CustomersEquipment(UserId);
+        InGameInfo = await _customersHttpService.CustomersInGameInfo(this.UserId);
+        CustomersEquipment = await _customersHttpService.CustomersEquipment(this.UserId);
 
         Belts = await _getItemHttpService.GetBelt();
         EarRings = await _getItemHttpService.GetEarRing();
@@ -84,24 +84,3 @@
 
     }
 }
-<style>
-    .ChangeCustomerItem{
-        width:350px;
-        height:200px;
-        margin: 5px;
-        display:inline-flex;
-    }
-    .buttonCentre{
-        display:flex;
-        align-content:center;
-        justify-content:center;
-    }
-
-    .buttonWidthStyle{
-        width:330px;
-    }
-    .CustomerEquipmentImageSize{
-        width:50px;
-        height:30px;
-    }
-</style>

@@ -48,3 +48,25 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.ChangeCustomerItem {
+    width: 350px;
+    height: 200px;
+    margin: 5px;
+    display: inline-flex;
+}
+
+.buttonCentre {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.buttonWidthStyle {
+    width: 330px;
+}
+
+.CustomerEquipmentImageSize {
+    width: 50px;
+    height: 30px;
+}
