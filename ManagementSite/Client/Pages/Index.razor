@@ -3,34 +3,22 @@
 @page "/index"
 
 @if (user is not null)
-{
-    
+{    
+    <MudText Typo="Typo.h3" Class="mt-5 text-center"> Greeting! Mr or Ms. @user.Identity.Name</MudText>
     <MudSpacer />
-    
-    <MudText Typo="Typo.h2" Class="mt-5">@user.Identity.Name</MudText>
-    <div class="m-2 p-2">
-        <MudText Typo="Typo.h2">Is Authenticated: @user.Identity.IsAuthenticated</MudText>
-    </div>
-    <div class="m-2 p-2">
-        <MudText Typo="Typo.h2">Authentication Type: @user.Identity.AuthenticationType</MudText>
-    </div>
-    <div class="m-2 p-2">
-       <MudText Typo="Typo.h2">Admin Role: @user.IsInRole("SuperAdministrator") </MudText>
-    </div>
-    <div class="m-2 p-2">
-        <MudText Typo="Typo.h5">Claims</MudText>
-        @foreach (var claim in user.Claims)
-        {
-            <span>
-                @claim.Type
-            </span>
-            <span>:</span>
-            <span>
-                @claim.Value
-            </span>
-            <br />
-        }
-    </div>
+    <MudText Typo="Typo.h5" Class="mt-5 text-center"> 
+        왼쪽메뉴에서 Items에서 WeaponList, EquipmentList, Accessories List에서 각 하나씩만 구현했습니다.
+        <br />
+        List들 중 구현된 것들: One Hand Sword, Armor, Belt 입니다.(빨간색 이름)
+        <br />
+        
+        <br />
+        이 외에는 다 구현하여 동작합니다.
+        <br />
+        Customer List는 10만명을  불러와서 시간이 좀 걸립니다.
+        <br />
+        살짝만 인내부탁드리겠습니다.
+    </MudText>
 }
 else
 {
