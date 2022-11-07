@@ -3,13 +3,6 @@
 
 <h3>Login</h3>
 
-@if (ShowErrors == true)
-{
-    <div class="alert alert-danger" role="alert">
-        <p>@Errors</p>
-    </div>
-}
-
 <EditForm Model="model" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary />
@@ -31,7 +24,6 @@
 @code {
     private LoginViewModel model = new();
     private bool ShowErrors { get; set; } = false;
-    private string Errors { get; set; } = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -43,14 +35,13 @@
     {
         var result = await _accountHttpService.Login(model);
 
-        if (!result.Successful)
+        if (result.Successful is false)
         {
-            Errors = result.Errors;
             ShowErrors = true;
         }
         else
         {
-            _navigationManager.NavigateTo("/");
+            _navigationManager.NavigateTo("/", true);
         }
     }
 

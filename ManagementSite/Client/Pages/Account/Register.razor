@@ -3,7 +3,7 @@
 
 <h3>Register</h3>
 
-@if (ShowErrors == true)
+@if (ShowErrors is true)
 {
     <div class="alert alert-danger" role="alert">
         @foreach (var error in Errors)
@@ -90,7 +90,7 @@
     private async Task OnValidSubmit()
     {
         var result = await _accountHttpService.Register(model);
-        if (!result.Successful)
+        if (result.Successful is false)
         {
             Errors = result.Errors;
             ShowErrors = true;
