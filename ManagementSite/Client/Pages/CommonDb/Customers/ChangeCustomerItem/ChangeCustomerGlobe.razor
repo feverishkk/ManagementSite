@@ -1,0 +1,41 @@
+﻿<MudCard>
+    <MudForm Model="@GlobeModel">
+        <MudCardContent>
+            <MudSelect Label="Globe" @bind-Value="GlobeModel.GlobeId" For="@(()=>GlobeModel.GlobeId)">
+                @foreach (var globe in Globes)
+                {
+                    <MudSelectItem Value="@globe.GlobeId">@globe.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(GlobeModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [Parameter]
+    public IEnumerable<Globe> Globes { get; set; } = new List<Globe>();
+
+    [CascadingParameter]
+    public string UserId{ get; set; }
+
+    private Globe GlobeModel { get; set; } = new Globe();
+
+    private async Task OnSelect(Globe globe)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(globe.GlobeId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Globe");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+
+
+
+}

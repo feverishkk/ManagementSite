@@ -27,6 +27,46 @@ namespace Management.Application.Services.CommonDb
         {
             return await _httpClient.GetFromJsonAsync<IEnumerable<Belt>>("GetItems/GetBelt");
         }
+        public async Task<IEnumerable<EarRing>> GetEarRing()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<EarRing>>("GetItems/GetEarRing");
+        }
+        public async Task<IEnumerable<Neckless>> GetNeckless()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Neckless>>("GetItems/GetNeckless");
+        }
+        public async Task<IEnumerable<Ring1>> GetRing1()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Ring1>>("GetItems/GetRing1");
+        }
+        public async Task<IEnumerable<Ring2>> GetRing2()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Ring2>>("GetItems/GetRing2");
+        }
+        public async Task<IEnumerable<Boots>> GetBoots()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Boots>>("GetItems/GetBoots");
+        }
+        public async Task<IEnumerable<Cape>> GetCape()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Cape>>("GetItems/GetCape");
+        }
+        public async Task<IEnumerable<Globe>> GetGlobe()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Globe>>("GetItems/GetGlobe");
+        }
+        public async Task<IEnumerable<Guard>> GetGuard()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Guard>>("GetItems/GetGuard");
+        }
+        public async Task<IEnumerable<Helmet>> GetHelmet()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Helmet>>("GetItems/GetHelmet");
+        }
+        public async Task<IEnumerable<TShirt>> GetTShirt()
+        {
+            return await _httpClient.GetFromJsonAsync<IEnumerable<TShirt>>("GetItems/GetTShirt");
+        }
 
         public async Task<IEnumerable<Armor>> GetArmor()
         {
@@ -53,5 +93,6 @@ namespace Management.Application.Services.CommonDb
             return await _httpClient.GetFromJsonAsync<IEnumerable<TotalAccessories>>("GetItems/GetAllAcc");
         }
 
+        
     }
 }

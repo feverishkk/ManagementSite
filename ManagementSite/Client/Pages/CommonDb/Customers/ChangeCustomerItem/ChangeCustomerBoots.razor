@@ -1,0 +1,41 @@
+﻿<MudCard>
+    <MudForm Model="@BootsModel">
+        <MudCardContent>
+            <MudSelect Label="Boots" @bind-Value="BootsModel.BootsId" For="@(()=>BootsModel.BootsId)">
+                @foreach (var boots in Boots)
+                {
+                    <MudSelectItem Value="@boots.BootsId">@boots.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(BootsModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [Parameter]
+    public IEnumerable<Boots> Boots { get; set; } = new List<Boots>();
+
+    [CascadingParameter]
+    public string UserId{ get; set; }
+
+    private Boots BootsModel { get; set; } = new Boots();
+
+    private async Task OnSelect(Boots boots)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(boots.BootsId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Boots");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+
+
+
+}

@@ -1,0 +1,40 @@
+﻿@using CommonDatabase.Models.Accessories;
+
+<MudCard>
+    <MudForm Model="@EarRingModel">
+        <MudCardContent>
+            <MudSelect Label="EarRing" @bind-Value="EarRingModel.EarRingId" For="@(()=>EarRingModel.EarRingId)">
+                @foreach (var earRing in EarRings)
+                {
+                    <MudSelectItem Value="@earRing.EarRingId">@earRing.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(EarRingModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [CascadingParameter]
+    public string UserId { get; set; }
+
+    public EarRing EarRingModel = new EarRing();
+
+    [Parameter]
+    public IEnumerable<EarRing> EarRings { get; set; } = new List<EarRing>();
+
+    public async Task OnSelect(EarRing earRing)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(earRing.EarRingId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("EarRing");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+}

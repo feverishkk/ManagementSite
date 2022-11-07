@@ -1,6 +1,6 @@
 ﻿@page "/eqp/armor"
 @using ManagementSite.Client.Pages.CommonDb.Itemlist.Equipment.Armor.Modal
-@attribute [Authorize(Roles = "ServerAdministrator")]
+@attribute [Authorize(Roles = "SuperAdministrator")]
 
 <MudTable Items="@EqpArmor" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped">
 

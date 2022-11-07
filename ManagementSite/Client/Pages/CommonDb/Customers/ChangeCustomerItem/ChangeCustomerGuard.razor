@@ -1,0 +1,41 @@
+﻿<MudCard>
+    <MudForm Model="@GuardModel">
+        <MudCardContent>
+            <MudSelect Label="Guard" @bind-Value="GuardModel.GuardId" For="@(()=>GuardModel.GuardId)">
+                @foreach (var guard in Guards)
+                {
+                    <MudSelectItem Value="@guard.GuardId">@guard.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(GuardModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [Parameter]
+    public IEnumerable<Guard> Guards { get; set; } = new List<Guard>();
+
+    [CascadingParameter]
+    public string UserId{ get; set; }
+
+    private Guard GuardModel { get; set; } = new Guard();
+
+    private async Task OnSelect(Guard guard)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(guard.GuardId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Guard");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+
+
+
+}

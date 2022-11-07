@@ -1,0 +1,40 @@
+﻿@using CommonDatabase.Models.Accessories;
+
+<MudCard>
+    <MudForm Model="@NecklessModel">
+        <MudCardContent>
+            <MudSelect Label="Neckless" @bind-Value="NecklessModel.NecklessId" For="@(()=>NecklessModel.NecklessId)">
+                @foreach (var neckless in Necklesses)
+                {
+                    <MudSelectItem Value="@neckless.NecklessId">@neckless.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(NecklessModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [CascadingParameter]
+    public string UserId { get; set; }
+
+    public Neckless NecklessModel = new Neckless();
+
+    [Parameter]
+    public IEnumerable<Neckless> Necklesses { get; set; } = new List<Neckless>();
+
+    public async Task OnSelect(Neckless neckless)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(neckless.NecklessId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Neckless");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+}

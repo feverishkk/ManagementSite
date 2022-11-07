@@ -15,7 +15,19 @@ namespace Management.Application.Interfaces.CommonDb
         Task<IEnumerable<TotalAccessories>> GetAllAcc();
 
         Task<IEnumerable<Belt>> GetBelt();
+        Task<IEnumerable<EarRing>> GetEarRing();
+        Task<IEnumerable<Neckless>> GetNeckless();
+        Task<IEnumerable<Ring1>> GetRing1();
+        Task<IEnumerable<Ring2>> GetRing2();
+
+        Task<IEnumerable<Boots>> GetBoots();
+        Task<IEnumerable<Cape>> GetCape();
         Task<IEnumerable<Armor>> GetArmor();
+        Task<IEnumerable<Globe>> GetGlobe();
+        Task<IEnumerable<Guard>> GetGuard();
+        Task<IEnumerable<Helmet>> GetHelmet();
+        Task<IEnumerable<TShirt>> GetTShirt();
+
         Task<IEnumerable<OneHandSword>> GetOneHandSword();
     }
 }

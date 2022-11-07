@@ -1,0 +1,40 @@
+﻿@using CommonDatabase.Models.Accessories;
+
+<MudCard>
+    <MudForm Model="@Ring1Model">
+        <MudCardContent>
+            <MudSelect Label="Ring1" @bind-Value="Ring1Model.Ring1Id" For="@(()=>Ring1Model.Ring1Id)">
+                @foreach (var ring in Ring1)
+                {
+                    <MudSelectItem Value="@ring.Ring1Id">@ring.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(Ring1Model))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [CascadingParameter]
+    public string UserId { get; set; }
+
+    public Ring1 Ring1Model = new Ring1();
+
+    [Parameter]
+    public IEnumerable<Ring1> Ring1 { get; set; } = new List<Ring1>();
+
+    public async Task OnSelect(Ring1 ring)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(ring.Ring1Id);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Ring1");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+}

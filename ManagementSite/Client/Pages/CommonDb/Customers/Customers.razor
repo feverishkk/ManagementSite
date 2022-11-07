@@ -11,11 +11,21 @@
 <MudSpacer />
 
 <CascadingValue Value="@UserId">
+    <ChangeCustomerBelt Belts="@Belts" />
+    <ChangeCustomerEarRing EarRings="EarRings" />
+    <ChangeCustomerNeckless Necklesses="@Necklesses" />
+    <ChangeCustomerRing1 Ring1="@Ring1" />
+    <ChangeCustomerRing2 Ring2="@Ring2" />
 
-    <ChangeCustomerBelt Belts="@Belts"  />
     <ChangeCustomerArmor Armors="@Armors" />
-    <ChangeCustomerWeapon TotalWeapons="@Weapons" />
+    <ChangeCustomerBoots Boots="@Boot" />
+    <ChangeCustomerCape Capes="@Capes"/>
+    <ChangeCustomerGlobe Globes="@Globes" />
+    <ChangeCustomerGuard Guards="@Guards" />
+    <ChangeCustomerHelmet Helmets="@Helmets" />
+    <ChangeCustomerTShirt TShirts="@TShirts" />
 
+    <ChangeCustomerWeapon TotalWeapons="@Weapons" />
 </CascadingValue>
 
 @code {
@@ -29,24 +39,51 @@
     private IEnumerable<CustomerEquipmentViewModel> CustomersEquipment { get; set; } = new List<CustomerEquipmentViewModel>();
 
     private IEnumerable<Belt> Belts = new List<Belt>();
+    private IEnumerable<EarRing> EarRings = new List<EarRing>();
+    private IEnumerable<Neckless> Necklesses = new List<Neckless>();
+    private IEnumerable<Ring1> Ring1 = new List<Ring1>();
+    private IEnumerable<Ring2> Ring2 = new List<Ring2>();
+
     private IEnumerable<Armor> Armors = new List<Armor>();
+    private IEnumerable<Boots> Boot = new List<Boots>();
+    private IEnumerable<Cape> Capes = new List<Cape>();
+    private IEnumerable<Globe> Globes = new List<Globe>();
+    private IEnumerable<Guard> Guards = new List<Guard>();
+    private IEnumerable<Helmet> Helmets = new List<Helmet>();
+    private IEnumerable<TShirt> TShirts = new List<TShirt>();
+
     private IEnumerable<TotalWeapons> Weapons = new List<TotalWeapons>();
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadData();
+        await LoadAccessories();
+        await LoadArmorAndWeapon();
         await base.OnInitializedAsync();
     }
 
-    private async Task LoadData()
+    private async Task LoadAccessories()
     {
         InGameInfo = await _customersHttpService.CustomersInGameInfo(UserId);
         CustomersEquipment = await _customersHttpService.CustomersEquipment(UserId);
+
         Belts = await _getItemHttpService.GetBelt();
-        Armors = await _getItemHttpService.GetArmor();
-        Weapons = await _getItemHttpService.GetAllWeapon();
+        EarRings = await _getItemHttpService.GetEarRing();
+        Necklesses = await _getItemHttpService.GetNeckless();
+        Ring1 = await _getItemHttpService.GetRing1();
+        Ring2 = await _getItemHttpService.GetRing2();
     }
 
+    private async Task LoadArmorAndWeapon()
+    {
+        Armors = await _getItemHttpService.GetArmor();
+        Boot = await _getItemHttpService.GetBoots();
+        Capes = await _getItemHttpService.GetCape();
+        Globes = await _getItemHttpService.GetGlobe();
+        Guards = await _getItemHttpService.GetGuard();
+        Helmets = await _getItemHttpService.GetHelmet();
+        TShirts = await _getItemHttpService.GetTShirt();
 
+        Weapons = await _getItemHttpService.GetAllWeapon();
 
+    }
 }

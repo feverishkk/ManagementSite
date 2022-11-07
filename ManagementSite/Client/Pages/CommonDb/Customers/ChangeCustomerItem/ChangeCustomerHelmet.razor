@@ -1,0 +1,41 @@
+﻿<MudCard>
+    <MudForm Model="@HelmetModel">
+        <MudCardContent>
+            <MudSelect Label="Helmet" @bind-Value="HelmetModel.HelmetId" For="@(()=>HelmetModel.HelmetId)">
+                @foreach (var helmet in Helmets)
+                {
+                    <MudSelectItem Value="@helmet.HelmetId">@helmet.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                   @onclick="@(()=>OnSelect(HelmetModel))">
+            Update
+        </MudButton>
+    </MudForm>
+</MudCard>
+
+@code {
+    [Parameter]
+    public IEnumerable<Helmet> Helmets { get; set; } = new List<Helmet>();
+
+    [CascadingParameter]
+    public string UserId{ get; set; }
+
+    private Helmet HelmetModel { get; set; } = new Helmet();
+
+    private async Task OnSelect(Helmet helmet)
+    {
+        ArrayList userInfo = new ArrayList();
+
+        userInfo.Add(helmet.HelmetId);
+        userInfo.Add(this.UserId);
+        userInfo.Add("Helmet");
+        await _updateItemHttpService.UpdateCustomerEquipment(userInfo);
+
+        StateHasChanged();
+    }
+
+
+
+}
