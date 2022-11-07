@@ -1,17 +1,19 @@
-﻿<MudCard>
+﻿<MudCard Class="ChangeCustomerItem">
     <MudForm Model="@CapeModel">
         <MudCardContent>
-            <MudSelect Label="Cape" @bind-Value="CapeModel.CapeId" For="@(()=>CapeModel.CapeId)">
+            <MudSelect Label="Cape" Class="buttonWidthStyle" @bind-Value="CapeModel.CapeId" For="@(()=>CapeModel.CapeId)">
                 @foreach (var cape in Capes)
                 {
                     <MudSelectItem Value="@cape.CapeId">@cape.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(CapeModel))">
-            Update
-        </MudButton>
+        <div class="buttonCentre">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                       @onclick="@(()=>OnSelect(CapeModel))">
+                Update
+            </MudButton>
+        </div>
     </MudForm>
 </MudCard>
 
@@ -20,7 +22,7 @@
     public IEnumerable<Cape> Capes { get; set; } = new List<Cape>();
 
     [CascadingParameter]
-    public string UserId{ get; set; }
+    public string UserId { get; set; }
 
     private Cape CapeModel { get; set; } = new Cape();
 

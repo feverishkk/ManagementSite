@@ -1,17 +1,19 @@
-﻿<MudCard>
+﻿<MudCard Class="ChangeCustomerItem">
     <MudForm Model="@BeltModel">
         <MudCardContent>
-            <MudSelect Label="Belt" @bind-Value="BeltModel.BeltId" For="@(()=>BeltModel.BeltId)">
+            <MudSelect Label="Belt" Class="buttonWidthStyle" @bind-Value="BeltModel.BeltId" For="@(()=>BeltModel.BeltId)">
                 @foreach (var belt in Belts)
                 {
                     <MudSelectItem Value="@belt.BeltId">@belt.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(BeltModel))">
-            Update
-        </MudButton>
+        <div class="buttonCentre">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                       @onclick="@(()=>OnSelect(BeltModel))">
+                Update
+            </MudButton>
+        </div>
     </MudForm>
 </MudCard>
 

@@ -1,21 +1,23 @@
-﻿<MudCard>
+﻿<MudCard Class="ChangeCustomerItem">
     <MudForm Model="@WeaponModel">
         <MudCardContent>
-            <MudSelect Label="Weapon" @bind-Value="WeaponModel.TotalWeaponId" For="@(()=>WeaponModel.TotalWeaponId)">
+            <MudSelect Label="Weapon"  Class="buttonWidthStyle" @bind-Value="WeaponModel.TotalWeaponId" For="@(()=>WeaponModel.TotalWeaponId)">
                 @foreach (var weapons in TotalWeapons)
                 {
                     <MudSelectItem Value="@weapons.TotalWeaponId">@weapons.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(WeaponModel.TotalWeaponId))">
-            Update
-        </MudButton>
+        <div class="buttonCentre">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                       @onclick="@(()=>OnSelect(WeaponModel.TotalWeaponId))">
+                Update
+            </MudButton>
+        </div>
     </MudForm>
 </MudCard>
 
-@code{
+@code {
     [CascadingParameter]
     public string UserId { get; set; }
 

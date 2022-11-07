@@ -1,17 +1,19 @@
-﻿<MudCard>
+﻿<MudCard Class="ChangeCustomerItem">
     <MudForm Model="@TShirtModel">
         <MudCardContent>
-            <MudSelect Label="TShirts" @bind-Value="TShirtModel.TShirtId" For="@(()=>TShirtModel.TShirtId)">
+            <MudSelect Label="TShirts" Class="buttonWidthStyle" @bind-Value="TShirtModel.TShirtId" For="@(()=>TShirtModel.TShirtId)">
                 @foreach (var shirt in TShirts)
                 {
                     <MudSelectItem Value="@shirt.TShirtId">@shirt.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(TShirtModel))">
-            Update
-        </MudButton>
+        <div class="buttonCentre">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                       @onclick="@(()=>OnSelect(TShirtModel))">
+                Update
+            </MudButton>
+        </div>
     </MudForm>
 </MudCard>
 
@@ -20,7 +22,7 @@
     public IEnumerable<TShirt> TShirts { get; set; } = new List<TShirt>();
 
     [CascadingParameter]
-    public string UserId{ get; set; }
+    public string UserId { get; set; }
 
     private TShirt TShirtModel { get; set; } = new TShirt();
 

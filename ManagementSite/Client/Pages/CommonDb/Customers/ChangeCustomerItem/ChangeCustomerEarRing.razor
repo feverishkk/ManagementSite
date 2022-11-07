@@ -1,19 +1,21 @@
 ﻿@using CommonDatabase.Models.Accessories;
 
-<MudCard>
+<MudCard Class="ChangeCustomerItem ">
     <MudForm Model="@EarRingModel">
         <MudCardContent>
-            <MudSelect Label="EarRing" @bind-Value="EarRingModel.EarRingId" For="@(()=>EarRingModel.EarRingId)">
+            <MudSelect Label="EarRing" Class="buttonWidthStyle" @bind-Value="EarRingModel.EarRingId" For="@(()=>EarRingModel.EarRingId)">
                 @foreach (var earRing in EarRings)
                 {
                     <MudSelectItem Value="@earRing.EarRingId">@earRing.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(EarRingModel))">
-            Update
-        </MudButton>
+        <div class="buttonCentre">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                       @onclick="@(()=>OnSelect(EarRingModel))">
+                Update
+            </MudButton>
+        </div>
     </MudForm>
 </MudCard>
 

@@ -1,19 +1,21 @@
 ﻿@using CommonDatabase.Models.Accessories;
 
-<MudCard>
+<MudCard Class="ChangeCustomerItem">
     <MudForm Model="@NecklessModel">
         <MudCardContent>
-            <MudSelect Label="Neckless" @bind-Value="NecklessModel.NecklessId" For="@(()=>NecklessModel.NecklessId)">
+            <MudSelect Label="Neckless" Class="buttonWidthStyle" @bind-Value="NecklessModel.NecklessId" For="@(()=>NecklessModel.NecklessId)">
                 @foreach (var neckless in Necklesses)
                 {
                     <MudSelectItem Value="@neckless.NecklessId">@neckless.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudCardContent>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
-                   @onclick="@(()=>OnSelect(NecklessModel))">
-            Update
-        </MudButton>
+        <div class="buttonCentre">
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                       @onclick="@(()=>OnSelect(NecklessModel))">
+                Update
+            </MudButton>
+        </div>
     </MudForm>
 </MudCard>
 

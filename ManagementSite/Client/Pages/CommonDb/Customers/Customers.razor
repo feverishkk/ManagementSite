@@ -11,21 +11,19 @@
 <MudSpacer />
 
 <CascadingValue Value="@UserId">
-    <ChangeCustomerBelt Belts="@Belts" />
-    <ChangeCustomerEarRing EarRings="EarRings" />
+    <ChangeCustomerWeapon TotalWeapons="@Weapons" />
+    <ChangeCustomerTShirt TShirts="@TShirts" />
+    <ChangeCustomerArmor Armors="@Armors" />
+    <ChangeCustomerCape Capes="@Capes"/>
+    <ChangeCustomerHelmet Helmets="@Helmets" />
     <ChangeCustomerNeckless Necklesses="@Necklesses" />
     <ChangeCustomerRing1 Ring1="@Ring1" />
     <ChangeCustomerRing2 Ring2="@Ring2" />
-
-    <ChangeCustomerArmor Armors="@Armors" />
+    <ChangeCustomerBelt Belts="@Belts" />
     <ChangeCustomerBoots Boots="@Boot" />
-    <ChangeCustomerCape Capes="@Capes"/>
-    <ChangeCustomerGlobe Globes="@Globes" />
+    <ChangeCustomerEarRing EarRings="EarRings" />
     <ChangeCustomerGuard Guards="@Guards" />
-    <ChangeCustomerHelmet Helmets="@Helmets" />
-    <ChangeCustomerTShirt TShirts="@TShirts" />
-
-    <ChangeCustomerWeapon TotalWeapons="@Weapons" />
+    <ChangeCustomerGlobe Globes="@Globes" />
 </CascadingValue>
 
 @code {
@@ -38,21 +36,20 @@
     private IEnumerable<CustomersInGameInfoViewModel> InGameInfo { get; set; } = new List<CustomersInGameInfoViewModel>();
     private IEnumerable<CustomerEquipmentViewModel> CustomersEquipment { get; set; } = new List<CustomerEquipmentViewModel>();
 
-    private IEnumerable<Belt> Belts = new List<Belt>();
-    private IEnumerable<EarRing> EarRings = new List<EarRing>();
+    private IEnumerable<TotalWeapons> Weapons = new List<TotalWeapons>();
+    private IEnumerable<TShirt> TShirts = new List<TShirt>();
+    private IEnumerable<Armor> Armors = new List<Armor>();
+    private IEnumerable<Cape> Capes = new List<Cape>();
+    private IEnumerable<Helmet> Helmets = new List<Helmet>();
     private IEnumerable<Neckless> Necklesses = new List<Neckless>();
     private IEnumerable<Ring1> Ring1 = new List<Ring1>();
     private IEnumerable<Ring2> Ring2 = new List<Ring2>();
-
-    private IEnumerable<Armor> Armors = new List<Armor>();
+    private IEnumerable<Belt> Belts = new List<Belt>();
     private IEnumerable<Boots> Boot = new List<Boots>();
-    private IEnumerable<Cape> Capes = new List<Cape>();
-    private IEnumerable<Globe> Globes = new List<Globe>();
+    private IEnumerable<EarRing> EarRings = new List<EarRing>();
     private IEnumerable<Guard> Guards = new List<Guard>();
-    private IEnumerable<Helmet> Helmets = new List<Helmet>();
-    private IEnumerable<TShirt> TShirts = new List<TShirt>();
+    private IEnumerable<Globe> Globes = new List<Globe>();
 
-    private IEnumerable<TotalWeapons> Weapons = new List<TotalWeapons>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -87,3 +84,24 @@
 
     }
 }
+<style>
+    .ChangeCustomerItem{
+        width:350px;
+        height:200px;
+        margin: 5px;
+        display:inline-flex;
+    }
+    .buttonCentre{
+        display:flex;
+        align-content:center;
+        justify-content:center;
+    }
+
+    .buttonWidthStyle{
+        width:330px;
+    }
+    .CustomerEquipmentImageSize{
+        width:50px;
+        height:30px;
+    }
+</style>
