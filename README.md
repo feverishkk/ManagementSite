@@ -6,11 +6,11 @@
 
 브랜치는 Test꺼 사용해주세요!
 
-DB 1:
+DB 1 - CommonDb
 
 https://drive.google.com/file/d/1ERgUYWxNbmqMUHZFaCp8D4AovEQxKdVN/view?usp=share_link
 
-DB 2:
+DB 2 - ManagementSite App
 
 https://drive.google.com/file/d/1CQZjlX-sW98frqMkW0R36k0UrL7esI4z/view?usp=share_link
 
