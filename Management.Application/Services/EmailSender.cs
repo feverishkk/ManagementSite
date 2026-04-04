@@ -18,8 +18,8 @@ namespace Management.Application.Services
 
         public Task SendEmail(string email, string subject, string htmlMessage)
         {
-            string fromMail = "gihun2da@naver.com";
-            string fromPassword = "Acrophobia8!";
+            string fromMail = "@.";
+            string fromPassword = "";
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
